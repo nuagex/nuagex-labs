@@ -36,4 +36,5 @@ Use [CATS](https://cats-docs.nuageteam.net) framework and provided Test Suite.
 2. Change the admin password held in `line 40` of [`vars.robot`](cats_setup/vars.robot#L40) file to contain the password provided for your lab.
 
 **For the case when CATS is inside NuageX**
+
 Refer to [this article](http://cats-docs.nuageteam.net/test_suite_examples/0025_nux_nsg_1fabootstrap/).
