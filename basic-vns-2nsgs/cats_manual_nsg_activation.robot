@@ -41,7 +41,7 @@ ${branch_pc2_data_addr}        192.168.2.102
 
 *** Keywords ***
 Login NuageX User
-    Login user
+    NuageUserMgmt.Login User
     ...    cats_api_url=https://124.252.253.146:8443
     ...    cats_username=admin
     ...    cats_password=ROoNKLWXcjsM3MjE
@@ -260,7 +260,7 @@ Creating vPorts and Bridge Interfaces for NSG2
     ...    cats_domain_name=${l3domain_name}
 
 Adding installer user
-    Create User
+    NuageVSD.Create User
     ...    userName=cats
     ...    password=cats
     ...    cats_org_name=${org_name}

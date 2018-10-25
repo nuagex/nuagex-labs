@@ -129,7 +129,7 @@ Creating vPorts and Bridge Interfaces for NSG2
     ...    cats_domain_name=${l3domain_name}
 
 Adding installer user
-    Create User
+    NuageVSD.Create User
     ...    userName=cats
     ...    password=cats
     ...    cats_org_name=${org_name}

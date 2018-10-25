@@ -27,15 +27,15 @@ ${branch_pc2_data_addr}        192.168.2.102
 
 # port forwarding variables
 ${ssh_key_path}                ~/.ssh/cats
-${jumpbox_address}             124.252.253.87
+${jumpbox_address}             124.252.253.61
 @{util_port_forwarding}        45100  10.0.0.33
 @{brpc1_port_forwarding}       45101  10.0.0.101
 @{brpc2_port_forwarding}       45102  10.0.0.102
 
 *** Keywords ***
 Login NuageX User
-    Login user
+    NuageUserMgmt.Login user
     ...    cats_api_url=https://${jumpbox_address}:8443
     ...    cats_username=admin
-    ...    cats_password=EktrJryx2WxtFmWH
+    ...    cats_password=oaDt4fmiVUSlQHvJ
     ...    cats_org_name=csp
