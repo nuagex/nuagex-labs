@@ -39,6 +39,14 @@ services:
     destination:
       port: 5672
       address: 10.0.0.2
+  - name: stompows
+    type: public
+    port: 61614
+    protocols:
+    - tcp
+    destination:
+      port: 61614
+      address: 10.0.0.2
 
 networks:
   # - name: private
