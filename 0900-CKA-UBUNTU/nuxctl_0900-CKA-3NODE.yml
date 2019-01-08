@@ -1,0 +1,34 @@
+template: 5980ee745a38da00012d158d
+name: 0900-CKA-3NODE
+expires: "2019-12-31T17:13:11.278Z"
+sshKeys:
+  - name: demo
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0jLLF2c7sSUHCwFJ1cpj0mTNRfemi6XMKxAf7H4gIzs/joL18W+wlSrnHnu801bDLc2RNg8dvOvXmzjzZrKKMInWMXrzb0zjljCPumYWlI/koWAIMzpENjeRjWrB22WFVOVDW4GkphzhchFWFPSF9xxU4i3MPHn3HYZiy6ieLOvknplQDivTXcLwRjvenK35gjLPxo4nFhQWyUdzPLLCb/NUx/CGjkh10qwVfw+AWw3x3boqxwBXitPjLJ+ocfZVohAWupKuvsTNzlh8m39imI5pi9qTFT1x9YtkYsTYCy2iz2HCirqy+8BC/CPCyHuEjs8ZT9OFHHQtjB/qgzfTp"
+
+####################################
+######    S E R V E R S
+####################################
+servers:
+  - name: master
+    flavor: "m1.medium"
+    image: "nux_ubuntu_server_18.04"
+    interfaces:
+      - network: private
+        address: "10.0.0.2"
+        index: 0
+
+  - name: node1
+    flavor: "m1.medium"
+    image: "nux_ubuntu_server_18.04"
+    interfaces:
+      - network: private
+        address: "10.0.0.3"
+        index: 0
+
+  - name: node2
+    flavor: "m1.medium"
+    image: "nux_ubuntu_server_18.04"
+    interfaces:
+      - network: private
+        address: "10.0.0.4"
+        index: 0
