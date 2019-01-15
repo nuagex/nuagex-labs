@@ -21,7 +21,9 @@ Once automatically deployed and configured the lab will conform to the following
 The Headquarters site and branch offices are emulated using the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows us to generate and analyze traffic as well as run some real-world applications.
 
 # Deployment
-The deployment process is powered by [nuxctl](htpps://nuxctl.nuagex.io) CLI tool. All the infrastructure deployment will be completed once a user runs the lab template available in this repo:
+The deployment process is powered by [nuxctl](htpps://nuxctl.nuagex.io) CLI tool. All the infrastructure deployment will be completed once a user runs the lab template available in this repo.
+
+The lab template is based on the **Nuage Networks 5.3.2 - VNS SD-WAN Portal 3.2.1** template and has additional infra components defined to support the integration and use cases demonstration.
 
 ```bash
 # make sure to fill in your nuagex public key information in the lab template
