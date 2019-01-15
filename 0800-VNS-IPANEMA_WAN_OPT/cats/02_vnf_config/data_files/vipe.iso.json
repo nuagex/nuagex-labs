@@ -1,0 +1,28 @@
+{
+    "configuration": {
+        "net": {
+            "mgt_interface": "natmgt",
+            "ip_mgt_addr": "dhcp",
+            "mgt_vlan_id": "none",
+            "mgt_mtu": 1500,
+            "ip_address": "{{ inband_ip }}",
+            "ip_mask": "{{ inband_netmask }}",
+            "vlan_id": "none",
+            "gateway": "{{ inband_gw_ip }}",
+            "mtu": 1500,
+            "hostname": "{{ vipe_hostname }}",
+            "routes": [
+                {
+                    "net": "172.254.0.0",
+                    "netmask": "255.255.0.0",
+                    "gw": "{{ inband_gw_ip }}"
+                }
+            ]
+        },
+        "reversor": {
+            "reversor_enabled": true,
+            "uri": "{{ salsa_url }}",
+            "domain": "{{ salsa_domain }}"
+        }
+    }
+}
