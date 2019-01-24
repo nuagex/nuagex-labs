@@ -53,7 +53,7 @@ ${vnf_mgmt_subnet1_network_addr}    10.100.1.0/24
 ${vnf_mgmt_subnet4_name}            ${hq_vnf1_name}
 ${vnf_mgmt_subnet4_network_addr}    10.100.99.0/24
 
-${vnf_mgmt_ems_subnet_name}            EMS-PC
+${vnf_mgmt_ems_subnet_name}            BRANCH1_EMS_SUB
 ${vnf_mgmt_ems_subnet_network_addr}    10.100.4.0/24
 ${ems_pc_data_addr}                    10.100.4.10
 

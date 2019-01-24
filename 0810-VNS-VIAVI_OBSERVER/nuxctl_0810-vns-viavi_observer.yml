@@ -56,25 +56,25 @@ networks:
     cidr: 10.10.99.0/24
     dns: 10.0.0.1
     dhcp: true
-  - name: HQ-LAN1
+  - name: HQ-Sub1
     cidr: 10.30.99.0/24
     dns: 10.0.0.1
     dhcp: false
 
   # Branch1 networks
-  - name: branch1-Internet
+  - name: Branch1-Internet
     cidr: 10.10.1.0/24
     dns: 10.0.0.1
     dhcp: true
-  - name: branch1-lan1
+  - name: Branch1-Sub1
     cidr: 10.30.1.0/24
     dns: 10.0.0.1
     dhcp: false
-  - name: branch1-lan2
+  - name: Branch1-EMS_Sub
     cidr: 10.31.1.0/24
     dns: 10.0.0.1
     dhcp: false
-  - name: branch1-lan3
+  - name: Branch1-Test_Sub
     cidr: 10.32.1.0/24
     dns: 10.0.0.1
     dhcp: false
@@ -158,7 +158,7 @@ servers:
       - network: dummy-wan
         address: 255.255.255.4
         index: 1
-      - network: HQ-LAN1
+      - network: HQ-Sub1
         address: 10.30.99.99
         index: 2
   - name: HQ-pc1
@@ -169,30 +169,30 @@ servers:
         network: private
         address: 10.0.0.199
       - index: 1
-        network: HQ-LAN1
+        network: HQ-Sub1
         address: 10.30.99.113
 
   # Branch1 servers
-  - name: branch1-nsg1
+  - name: Branch1-nsg1
     flavor: m1.medium
     image: nux_nsg_5.3.2u1
     interfaces:
-      - network: branch1-Internet
+      - network: Branch1-Internet
         address: 10.10.1.11
         index: 0
       - network: dummy-wan
         address: 255.255.255.1
         index: 1
-      - network: branch1-lan2  # for EMS PC
+      - network: Branch1-EMS_Sub  # for EMS PC
         address: 10.31.1.11
         index: 2
-      - network: branch1-lan3  # for Win10 VIAVI Test PC
+      - network: Branch1-Test_Sub  # for Win10 VIAVI Test PC
         address: 10.32.1.11
         index: 3
-      - network: branch1-lan1  # installer pc, thus the last port
+      - network: Branch1-Sub1  # installer pc, thus the last port
         address: 10.30.1.11
         index: 4
-  - name: branch1-pc1
+  - name: Branch1-pc1
     image: nux_branch_pc
     flavor: m1.small
     interfaces:
@@ -200,7 +200,7 @@ servers:
         network: private
         address: 10.0.0.101
       - index: 1
-        network: branch1-lan1
+        network: Branch1-Sub1
         address: 10.30.1.101
   - name: ems1-pc1
     image: nux_branch_pc
@@ -210,14 +210,14 @@ servers:
         network: private
         address: 10.0.0.198
       - index: 1
-        network: branch1-lan2
+        network: Branch1-EMS_Sub
         address: 10.31.1.101
   - name: Branch1-TestPC
     image: nux_win10pro
     flavor: m2.medium
     interfaces:
       - index: 0
-        network: branch1-lan3
+        network: Branch1-Test_Sub
         address: 10.32.1.103
 
 
@@ -232,6 +232,6 @@ servers:
       - network: HQ-Internet
         address: 10.10.99.1
         index: 1
-      - network: branch1-Internet
+      - network: Branch1-Internet
         address: 10.10.1.1
         index: 2
