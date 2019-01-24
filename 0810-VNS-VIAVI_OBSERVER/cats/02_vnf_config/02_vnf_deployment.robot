@@ -41,7 +41,7 @@ Download VNF image and VNF boot ISOs to UtilVM
 
     # downloading boot ISOs from observerlive servers
     SSHLibrary.Execute Command
-    ...    cd /var/www/html && curl -O ${vnf1_boot_iso_url} && curl -O ${vnf2_boot_iso_url} && ls *.iso -1 | xargs -I % sh -c 'md5sum % > %.md5;'
+    ...    cd /var/www/html && curl -O ${branch1_vnf1_boot_iso_url} && curl -O ${hq_vnf1_boot_iso_url} && ls *.iso -1 | xargs -I % sh -c 'md5sum % > %.md5;'
 
 Retrieve md5sums for VNF disk image
     ${image_md5} =  SSHLibrary.Execute Command

@@ -71,8 +71,8 @@ ${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
 ##############################
 #     VIAVI PARAMETERS
 ##############################
-${vnf1_boot_iso_url}             TO_BE_FILLED_BY_A_USER:GET_FROM_OBSERVERLIVE_WEB_APP
-${vnf2_boot_iso_url}             TO_BE_FILLED_BY_A_USER:GET_FROM_OBSERVERLIVE_WEB_APP
+${branch1_vnf1_boot_iso_url}             TO_BE_FILLED_BY_A_USER:GET_FROM_OBSERVERLIVE_WEB_APP
+${hq_vnf1_boot_iso_url}             TO_BE_FILLED_BY_A_USER:GET_FROM_OBSERVERLIVE_WEB_APP
 
 ##############################
 #     CONNECTION PARAMETERS
