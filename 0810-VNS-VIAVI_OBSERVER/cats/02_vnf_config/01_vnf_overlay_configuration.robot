@@ -4,7 +4,7 @@ Resource          ../vars.robot
 Suite Setup       Login NuageX User
 
 *** Test Cases ***
-Creating VNF management domain
+Create VNF management domain
     Create L3 Domain
     ...    name=${vnf_mgmt_domain_name}
     ...    cats_org_name=${org_name}
@@ -12,14 +12,14 @@ Creating VNF management domain
     ...    underlayEnabled=ENABLED
     ...    PATEnabled=ENABLED
 
-Adding DHCP server for the management domain
+Add DHCP server for the management domain
     Create DHCP Option in L3 Domain
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${vnf_mgmt_domain_name}
     ...    actualType=6
     ...    actualValues=@[1.1.1.1, 8.8.8.8]
 
-Creating VNF Management domain objects
+Create VNF Management domain objects
     Create Zone
     ...    name=VNF_MGMT
     ...    cats_org_name=${org_name}
@@ -71,7 +71,7 @@ Creating VNF Management domain objects
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${vnf_mgmt_domain_name}
 
-Configuring Security Policies for VNF Management L3 Domain
+Configure Security Policies for VNF Management L3 Domain
     Begin Policy Changes
     ...    cats_org_name=${org_name}
     ...    cats_L3_domain_name=${vnf_mgmt_domain_name}

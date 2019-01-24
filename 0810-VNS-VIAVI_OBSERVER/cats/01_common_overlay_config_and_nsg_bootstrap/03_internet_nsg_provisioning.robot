@@ -4,17 +4,17 @@ Resource          ../vars.robot
 Suite Setup       Login NuageX User
 
 *** Test Cases ***
-Creating Internet NSG Template
+Create Internet NSG Template
     Create NSG Template
     ...    name=${nsg_inet_template_name}
     ...    cats_infra_gw_profile_name=${infra_gw_profile_name}
 
-Associating Infra Access Profile with Internet NSG Template
+Associate Infra Access Profile with Internet NSG Template
     Associate Infra Access Profile with NSG Template
     ...    cats_nsg_template_name=${nsg_inet_template_name}
     ...    cats_infra_access_profile_name=${infra_access_profile_name}
 
-Creating Ports and VLANs in Internet NSG Template
+Create Ports and VLANs in Internet NSG Template
     # port1 INTERNET NETWORK
     Create Port Template in NSG Template
     ...    name=port1-Internet
@@ -66,14 +66,14 @@ Creating Ports and VLANs in Internet NSG Template
     ...    cats_nsg_template_name=${nsg_inet_template_name}
     ...    cats_nsg_port_template_name=port5-Access
 
-Associating VSC Profile
+Associate VSC Profile
     Associate VSC Profile with NSG VLAN Template
     ...    cats_nsg_template_name=${nsg_inet_template_name}
     ...    cats_nsg_port_template_name=port1-Internet
     ...    cats_vlan_id=0
     ...    cats_vsc_profile_name=${vsc_profile1_name}
 
-Creating Uplink Connections
+Create Uplink Connections
     Create Uplink Connection in NSG Vlan Template
     ...    cats_nsg_template_name=${nsg_inet_template_name}
     ...    cats_nsg_port_template_name=port1-Internet
@@ -82,7 +82,7 @@ Creating Uplink Connections
     ...    role=PRIMARY
     ...    cats_underlay_name=Internet
 
-Creating NSG Instances
+Create NSG Instances
     # hq
     Create NSG
     ...    name=${hq_nsg1_name}
@@ -95,7 +95,7 @@ Creating NSG Instances
     ...    cats_org_name=${org_name}
 
 
-Disabling NAT-T on uplink
+Disable NAT-T on uplink
     Disable NAT-T for NSG Network Port
     ...    cats_nsg_name=${hq_nsg1_name}
     ...    cats_nsg_port_name=port1-Internet
@@ -107,7 +107,7 @@ Disabling NAT-T on uplink
     ...    cats_org_name=${org_name}
 
 
-Creating vPorts and Bridge Interfaces for HQ-NSG1
+Create vPorts and Bridge Interfaces for HQ-NSG1
     Create Bridge vPort for NSG
     ...    name=${hq_nsg1_vport1_name}
     ...    cats_org_name=${org_name}
@@ -124,7 +124,7 @@ Creating vPorts and Bridge Interfaces for HQ-NSG1
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
 
-Creating vPorts and Bridge Interfaces for BRANCH1-NSG1
+Create vPorts and Bridge Interfaces for BRANCH1-NSG1
     # vport and interface for Branch-PC (also is an installer PC)
     Create Bridge vPort for NSG
     ...    name=${branch1_nsg1_vport1_name}
@@ -160,7 +160,7 @@ Creating vPorts and Bridge Interfaces for BRANCH1-NSG1
     ...    cats_domain_name=${customer_domain_name}
 
 
-Adding installer user
+Add installer user
     Associate Installer with NSG
     ...    cats_org_name=${org_name}
     ...    cats_nsg_name=${hq_nsg1_name}

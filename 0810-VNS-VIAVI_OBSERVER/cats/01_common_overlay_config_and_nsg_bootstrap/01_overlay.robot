@@ -4,7 +4,7 @@ Resource          ../vars.robot
 Suite Setup       Login NuageX User
 
 *** Test Cases ***
-Creating Organization Profile
+Create Organization Profile
     Create Organization Profile
     ...    name=${org_profile_name}
     ...    allowedForwardingClasses=@[A, B, C, D, E, F, G, H]
@@ -16,18 +16,18 @@ Creating Organization Profile
     ...    allowAdvancedQOSConfiguration=True
     ...    VNFManagementEnabled=True
 
-Creating Organization
+Create Organization
     Create Organization
     ...    name=${org_name}
     ...    localAS=65000
     ...    cats_org_profile_name=${org_profile_name}
 
-Creating L3 domain template
+Create L3 domain template
     Create L3 Domain Template
     ...    name=${l3domain_template1_name}
     ...    cats_org_name=${org_name}
 
-Creating L3 domain
+Create L3 domain
     Create L3 Domain
     ...    name=${customer_domain_name}
     ...    cats_org_name=${org_name}
@@ -42,7 +42,7 @@ Add DHCP server info for the customer domain
     ...    actualType=6
     ...    actualValues=@[1.1.1.1, 8.8.8.8]
 
-Creating Zones
+Create Zones
     Create Zone
     ...    name=${hq_zone_name}
     ...    cats_org_name=${org_name}
@@ -53,7 +53,7 @@ Creating Zones
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
 
-Creating Subnets
+Create Subnets
     # HQ subnet
     Create Subnet
     ...    name=${hq_subnet_name}

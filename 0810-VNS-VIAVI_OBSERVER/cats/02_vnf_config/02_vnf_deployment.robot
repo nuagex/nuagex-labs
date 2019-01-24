@@ -4,7 +4,7 @@ Resource          ../vars.robot
 Suite Setup       Login NuageX User
 
 *** Test Cases ***
-Setting up connection to UtilVM
+Set up connection to UtilVM
     [Tags]    solo_run  cats_outside
 
     # create local SSH port forwarding for UtilVM
@@ -30,7 +30,7 @@ Setting up connection to UtilVM
 
     Set Global Variable    ${util_conn}
 
-Downloading VNF image and VNF boot ISOs to UtilVM
+Download VNF image and VNF boot ISOs to UtilVM
     [Tags]    VNF_DOWNLOAD  ONETIME
 
     SSHLibrary.Switch Connection    ${util_conn}
@@ -43,13 +43,13 @@ Downloading VNF image and VNF boot ISOs to UtilVM
     SSHLibrary.Execute Command
     ...    cd /var/www/html && curl -O ${vnf1_boot_iso_url} && curl -O ${vnf2_boot_iso_url} && ls *.iso -1 | xargs -I % sh -c 'md5sum % > %.md5;'
 
-Retrieving md5sums for VNF disk image
+Retrieve md5sums for VNF disk image
     ${image_md5} =  SSHLibrary.Execute Command
                     ...    cat /var/www/html/img.qcow2.md5 | awk '{print $1}'
 
     Set Suite Variable    ${image_md5}
 
-Creating VNF for Branch1
+Create VNF for Branch1
     ${status}  ${branch1_vnf_orig_state} =  Run Keyword And Ignore Error
                                             ...    NuageVNF.Get VNF
                                                    ...    name=${branch1_vnf1_name}
@@ -75,7 +75,7 @@ Creating VNF for Branch1
     Set Suite Variable     ${branch1_vnf_state}
 
 
-Creating VNF for HQ
+Create VNF for HQ
     ${status}  ${hq_vnf_orig_state} =  Run Keyword And Ignore Error
                                        ...    NuageVNF.Get VNF
                                               ...    name=${hq_vnf1_name}
