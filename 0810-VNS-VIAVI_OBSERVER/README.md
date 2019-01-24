@@ -59,11 +59,12 @@ The following example start the whole configuration process using CATS docker co
 # being in the lab directory (where this README.md file is located)
 # flags:
 ## -X -- stop the execution if error occurs
+## -e solo_run -- exclude the test cases marked with `solo_run` tag
 
 docker run -t \
   -v ${HOME}/.ssh:/root/.ssh \
   -v `pwd`/cats:/home/tests \
-  cats -X /home/tests
+  cats -X -e solo_run /home/tests
 ```
 
 The configuration ends in a success if every step is marked with the PASS status. The configuration execution log can be found under `cats/reports` directory.
