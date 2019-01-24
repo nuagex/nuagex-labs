@@ -46,12 +46,12 @@ ${branch1_testpc_data_addr}    192.168.10.110
 ##############################
 #  VNF MGMT DOMAIN PARAMETERS
 ##############################
-${vnf_mgmt_domain_name}             VNF MANAGEMENT
-${vnf_mgmt_subnet1_name}            ${branch1_vnf1_name}
-${vnf_mgmt_subnet1_network_addr}    10.100.1.0/24
+${vnf_mgmt_domain_name}                VNF MANAGEMENT
+${vnf_mgmt_subnet1_name}               ${branch1_vnf1_name}
+${vnf_mgmt_subnet1_network_addr}       10.100.1.0/24
 
-${vnf_mgmt_subnet4_name}            ${hq_vnf1_name}
-${vnf_mgmt_subnet4_network_addr}    10.100.99.0/24
+${vnf_mgmt_subnet4_name}               ${hq_vnf1_name}
+${vnf_mgmt_subnet4_network_addr}       10.100.99.0/24
 
 ${vnf_mgmt_ems_subnet_name}            BRANCH1_EMS_SUB
 ${vnf_mgmt_ems_subnet_network_addr}    10.100.4.0/24
@@ -71,23 +71,23 @@ ${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
 ##############################
 #     VIAVI PARAMETERS
 ##############################
-${branch1_vnf1_boot_iso_url}             TO_BE_FILLED_BY_A_USER:GET_FROM_OBSERVERLIVE_WEB_APP
-${hq_vnf1_boot_iso_url}             TO_BE_FILLED_BY_A_USER:GET_FROM_OBSERVERLIVE_WEB_APP
+${branch1_vnf1_boot_iso_url}      TO_BE_FILLED_BY_A_USER:GET_FROM_OBSERVERLIVE_WEB_APP
+${hq_vnf1_boot_iso_url}           TO_BE_FILLED_BY_A_USER:GET_FROM_OBSERVERLIVE_WEB_APP
 
 ##############################
 #     CONNECTION PARAMETERS
 ##############################
-${jumpbox_address}               TO_BE_FILLED_BY_A_USER:LAB_IP_ADDRESS
-${vsd_password}                  TO_BE_FILLED_BY_A_USER:LAB_PASSWORD
-${ssh_key_path}                  TO_BE_FILLED_BY_A_USER:PATH_TO_THE_LABS_PRIV_KEY
+${jumpbox_address}                TO_BE_FILLED_BY_A_USER:LAB_IP_ADDRESS
+${vsd_password}                   TO_BE_FILLED_BY_A_USER:LAB_PASSWORD
+${ssh_key_path}                   TO_BE_FILLED_BY_A_USER:PATH_TO_THE_LABS_PRIV_KEY
 
 # port forwarding variables
-@{util_port_forwarding}          45100  10.0.0.33
-@{vsd_port_forwarding}           45102  10.0.0.2
-@{vsci_port_forwarding}          45103  10.0.0.10
-@{br1pc1_port_forwarding}        45107  10.0.0.101
-@{hqpc1_port_forwarding}         45110  10.0.0.199
-@{pe_internet_port_forwarding}   45105  10.0.0.210
+@{util_port_forwarding}           45100  10.0.0.33
+@{vsd_port_forwarding}            45102  10.0.0.2
+@{vsci_port_forwarding}           45103  10.0.0.10
+@{br1pc1_port_forwarding}         45107  10.0.0.101
+@{hqpc1_port_forwarding}          45110  10.0.0.199
+@{pe_internet_port_forwarding}    45105  10.0.0.210
 
 *** Keywords ***
 Login NuageX User
