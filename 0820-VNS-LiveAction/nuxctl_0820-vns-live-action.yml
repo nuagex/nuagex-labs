@@ -1,0 +1,193 @@
+# nuxctl (nuxctl.nuagex.io) template
+# compatible with nuxctl 0.6.0+ version
+template: 5b3f906ac7b3920001021a9b
+name: liveAction_lab
+sshKeys:
+  - name: demo  # WARNING: make sure to use your public key instead of the demo one
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDw1jIozLL7p5Ar685vgoSqhIEKoxRn/BpvEaiZkZORZo+Ox4HHRGrW+NZJLvmWj+PxxNj6Mw1b6X0uK9eq1VRuW1y1gHK+7T92GxakyreJW1rIC1DfdVxJZXEv+mN17GSSekdUG/FGadjIr4lUwInPr10g2inmICwM+1sEDMiNBC0/e0mGoAdIe+RHngLTdJShxC7EedfNlIianBGykul3zXGiVr51wxHeI3IqD3tRTs6J9+Fyu6XPtH1+MN/rquVJgpposoPMljRDIWDB/elORmtL47ZEzOcHEPe8KJ7Ha4Y+YBiwo751UIptwgy9OHpU87MpJx9tjSmEr/apVdJ7 arunpoonia@Aruns-MacBook-Pro.local"
+
+services:
+  - name: liveaction_ui
+    type: public
+    port: 2443
+    protocols:
+      - tcp
+    destination:
+      port: 443
+      address: 10.0.0.11
+
+###################
+#                 #
+# N E T W O R K S #
+#                 #
+###################
+networks:
+  # - name: private
+  #   cidr: 10.0.0.0/24
+  #   dns:
+  #   - 10.0.0.1
+  #   dhcp: true
+  # - name: nsg_wan1
+  #   cidr: 10.10.0.0/24
+  #   dns:
+  #   - 10.0.0.1
+  #   dhcp: true
+  # - name: dummy_wan2
+  #   cidr: 10.20.0.0/24
+  #   dns:
+  #   - 10.0.0.1
+  #   dhcp: true
+  # - name: nsg_lan1
+  #   cidr: 192.168.1.0/24
+  #   dns:
+  #   - 10.0.0.1
+  #   dhcp: true
+  # - name: nsg_lan2
+  #   cidr: 192.168.2.0/24
+  #   dns:
+  #   - 10.0.0.1
+  #   dhcp: true
+
+
+  # dummy networks
+  # used to isolate wan interfaces of NSGVs
+
+
+#################
+#               #
+# S E R V E R S #
+#               #
+#################
+servers:
+  # - name: vsd01
+  #   image: vsd01_NUX_5.2.2_PORTAL_VSD
+  #   flavor: nux.vsd
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.2
+  # - name: vsc01
+  #   image: vsc01_NUX_5.2.2_PORTAL
+  #   flavor: nux.vsc
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.3
+  # - name: portal
+  #   image: portal_NUX-VNS-5.2.2_PORTAL
+  #   flavor: nux.vsd
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.4
+  # - name: elastic
+  #   image: elastic_NUX_5.2.2_PORTAL
+  #   flavor: nux.vsd
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.5
+  # - name: catsvm
+  #   image: catsvm_NUX_5.2.2_PORTAL
+  #   flavor: m2.small
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.7
+  # - name: utility
+  #   image: utility_NUX_5.2.2_PORTAL
+  #   flavor: m1.small
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.33
+  # - name: router
+  #   image: router_NUX_5.2.2_PORTAL
+  #   flavor: nux.vsd
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.33
+  #   - index: 1
+  #     network: nsg_wan1
+  #     address: 10.10.0.1
+  #   - index: 2
+  #     network: dummy_wan2
+  #     address: 10.20.0.1
+  ### NSG-Vs
+  # - name: nsgv1
+  #   image: nux_nsg_5.2.2
+  #   flavor: nux.vsd
+  #   interfaces:
+  #   - index: 0
+  #     network: nsg_wan1
+  #     address: 10.10.0.11
+  #   - index: 1
+  #     network: dummy_wan2
+  #     address: 10.20.0.21
+  #   - index: 2
+  #     network: nsg_lan1
+  #     address: 192.168.1.1
+  # - name: nsgv2
+  #   image: nux_nsg_5.2.2
+  #   flavor: nux.vsd
+  #   interfaces:
+  #   - index: 0
+  #     network: nsg_wan1
+  #     address: 10.10.0.12
+  #   - index: 1
+  #     network: dummy_wan2
+  #     address: 10.20.0.22
+  #   - index: 2
+  #     network: nsg_lan2
+  #     address: 192.168.2.1
+  ### PCs
+  # - name: pc1
+  #   image: PC_NUX_5.2.2_PORTAL
+  #   flavor: nux.vsd
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.10
+  #   - index: 1
+  #     network: nsg_lan1
+  #     address: 192.168.1.100
+  # - name: pc2
+  #   image: PC_NUX_5.2.2_PORTAL
+  #   flavor: nux.vsd
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.20
+  #   - index: 1
+  #     network: nsg_lan1
+  #     address: 192.168.1.200
+  # - name: pc3
+  #   image: PC_NUX_5.2.2_PORTAL
+  #   flavor: nux.vsd
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.30
+  #   - index: 1
+  #     network: nsg_lan2
+  #     address: 192.168.2.100
+    # - name: pc4
+  #   image: PC_NUX_5.2.2_PORTAL
+  #   flavor: nux.vsd
+  #   interfaces:
+  #   - index: 0
+  #     network: private
+  #     address: 10.0.0.40
+  #   - index: 1
+  #     network: nsg_lan2
+  #     address: 192.168.2.200
+
+  # LiveAction VM
+  - name: live-action
+    image: ubuntu_16.04
+    flavor: nux.vsd
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.11
