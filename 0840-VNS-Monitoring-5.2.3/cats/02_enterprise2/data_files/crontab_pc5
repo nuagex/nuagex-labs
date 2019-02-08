@@ -1,0 +1,8 @@
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+*/5 *  *  *  *  root /usr/bin/timeout 180 ip netns exec ns-data curl http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_h264.mov > /dev/null
+*/10 *  *  *  * root /usr/bin/timeout 300 dd if=/dev/zero count=1000000 bs=4096 | ip netns exec ns-data ssh -i /root/.ssh/id_rsa root@172.17.3.101 'cat > /dev/null'
+*/10 *  *  *  * root /usr/bin/timeout 300 dd if=/dev/zero count=1000000 bs=4096 | ip netns exec ns-data ssh -i /root/.ssh/id_rsa root@172.17.4.101 'cat > /dev/null'
+*/10 *  *  *  * root /usr/bin/timeout 300 dd if=/dev/zero count=1000000 bs=4096 | ip netns exec ns-data ssh -i /root/.ssh/id_rsa root@172.20.3.101 'cat > /dev/null'
