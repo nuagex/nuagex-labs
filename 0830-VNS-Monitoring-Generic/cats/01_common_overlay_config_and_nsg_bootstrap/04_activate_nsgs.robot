@@ -116,6 +116,30 @@ Wait for all NSGs to reach boostrapped state
     ...    skip_controller_check=True
 
 
+Connect to Mountain View PC and renew dhcp lease
+    ${mv_pc_conn} =  Linux.Connect To Server
+                      ...    server_address=localhost
+                      ...    server_port=@{hqpc1_port_forwarding}[0]
+                      ...    server_login=root
+                      ...    server_password=Alcateldc
+                      ...    timeout=30s
+    Set Suite Variable    ${mv_pc_conn}
+
+Connect to Namespace and Renew DHCP client lease 
+    SSHLibrary.Execute Command    ip netns exec ns-data bash -c "dhclient eth1"
+
+Connect to New York PC and renew dhcp lease
+    ${ny_pc_conn} =  Linux.Connect To Server
+                      ...    server_address=localhost
+                      ...    server_port=@{br1pc1_port_forwarding}[0]
+                      ...    server_login=root
+                      ...    server_password=Alcateldc
+                      ...    timeout=30s
+    Set Suite Variable    ${ny_pc_conn}
+
+Connect to Namespace and Renew DHCP client lease  
+    SSHLibrary.Execute Command    ip netns exec ns-data bash -c "dhclient eth1"
+
 
 
 
