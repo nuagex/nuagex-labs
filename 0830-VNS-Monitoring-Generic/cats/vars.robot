@@ -43,8 +43,8 @@ ${branch1_pc1_data_addr}       10.40.0.40
 ##############################
 #     CONNECTION PARAMETERS
 ##############################
-${jumpbox_address}                124.252.253.56
-${vsd_password}                   YA8G7JildTdE1LyZ
+${jumpbox_address}                124.252.253.63
+${vsd_password}                   mu92q4b7UeZNxWHx
 ${ssh_key_path}                   ~/.ssh/id_rsa
 
 # port forwarding variables

@@ -1,6 +1,6 @@
 # nuxctl (nuxctl.nuagex.io) template
 # compatible with nuxctl 0.6.0+ version
-template: 5c5dc76117b3be0001d994dd
+template: 5c35217192f86a000180be8f
 name: vns-monitoring-labs
 sshKeys:
   - name: demo  # WARNING: make sure to use your public key instead of the demo one
