@@ -1,10 +1,9 @@
----
-layout: article
-title: "Nuage Networks - SD-WAN Monitoring & Visibility Integration Guide"
-tags: [vsp, vns, oss, bss, monitoring, visibility]
-requires_nda: true
-author: Remi Vichery
----
+* **title:** Nuage Networks - SD-WAN Monitoring & Visibility Integration Guide
+* **version:** 1.0.0
+* **tags:** vsp, vns, oss, bss, monitoring, visibility
+* **requirements**: Nuage 5.2.3+, Docker on local Machine, CATS container image available on local machine
+* **designer**: Remi Vichery
+* **validation**: Outside of NuageX lab
 
 This document explains how a partner should integrate with the Nuage Networks VSP to discover the content of the platform (Topologies, Gateways, ...) and/or poll statistics information of SD-WAN resources.
 
