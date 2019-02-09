@@ -18,14 +18,14 @@ The automation harness provided with this lab enables a user to demonstrate the 
 
 
 Once automatically deployed and configured the lab will conform to the following diagram:
-![lab](https://gitlab.com/rdodin/pics/wikis/uploads/603ee0b6520a1a08e6d1610f6e988daa/image.png)
+![lab](./images/image.png)
 
 The Headquarters site and the branch office are equipped with the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows to generate and analyze traffic as well as run some real-world applications.
 
 # Deployment
 The deployment process is powered by [nuxctl](https://nuxctl.nuagex.io) CLI tool. The infrastructure deployment activities will be triggered once a user supply the lab template available in this repo to the `nuxctl` tool.
 
-The lab template is based on the **Nuage Networks 5.3.2 - VNS SD-WAN Portal 3.2.1** NuageX template and has additional infra components defined to support the integration and use cases demonstration.
+The lab template is based on the **Nuage Networks 5.3.3U3** NuageX template and has additional infra components defined to support the integration and use cases demonstration.
 
 ```bash
 # make sure to fill in your nuagex public key information in the lab template
@@ -54,6 +54,8 @@ docker run -t \
   -v `pwd`/cats:/home/tests \
   cats -X -e solo_run /home/tests
 ```
+
+Example: ```docker run -t -v ~/.ssh:/root/.ssh -v `pwd`/cats:/home/tests cats -X  /home/tests```
 
 Here, the hosts `${HOME}/.ssh` folder contents is exposed to the CATS container and mounted there as `/root/.ssh` directory. This means, that the `id_rsa` key on the local host will be available to the CATS container by the `/root/.ssh/id_rsa` path, and this path should be configured on line [82](./cats/vars.robot#L82) of the variables file.
 

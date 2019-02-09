@@ -196,7 +196,7 @@ servers:
         address: 10.0.0.30
       - index: 1
         network: NY-LAN1
-        address: 10.40.0.30
+        address: 10.40.0.40
 
   # Routers
   - name: pe-router

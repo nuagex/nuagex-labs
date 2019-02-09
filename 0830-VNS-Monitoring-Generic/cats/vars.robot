@@ -37,7 +37,7 @@ ${hq_nsg1_vport1_name}         MV-VPORT1
 ${branch1_nsg1_vport1_name}    NY-VPORT1
 ## PCs addresses
 ${hq_pc1_data_addr}            10.20.0.20
-${branch1_pc1_data_addr}       10.40.0.30
+${branch1_pc1_data_addr}       10.40.0.40
 
 
 ##############################
