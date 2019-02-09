@@ -73,22 +73,22 @@ When the lab deployment is finished, proceed with automatic lab configuration.
     ```
 
 3. Run your lab configuration using below command: 
-  - Change your working directory to `0830-VNS-Monitoring-Generic` folder. 
-  - You will be mounting your `private_key` path and current directory where `cats` scripts are stored.
-  - Run below command to complete lab cofigruation. 
+   - Change your working directory to `0830-VNS-Monitoring-Generic` folder. 
+   - You will be mounting your `private_key` path and current directory where `cats` scripts are stored.
+   - Run below command to complete lab cofigruation. 
 
-```bash
-# being in the lab directory (where this README.md file is located)
-# flags:
-## -X -- stop the execution if error occurs
-## -e solo_run -- exclude the test cases marked with `solo_run` tag
+   ```bash
+   # being in the lab directory (where this README.md file is located)
+   # flags:
+   ## -X -- stop the execution if error occurs
+   ## -e solo_run -- exclude the test cases marked with `solo_run` tag
 
-docker run -t \
-  -v ${HOME}/.ssh:/root/.ssh \
-  -v `pwd`/cats:/home/tests \
-  cats -X -e solo_run /home/tests
-```
-  - Example: 
+   docker run -t \
+   -v ${HOME}/.ssh:/root/.ssh \
+   -v `pwd`/cats:/home/tests \
+   cats -X -e solo_run /home/tests
+   ```
+   - Example: 
   ```docker run -t -v ~/.ssh:/root/.ssh -v `pwd`/cats:/home/tests cats -X  /home/tests```
 
 ## Troubleshooting 
