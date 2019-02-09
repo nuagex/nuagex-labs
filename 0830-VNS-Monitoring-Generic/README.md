@@ -24,13 +24,24 @@ The deployment process is powered by [nuxctl](https://nuxctl.nuagex.io) CLI tool
 
 The lab template is based on the **Nuage Networks 5.3.3U3** NuageX template and has additional infra components defined to support the integration and use cases demonstration.
 
+Follow below steps to deploy the lab: 
+1. Update your `nuagex` username and password in [creds_file](./my_creds.yml) file.
+2. Update `ssh-key` on line [7](./nuxctl_0830-vns-monitoring_generic.yml#L7)
+3. Run below command to create lab: 
 ```bash
 # make sure to fill in your nuagex public key information in the lab template
 # before running the command
 nuxctl create-lab -c my_creds.yml -l  nuxctl_0830-vns-monitoring_generic.yml --wait
 ```
+4. On successfull completion you will see output similiar to this: 
+```bash 
 
-You should update your `nuagex` username and password in `my_creds.yml` file.
+ID                        Name                    Status   Expires                 External IP      Password
+------------------------  ----------------------  -------  ----------------------  ---------------  ----------------
+<lab_id>                  vns-monitoring-labs     started  2019-02-23 00:31 (UTC)  XXXXXX           XXXXX
+```
+5. Note down `External IP` and `Password` which you will need in `Variables File` section. 
+
 
 # Configuration
 When the lab deployment is finished, proceed with automatic lab configuration. Lab configuration automation is saved in a set of [CATS](http://cats-docs.nuageteam.net) scripts contained in a [cats](./cats/) folder of this repo.
@@ -56,10 +67,10 @@ docker run -t \
 
 Example: ```docker run -t -v ~/.ssh:/root/.ssh -v `pwd`/cats:/home/tests cats -X  /home/tests```
 
-Here, the hosts `${HOME}/.ssh` folder contents is exposed to the CATS container and mounted there as `/root/.ssh` directory. This means, that the `id_rsa` key on the local host will be available to the CATS container by the `/root/.ssh/id_rsa` path, and this path should be configured on line [82](./cats/vars.robot#L82) of the variables file.
+Here, the hosts `${HOME}/.ssh` folder contents is exposed to the CATS container and mounted there as `/root/.ssh` directory. This means, that the `id_rsa` key on the local host will be available to the CATS container by the `/root/.ssh/id_rsa` path, and this path should be configured on line [48](./cats/vars.robot#L82) of the variables file.
 
 ## Starting configuration process
-The configuration process will handle all the heavy-lifting of the lab configuration. Starting with overlay objects creation, going through NSG bootstrap and activation, finishing with VNFs creation and deployment.
+The configuration process will handle all the heavy-lifting of the lab configuration. 
 
 To launch the configuration sequence a user needs to download CATS to their machine or use CATS in a container.
 
