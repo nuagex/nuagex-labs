@@ -60,7 +60,7 @@ When the lab deployment is finished, proceed with automatic lab configuration.
 2. You will need to update variables file located in the [vars.robot](./cats/vars.robot). You must update only variables which are marked with `TO_BE_FILLED_BY_A_USER` string and therefore must be provided by a user before running the configuration scripts: 
    - `Jumpbox` address of your NuageX lab deployed in previous section. 
    - `vsd_password` password associated with `admin` user of VSD UI. 
-   - `ssh_key_parh` full path of your private key associated with `public_key` 
+   - `ssh_key_path` full path of your private key associated with `public_key` 
    - Example: 
     
     ```bash 

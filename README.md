@@ -18,5 +18,14 @@ Lab demonstrates joint integration between Nuage Networks VNS and Infovista Ipan
 ### [0810-VNS-VIAVI_OBSERVER](./0810-VNS-VIAVI_OBSERVER)
 Lab demonstrates joint integration between Nuage Networks VNS and [VIAVI Observer Live](https://www.viavisolutions.com/en-us/products/observerlive) solution. It consists of a single underlay and an Organization with a HQ and a branch site. Both HQ and a Branch are equipped with an NSG, which in turn runs VIAVI Virtual Agent as a Hosted VNF.
 
+### [0820-VNS-LiveAction](./0820-VNS-LiveAction)
+Lab demonstrates joint integration between Nuage Networks VNS and liveAction solution.
+
+### [0830-VNS-Monitoring-Generic](./0830-VNS-Monitoring-Generic)
+Lab demonstrates joint integration between Nuage Networks VNS and a monitoring solution.
+
+### [0840-VNS-Monitoring-5.2.3](./0840-VNS-Monitoring-5.2.3)
+Lab demonstrates joint integration between Nuage Networks VNS and Monitor Partner
+
 ### [0900-CKA-UBUNTU](./0900-CKA-UBUNTU)
 A 3-node kubernetes cluster (1 master and 2 nodes) running on Ubuntu 18.04 servers to practice with k8s or prepare for CKA exam.
