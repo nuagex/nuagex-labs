@@ -86,7 +86,7 @@ When the lab deployment is finished, proceed with automatic lab configuration.
    docker run -t \
    -v ${HOME}/.ssh:/root/.ssh \
    -v `pwd`/cats:/home/tests \
-   cats -X -e solo_run /home/tests
+   cats -X /home/tests
    ```
    - Example: 
   ```docker run -t -v ~/.ssh:/root/.ssh -v `pwd`/cats:/home/tests cats -X  /home/tests```
@@ -94,3 +94,8 @@ When the lab deployment is finished, proceed with automatic lab configuration.
 ## Troubleshooting 
 
 Every Lab configuration generates a report in `cats/reports` directory, you can view `output.xml` file to troubleshoot further.
+
+
+## Feeback 
+
+Please send your feedback to nuagex@nuagenetworks.net
