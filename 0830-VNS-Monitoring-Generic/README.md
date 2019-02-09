@@ -5,22 +5,19 @@
 * **requirements**: Nuage 5.3.3+
 * **designer**: Arun Poonia
 
-This lab deploys a generic VNS lab with NSG-Vs. The lab consists of an Organization comprised of a Mountain View and a New York Branh site deployed over a single underlay (Internet).
+This lab deploys a generic VNS lab with NSG-Vs. The lab consists of an Organization comprised of a Mountain View and a New York Branch sites deployed over a single underlay (Internet).
 
-Both HQ and a Branch are equipped with an NSG, which in turn runs VIAVI Virtual Agent as a Hosted VNF. In addition to the VIAVI Virtual Agents, Branch1 also sports a Windows 10 machine running a VIAVI Windows Agent.
+Both Mountain View and New York branches are equipped with an NSG. Each NSG has one PC present on LAN subnet.
 
-The automation harness provided with this lab enables a user to demonstrate the following use cases of a joint integration:
+The automation harness provided with this lab enables a user to demonstrate the following use case:
 
-* VIAVI VNF deployment and Observer Live service discovery.
-* Network test between the sites - proactive, ongoing network link testing performed by VIAVI VNF agents.
-* Service validation - establishing visibility between the cloud and on-premises VNF agents.
-* Remote user troubleshooting - leveraging Windows machine connected with Nuage Networks VNS and running VIAVI agent.
-
+* Bootstrapping NSG-Vs
+* SD-WAN Portal
 
 Once automatically deployed and configured the lab will conform to the following diagram:
 ![lab](./images/image.png)
 
-The Headquarters site and the branch office are equipped with the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows to generate and analyze traffic as well as run some real-world applications.
+The Mountain View site and New York branch offices are equipped with the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows to generate and analyze traffic as well as run some real-world applications.
 
 # Deployment
 The deployment process is powered by [nuxctl](https://nuxctl.nuagex.io) CLI tool. The infrastructure deployment activities will be triggered once a user supply the lab template available in this repo to the `nuxctl` tool.
@@ -33,6 +30,8 @@ The lab template is based on the **Nuage Networks 5.3.3U3** NuageX template and 
 nuxctl create-lab -c my_creds.yml -l  nuxctl_0830-vns-monitoring_generic.yml --wait
 ```
 
+You should update your `nuagex` username and password in `my_creds.yml` file.
+
 # Configuration
 When the lab deployment is finished, proceed with automatic lab configuration. Lab configuration automation is saved in a set of [CATS](http://cats-docs.nuageteam.net) scripts contained in a [cats](./cats/) folder of this repo.
 
@@ -42,7 +41,7 @@ As of v1.0.0 of this automation suite CATS should be launched from a machine loc
 The lab configuration can be parameterized by changing the variables in the [vars.robot](./cats/vars.robot) file. Some variables values in this file are marked with `TO_BE_FILLED_BY_A_USER` string and therefore must be provided by a user before running the configuration scripts.
 
 ### SSH keys
-To enable CATS to connect to the Labs components a path to the users private key should be specified on line [82](./cats/vars.robot#L82) of the variables file. This is the private key of the public key that a user should have configured in theirs NuageX user profile.
+To enable CATS to connect to the Labs components a path to the users private key should be specified on line [48](./cats/vars.robot#L48) of the variables file. This is the private key of the public key that a user should have configured in theirs NuageX user profile.
 
 When a user executes CATS scripts using the local CATS installation, then this path should point to an existing file on a users machine.
 
@@ -84,4 +83,4 @@ The configuration ends in a success if every step is marked with the PASS status
 
 # Use cases
 
-Use cases execution and provisioning are to be carried out by a user manually after the lab configuration finishes. Check with the VIAVI Integration Guide for use cases configuration instructions.
+Provide a generic VNS monitoring platform to allow two NSG-Vs and PC behind each NSG.
