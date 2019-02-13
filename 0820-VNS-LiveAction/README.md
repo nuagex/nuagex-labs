@@ -1,4 +1,4 @@
-# 0830-VNS-MONITORING-GENERIC
+# 0820-VNS-LiveAction
 
 * **version:** 1.0.0
 * **tags:** Monitoring
@@ -47,7 +47,7 @@ nuxctl create-lab -c my_creds.yml -l  nuxctl_0820-vns-live-action.yml --wait
 
 ID                        Name                    Status   Expires                 External IP      Password
 ------------------------  ----------------------  -------  ----------------------  ---------------  ----------------
-<lab_id>                  vns-live-action         started  2019-02-23 00:31 (UTC)  XXXXXX           XXXXX
+<lab_id>                  vns-monitoring-labs     started  2019-02-23 00:31 (UTC)  XXXXXX           XXXXX
 ```
 6. Note down `External IP` and `Password` which you will need in `Variables File` section. 
 

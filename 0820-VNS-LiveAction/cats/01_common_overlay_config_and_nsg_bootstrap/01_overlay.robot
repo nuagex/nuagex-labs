@@ -29,7 +29,7 @@ Create L3 domain template
 
     Enable DPI at L3 Domain Template
     ...    cats_org_name=${org_name}
-    ...    cats_domain_template_name=${l3domain_template_name}
+    ...    cats_domain_template_name=${l3domain_template1_name}
 
 Create L3 domain
     Create L3 Domain
