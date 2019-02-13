@@ -1,7 +1,7 @@
 # 0820-VNS-LiveAction
 
 * **version:** 1.0.0
-* **tags:** Monitoring
+* **tags:** LiveSP
 * **requirements**: Nuage 5.3.3+, Docker on local Machine, CATS container image available on local machine
 * **designer**: Arun Poonia
 * **validation**: Outside of NuageX lab
@@ -23,7 +23,7 @@ The Mountain View site and New York branch offices are equipped with the [Branch
 
 # Use cases
 
-Provide a generic VNS monitoring platform to allow two NSG-Vs and PC behind each NSG.
+Provide a generic VNS and liveSP platform to allow two NSG-Vs and PC behind each NSG.
 
 # Lab Deployment 
 
@@ -47,7 +47,7 @@ nuxctl create-lab -c my_creds.yml -l  nuxctl_0820-vns-live-action.yml --wait
 
 ID                        Name                    Status   Expires                 External IP      Password
 ------------------------  ----------------------  -------  ----------------------  ---------------  ----------------
-<lab_id>                  vns-monitoring-labs     started  2019-02-23 00:31 (UTC)  XXXXXX           XXXXX
+<lab_id>                  vns-live-action         started  2019-02-23 00:31 (UTC)  XXXXXX           XXXXX
 ```
 6. Note down `External IP` and `Password` which you will need in `Variables File` section. 
 
@@ -73,7 +73,7 @@ When the lab deployment is finished, proceed with automatic lab configuration.
     ```
 
 3. Run your lab configuration using below command: 
-   - Change your working directory to `0830-VNS-Monitoring-Generic` folder. 
+   - Change your working directory to `0820-VNS-LiveAction` folder. 
    - You will be mounting your `private_key` path and current directory where `cats` scripts are stored.
    - Run below command to complete lab cofigruation. 
 
