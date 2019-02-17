@@ -27,12 +27,16 @@ Create L3 domain template
     ...    name=${l3domain_template1_name}
     ...    cats_org_name=${org_name}
 
+    Enable DPI at L3 Domain Template
+    ...    cats_org_name=${org_name}
+    ...    cats_domain_template_name=${l3domain_template1_name}
+
 Create L3 domain
     Create L3 Domain
     ...    name=${customer_domain_name}
     ...    cats_org_name=${org_name}
     ...    cats_L3_domain_template_name=${l3domain_template1_name}
-    ...    underlayEnabled=ENABLED  # to enable internet access for Test-PC with VIAVI windows agent installed
+    ...    underlayEnabled=ENABLED
     ...    PATEnabled=ENABLED
 
 Add DHCP server info for the customer domain
@@ -44,61 +48,67 @@ Add DHCP server info for the customer domain
 
 Create Zones
     Create Zone
-    ...    name=${hq_zone_name}
+    ...    name=${lan_zone_name}
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
 
-    Create Zone
-    ...    name=${branch1_zone_name}
-    ...    cats_org_name=${org_name}
-    ...    cats_domain_name=${customer_domain_name}
 
 Create Subnets
-    # HQ subnet
+    # LAN 1 Subnet
     Create Subnet
-    ...    name=${hq_subnet_name}
+    ...    name=${lan1_subnet_name} 
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
-    ...    cats_zone_name=${hq_zone_name}
-    ...    cats_address=${hq_network_addr}
+    ...    cats_zone_name=${lan_zone_name}
+    ...    cats_address=${lan1_network_addr}
 
     Create Address Range in Subnet
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
-    ...    cats_subnet_name=${hq_subnet_name}
-    ...    minAddress=${hq_pc1_data_addr}
-    ...    maxAddress=${hq_pc1_data_addr}
+    ...    cats_subnet_name=${lan1_subnet_name} 
+    ...    minAddress=${lan1_pc1_data_addr}
+    ...    maxAddress=${lan1_pc1_data_addr}
 
-    # Branch1 subnet
+    # LAN 2 Subnet
     Create Subnet
-    ...    name=${branch1_subnet_name}
+    ...    name=${lan2_subnet_name} 
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
-    ...    cats_zone_name=${branch1_zone_name}
-    ...    cats_address=${branch1_network_addr}
+    ...    cats_zone_name=${lan_zone_name}
+    ...    cats_address=${lan2_network_addr}
 
     Create Address Range in Subnet
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
-    ...    cats_subnet_name=${branch1_subnet_name}
-    ...    minAddress=${branch1_pc1_data_addr}
-    ...    maxAddress=${branch1_pc1_data_addr}
+    ...    cats_subnet_name=${lan2_subnet_name} 
+    ...    minAddress=${lan2_pc1_data_addr}
+    ...    maxAddress=${lan2_pc1_data_addr}
 
-    # TestPC @ Branch1
+
+    # Managment Lan Subnet
     Create Subnet
-    ...    name=${branch1_test_subnet_name}
+    ...    name=${mgmt_lan_subnet_name} 
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
-    ...    cats_zone_name=${branch1_zone_name}
-    ...    cats_address=${branch1_test_network_addr}
+    ...    cats_zone_name=${lan_zone_name}
+    ...    cats_address=${mgmt_lan_network_addr}
 
     Create Address Range in Subnet
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
-    ...    cats_subnet_name=${branch1_test_subnet_name}
-    ...    minAddress=${branch1_testpc_data_addr}
-    ...    maxAddress=${branch1_testpc_data_addr}
+    ...    cats_subnet_name=${mgmt_lan_subnet_name} 
+    ...    minAddress=${mgmt_lan_pc1_data_addr}
+    ...    maxAddress=${mgmt_lan_pc1_data_addr}
 
+    # Managment Subnet
+    Create Subnet
+    ...    name=${vnf_mgmt_subnet_name} 
+    ...    cats_org_name=${org_name}
+    ...    cats_domain_name=${customer_domain_name}
+    ...    cats_zone_name=${lan_zone_name}
+    ...    cats_address=${vnf_mgmt_network_addr}
+
+    
 Create default security policy
     Begin Policy Changes
     ...    cats_org_name=${org_name}

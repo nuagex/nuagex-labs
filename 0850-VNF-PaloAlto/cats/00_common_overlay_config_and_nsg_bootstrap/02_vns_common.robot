@@ -18,8 +18,11 @@ Create Infra GW Profile
 Create VSC Profiles
     Create VSC Profile
     ...    name=${vsc_profile1_name}
-    ...    firstController=${vsc-i_ctrl_ip}
+    ...    firstController=${vsc_control_ip} 
 
+    Create VSC Profile
+    ...    name=${vsc_dummy_profile_name}
+    ...    firstController=${vsc_control_dummy_ip}
 
 Create Underlays
     Create Underlay in Platform Configuration
