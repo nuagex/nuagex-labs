@@ -1,6 +1,6 @@
 In this lab the physical appliance (IPE) is simulated by means of a virtual appliance (VIPE) specifically provisioned as if it is a physical device.
 
-![pic1](https://gitlab.com/rdodin/pics/wikis/uploads/52c4b4abb4aa7a1ca0e1ccab3d4af279/image.png)
+![pic1](https://www.lucidchart.com/publicSegments/view/1ffdc6bd-f72c-4e35-8664-293c44d67967/image.png)
 
 To simulate an IPE we should have a hypervisor that would host the Ipanema VM (VIPE) and connect it to the lab infrastructure as we would do with a physical appliance. The Centos7.5 hypervisor is deployed by nuxctl and is defined in [this block](nuxctl_0801-vns-ipanema_wan_opt_mixed_mode.yml#L199-L214), it is a generic purpose image, therefore a user needs to configure it to support emulated IPE as explained below.
 
@@ -29,7 +29,7 @@ sudo systemctl start libvirtd
 
 The Ipanema IPE should be connected to the overlay created by Nuage Networks VNS to connect headquarters site to the rest of the Organization network. This is done by bridging VIPEs management, LAN and WAN interfaces to the hypervisors interfaces.
 
-![pic2](https://gitlab.com/rdodin/pics/wikis/uploads/57e1c5d8670f8860820baf64230fa1fa/image.png)
+![pic2](https://www.lucidchart.com/publicSegments/view/10ad2c1d-141c-4e4e-be2b-f408948abbb3/image.png)
 
 The following commands can be pasted in the hypervisors shell to configure the bridges:
 
