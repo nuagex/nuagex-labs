@@ -1,0 +1,20 @@
+{
+    "configuration": {
+        "net": {
+            "mgt_interface": "mgt",
+            "ip_mgt_addr": "{{ vipe_mgmt_address }}",
+            "ip_mgt_mask": "255.255.255.0",
+            "mgt_vlan_id": "none",
+            "mgt_mtu": 1500,
+            "vlan_id": "none",
+            "gateway": "{{ vipe_gw_ip }}",
+            "mtu": 1500,
+            "hostname": "{{ vipe_hostname }}"
+        },
+        "reversor": {
+            "reversor_enabled": true,
+            "uri": "{{ salsa_url }}",
+            "domain": "{{ salsa_domain }}"
+        }
+    }
+}
