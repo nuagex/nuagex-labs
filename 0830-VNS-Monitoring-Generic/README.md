@@ -51,6 +51,8 @@ ID                        Name                    Status   Expires              
 ```
 6. Note down `External IP` and `Password` which you will need in `Variables File` section. 
 
+# CATS Docker Configuration 
+
 
 # Lab Configuration
 
