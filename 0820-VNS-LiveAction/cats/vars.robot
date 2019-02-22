@@ -43,9 +43,9 @@ ${branch1_pc1_data_addr}       10.40.0.40
 ##############################
 #     CONNECTION PARAMETERS
 ##############################
-${jumpbox_address}                TO_BE_FILLED_BY_A_USER:LAB_IP_ADDRESS
-${vsd_password}                   TO_BE_FILLED_BY_A_USER:LAB_PASSWORD
-${ssh_key_path}                   TO_BE_FILLED_BY_A_USER:PATH_TO_THE_LABS_PRIV_KEY
+${jumpbox_address}                124.252.253.192
+${vsd_password}                   TyJjEimOCbkmhRoU
+${ssh_key_path}                   ~/.ssh/id_rsa
 
 # port forwarding variables
 @{vsd_port_forwarding}            45102  10.0.0.2
