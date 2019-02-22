@@ -1,5 +1,5 @@
 # NuageX Labs
-This repo contains Lab definition files and automation scripts designed to be used agains [NuageX](https://nuagex.io) platform.  
+This repo contains the lab definition files and automation scripts designed to simplify the lab deployment process on the [NuageX](https://nuagex.io) platform.  
 The catalog below lists the Labs available, dive into the appropriate folder to see what the lab is about and how to deploy it on NuageX.
 
 Usually, Lab's automation harness leverages:
