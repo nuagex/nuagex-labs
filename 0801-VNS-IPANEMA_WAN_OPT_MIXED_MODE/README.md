@@ -51,7 +51,7 @@ In order to pull the CATS container and this repository to the lab's jumpbox VM 
    ```
 3. You should have the CATS container pulled out and the nuagex-labs repository cloned to the home directory of the jumpbox VM.
 
-> **WARNING**: since Ipanema VNF requires a second disk to be added to the VNF image, a standard user will not be able to add it via the standard lab template or NuageX GUI. Please consult with NuageX team on how to convert the regular NSG images to the VNF-capable ones when the lab is deployed (e-mail nuagex+infovista@nuagenetworks.net with your lab ID and reques).
+> **WARNING**: since Ipanema VNF requires a second disk to be added to the VNF image, a standard user will not be able to add it via the standard lab template or NuageX GUI. Please consult with NuageX team on how to convert the regular NSG images to the VNF-capable ones when the lab is deployed (e-mail nuagex+infovista@nuagenetworks.net with your lab ID and request).
 
 ## Variables file
 The configuration variables are stored in a single [vars.robot](./cats/vars.robot) file and you need to fill in the values there on the lines marked with `TO_BE_FILLED_BY_A_USER` string. These variables must be filled out before running the configuration scripts.
