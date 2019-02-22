@@ -24,7 +24,7 @@ The lab utilizes a single "Internet" underlay and a demo Organization with a HQ 
 The Headquarters site users and branch offices users are emulated using the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows us to generate and analyze traffic as well as run some real-world applications.
 
 # Deployment
-The deployment process is powered by [nuxctl](htpps://nuxctl.nuagex.io) CLI tool. All the infrastructure deployment will be completed once a user runs the the tool against the [lab template](nuxctl_0801-vns-ipanema_wan_opt_mixed_mode.yml) supplied within this repo.
+The deployment process is powered by [nuxctl](https://nuxctl.nuagex.io) CLI tool. All the infrastructure deployment will be completed once a user runs the the tool against the [lab template](nuxctl_0801-vns-ipanema_wan_opt_mixed_mode.yml) supplied within this repo.
 
 The lab template is based on the NuageX's **Nuage Networks 5.3.2 - VNS SD-WAN Portal 3.2.1** template and has additional infra components defined to support the integration and use cases demonstration.
 
