@@ -126,3 +126,14 @@ Add installer user
     ...    cats_org_name=${org_name}
     ...    cats_nsg_name=${branch1_nsg1_name}
     ...    cats_installer_username=cats
+
+Update NSGs Address
+    Update NSG Location
+    ...    cats_org_name=${org_name}
+    ...    cats_nsg_name=${hq_nsg1_name}
+    ...    address=${hq_nsg1_address}
+
+    Update NSG Location
+    ...    cats_org_name=${org_name}
+    ...    cats_nsg_name=${branch1_nsg1_name}
+    ...    address=${branch1_nsg1_address}

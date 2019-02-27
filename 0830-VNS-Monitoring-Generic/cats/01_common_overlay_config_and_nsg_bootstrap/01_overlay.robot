@@ -29,7 +29,7 @@ Create L3 domain template
 
     Enable DPI at L3 Domain Template
     ...    cats_org_name=${org_name}
-    ...    cats_domain_template_name=${l3domain_template_name}
+    ...    cats_domain_template_name=${l3domain_template1_name}
     
 Create L3 domain
     Create L3 Domain
@@ -48,45 +48,45 @@ Add DHCP server info for the customer domain
 
 Create Zones
     Create Zone
-    ...    name=${hq_zone_name}
+    ...    name=${mv_zone_name}
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
 
     Create Zone
-    ...    name=${branch1_zone_name}
+    ...    name=${ny_zone_name}
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
 
 Create Subnets
-    # HQ subnet
+    # mv subnet
     Create Subnet
-    ...    name=${hq_subnet_name}
+    ...    name=${mv_subnet_name}
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
-    ...    cats_zone_name=${hq_zone_name}
-    ...    cats_address=${hq_network_addr}
+    ...    cats_zone_name=${mv_zone_name}
+    ...    cats_address=${mv_network_addr}
 
     Create Address Range in Subnet
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
-    ...    cats_subnet_name=${hq_subnet_name}
-    ...    minAddress=${hq_pc1_data_addr}
-    ...    maxAddress=${hq_pc1_data_addr}
+    ...    cats_subnet_name=${mv_subnet_name}
+    ...    minAddress=${mv_pc1_data_addr}
+    ...    maxAddress=${mv_pc1_data_addr}
 
-    # Branch1 subnet
+    # ny subnet
     Create Subnet
-    ...    name=${branch1_subnet_name}
+    ...    name=${ny_subnet_name}
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
-    ...    cats_zone_name=${branch1_zone_name}
-    ...    cats_address=${branch1_network_addr}
+    ...    cats_zone_name=${ny_zone_name}
+    ...    cats_address=${ny_network_addr}
 
     Create Address Range in Subnet
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
-    ...    cats_subnet_name=${branch1_subnet_name}
-    ...    minAddress=${branch1_pc1_data_addr}
-    ...    maxAddress=${branch1_pc1_data_addr}
+    ...    cats_subnet_name=${ny_subnet_name}
+    ...    minAddress=${ny_pc1_data_addr}
+    ...    maxAddress=${ny_pc1_data_addr}
 
 
 Create default security policy

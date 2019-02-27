@@ -16,6 +16,7 @@ Create port forwarding rules to access VSD VSC and Util
     ...  remote_host=@{portal_port_forwarding}[1]
     ...  remote_port=22
 
+## connect to portal vm and update login and logout URL
 Connect to Portal VM and update login/logout URL
     ${portal_conn} =  Linux.Connect To Server
                       ...    server_address=localhost
@@ -25,6 +26,7 @@ Connect to Portal VM and update login/logout URL
                       ...    timeout=30s
     Set Suite Variable    ${portal_conn}
 
+## update URLs
 Update VNS logout and Redirect URL 
     SSHLibrary.Execute Command    sed -i '/vnsportal.redirect.uri=/c vnsportal.redirect.uri=http://${jumpbox_address}:1443/' /opt/vnsportal/tomcat-instance1/application.properties
     SSHLibrary.Execute Command    sed -i '/vns.logout.url=/c vns.logout.url=http://${jumpbox_address}:1443/' /opt/vnsportal/tomcat-instance1/application.properties

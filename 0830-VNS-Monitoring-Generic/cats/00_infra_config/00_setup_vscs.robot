@@ -74,6 +74,6 @@ Configure VSC Internet
 
     # Configure control interface
     VSC.Execute Command    /configure router interface control address ${vsc-i_control_ip}/24
-    VSC.Execute Command    /configure router static-route 10.10.0.0/16 next-hop ${hq_internet_gw_ip}
+    VSC.Execute Command    /configure router static-route 10.10.0.0/16 next-hop ${internet_gw_ip}
 
     VSC.Execute Command    /admin save

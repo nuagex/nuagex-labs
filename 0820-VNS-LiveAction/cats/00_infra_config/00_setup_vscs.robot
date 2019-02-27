@@ -32,6 +32,12 @@ Connect to VSD
                     ...    timeout=30s
     Set Suite Variable    ${vsd_conn}
 
+Revoke existing VSC certificates
+    [Tags]  vsc_certs
+    # for vsc
+    SSHLibrary.Execute Command
+    ...    /opt/vsd/ejbca/deploy/certMgmt.sh -a revoke -u ${vsc-internet_hostname} -c ${vsc-internet_hostname}  -o csp  -d ${vsd_fqdn}
+
 Generate VSC Internet certificates
     [Tags]  vsc_certs
     # for vsc-i

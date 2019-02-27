@@ -39,12 +39,18 @@ ${branch1_nsg1_vport1_name}    NY-VPORT1
 ${hq_pc1_data_addr}            10.20.0.20
 ${branch1_pc1_data_addr}       10.40.0.40
 
+## NSGs Address
+${hq_nsg1_address}              755 Ravendale Drive, Mountain View, CA, 94043
+${branch1_nsg1_address}         228 Park Ave S New York, NY 10003-1502 US
 
+## AAR Parameters
+${perf_monit_name}              Custom Probe
+           
 ##############################
 #     CONNECTION PARAMETERS
 ##############################
-${jumpbox_address}                124.252.253.192
-${vsd_password}                   TyJjEimOCbkmhRoU
+${jumpbox_address}                124.252.253.9
+${vsd_password}                   mcuqlJpezOuh68ox
 ${ssh_key_path}                   ~/.ssh/id_rsa
 
 # port forwarding variables

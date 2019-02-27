@@ -18,29 +18,29 @@ Set up port forwarding
     ...    remote_host=@{util_port_forwarding}[1]
     ...    remote_port=22
 
-    # port forwarding to access Branch1 PC1
+    # port forwarding to access ny PC1
     SSHLibrary.Create Local SSH Tunnel
     ...    local_port=@{br1pc1_port_forwarding}[0]
     ...    remote_host=@{br1pc1_port_forwarding}[1]
     ...    remote_port=22
 
-    # port forwarding to access HQ PC1
+    # port forwarding to access mv PC1
     SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{hqpc1_port_forwarding}[0]
-    ...    remote_host=@{hqpc1_port_forwarding}[1]
+    ...    local_port=@{mvpc1_port_forwarding}[0]
+    ...    remote_host=@{mvpc1_port_forwarding}[1]
     ...    remote_port=22
 
 Get NSGs status
-    ${hq_nsg1} =  Get NSG
-                  ...    name=${hq_nsg1_name}
+    ${mv_nsg1} =  Get NSG
+                  ...    name=${mv_nsg1_name}
                   ...    cats_org_name=${org_name}
 
-    ${branch1_nsg1} =  Get NSG
-                       ...    name=${branch1_nsg1_name}
+    ${ny_nsg1} =  Get NSG
+                       ...    name=${ny_nsg1_name}
                        ...    cats_org_name=${org_name}
 
-    Set Suite Variable    ${hq_nsg1}
-    Set Suite Variable    ${branch1_nsg1}
+    Set Suite Variable    ${mv_nsg1}
+    Set Suite Variable    ${ny_nsg1}
 
 
 Setup addresses for CATS OUTSIDE provisioning
@@ -49,16 +49,16 @@ Setup addresses for CATS OUTSIDE provisioning
     ${util_mgmt_addr} =  Set Variable    localhost
     ${util_mgmt_port} =  Set Variable    @{util_port_forwarding}[0]
 
-    ${branch1_pc1_mgmt_addr} =  Set Variable    localhost
-    ${branch1_pc1_mgmt_port} =  Set Variable    @{br1pc1_port_forwarding}[0]
+    ${ny_pc1_mgmt_addr} =  Set Variable    localhost
+    ${ny_pc1_mgmt_port} =  Set Variable    @{br1pc1_port_forwarding}[0]
 
-    ${hq_pc1_mgmt_addr} =  Set Variable    localhost
-    ${hq_pc1_mgmt_port} =  Set Variable    @{hqpc1_port_forwarding}[0]
+    ${mv_pc1_mgmt_addr} =  Set Variable    localhost
+    ${mv_pc1_mgmt_port} =  Set Variable    @{mvpc1_port_forwarding}[0]
 
-    Set Suite Variable    ${branch1_pc1_mgmt_addr}
-    Set Suite Variable    ${branch1_pc1_mgmt_port}
-    Set Suite Variable    ${hq_pc1_mgmt_addr}
-    Set Suite Variable    ${hq_pc1_mgmt_port}
+    Set Suite Variable    ${ny_pc1_mgmt_addr}
+    Set Suite Variable    ${ny_pc1_mgmt_port}
+    Set Suite Variable    ${mv_pc1_mgmt_addr}
+    Set Suite Variable    ${mv_pc1_mgmt_port}
     Set Suite Variable    ${util_mgmt_addr}
     Set Suite Variable    ${util_mgmt_port}
 
@@ -73,8 +73,8 @@ Setup SSH connections to Branch PCs and UtilVM
     Set Global Variable    ${util_conn}
 
     ${br1pc1_conn} =  Linux.Connect To Server
-                      ...    server_address=${branch1_pc1_mgmt_addr}
-                      ...    server_port=${branch1_pc1_mgmt_port}
+                      ...    server_address=${ny_pc1_mgmt_addr}
+                      ...    server_port=${ny_pc1_mgmt_port}
                       ...    server_login=centos
                       ...    server_password=Alcateldc
                       ...    prompt=~]$
@@ -82,36 +82,36 @@ Setup SSH connections to Branch PCs and UtilVM
 
     Set Global Variable    ${br1pc1_conn}
 
-    ${hqpc1_conn} =  Linux.Connect To Server
-                      ...    server_address=${hq_pc1_mgmt_addr}
-                      ...    server_port=${hq_pc1_mgmt_port}
+    ${mvpc1_conn} =  Linux.Connect To Server
+                      ...    server_address=${mv_pc1_mgmt_addr}
+                      ...    server_port=${mv_pc1_mgmt_port}
                       ...    server_login=centos
                       ...    server_password=Alcateldc
                       ...    prompt=~]$
                       ...    timeout=30
 
-    Set Global Variable    ${hqpc1_conn}
+    Set Global Variable    ${mvpc1_conn}
 
-Activate Branch1-NSG1
-    Run Keyword If  "${branch1_nsg1.bootstrap_status}" != "ACTIVE"
+Activate NY-NSG
+    Run Keyword If  "${ny_nsg1.bootstrap_status}" != "ACTIVE"
     ...    Initiate NSG Bootstrap Procedure
            ...    org_name=${org_name}
-           ...    nsg_name=${branch1_nsg1_name}
+           ...    nsg_name=${ny_nsg1_name}
            ...    installer_pc_connection=${br1pc1_conn}
 
 
-Activate HQ-NSG1
-    Run Keyword If  "${hq_nsg1.bootstrap_status}" != "ACTIVE"
+Activate MV-NSG
+    Run Keyword If  "${mv_nsg1.bootstrap_status}" != "ACTIVE"
     ...    Initiate NSG Bootstrap Procedure
            ...    org_name=${org_name}
-           ...    nsg_name=${hq_nsg1_name}
-           ...    installer_pc_connection=${hqpc1_conn}
+           ...    nsg_name=${mv_nsg1_name}
+           ...    installer_pc_connection=${mvpc1_conn}
 
 
 Wait for all NSGs to reach boostrapped state
     Wait for NSG bootstrap
     ...    cats_org_name=${org_name}
-    ...    cats_nsg_list=@[${hq_nsg1_name}, ${branch1_nsg1_name}]
+    ...    cats_nsg_list=@[${mv_nsg1_name}, ${ny_nsg1_name}]
     ...    cats_timeout=120
     ...    skip_controller_check=True
 
@@ -119,7 +119,7 @@ Wait for all NSGs to reach boostrapped state
 Connect to Mountain View PC and renew dhcp lease
     ${mv_pc_conn} =  Linux.Connect To Server
                       ...    server_address=localhost
-                      ...    server_port=@{hqpc1_port_forwarding}[0]
+                      ...    server_port=@{mvpc1_port_forwarding}[0]
                       ...    server_login=root
                       ...    server_password=Alcateldc
                       ...    timeout=30s

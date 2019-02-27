@@ -57,72 +57,83 @@ Create Uplink Connections
     ...    cats_underlay_name=Internet
 
 Create NSG Instances
-    # hq
+    # mv
     Create NSG
-    ...    name=${hq_nsg1_name}
+    ...    name=${mv_nsg1_name}
     ...    cats_nsg_template_name=${nsg_inet_template_name}
     ...    cats_org_name=${org_name}
-    # branch1
+    # ny
     Create NSG
-    ...    name=${branch1_nsg1_name}
+    ...    name=${ny_nsg1_name}
     ...    cats_nsg_template_name=${nsg_inet_template_name}
     ...    cats_org_name=${org_name}
 
 
 Disable NAT-T on uplink
     Disable NAT-T for NSG Network Port
-    ...    cats_nsg_name=${hq_nsg1_name}
+    ...    cats_nsg_name=${mv_nsg1_name}
     ...    cats_nsg_port_name=port1-Internet
     ...    cats_org_name=${org_name}
 
     Disable NAT-T for NSG Network Port
-    ...    cats_nsg_name=${branch1_nsg1_name}
+    ...    cats_nsg_name=${ny_nsg1_name}
     ...    cats_nsg_port_name=port1-Internet
     ...    cats_org_name=${org_name}
 
 
-Create vPorts and Bridge Interfaces for HQ-NSG1
+Create vPorts and Bridge Interfaces for MV-NSG
     Create Bridge vPort for NSG
-    ...    name=${hq_nsg1_vport1_name}
+    ...    name=${mv_nsg1_vport1_name}
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
     ...    cats_domain_type=L3
-    ...    cats_subnet_name=${hq_subnet_name}
-    ...    cats_nsg_name=${hq_nsg1_name}
+    ...    cats_subnet_name=${mv_subnet_name}
+    ...    cats_nsg_name=${mv_nsg1_name}
     ...    cats_nsg_port_name=port3-Access
     ...    cats_vlan_id=0
 
     Create Bridge Interface in L3 Domain
-    ...    name=${hq_nsg1_vport1_name}
-    ...    cats_vport_name=${hq_nsg1_vport1_name}
+    ...    name=${mv_nsg1_vport1_name}
+    ...    cats_vport_name=${mv_nsg1_vport1_name}
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
 
-Create vPorts and Bridge Interfaces for BRANCH1-NSG1
+Create vPorts and Bridge Interfaces for NY-NSG
     # vport and interface for Branch-PC (also is an installer PC)
     Create Bridge vPort for NSG
-    ...    name=${branch1_nsg1_vport1_name}
+    ...    name=${ny_nsg1_vport1_name}
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
     ...    cats_domain_type=L3
-    ...    cats_subnet_name=${branch1_subnet_name}
-    ...    cats_nsg_name=${branch1_nsg1_name}
+    ...    cats_subnet_name=${ny_subnet_name}
+    ...    cats_nsg_name=${ny_nsg1_name}
     ...    cats_nsg_port_name=port3-Access
     ...    cats_vlan_id=0
 
     Create Bridge Interface in L3 Domain
-    ...    name=${branch1_nsg1_vport1_name}
-    ...    cats_vport_name=${branch1_nsg1_vport1_name}
+    ...    name=${ny_nsg1_vport1_name}
+    ...    cats_vport_name=${ny_nsg1_vport1_name}
     ...    cats_org_name=${org_name}
     ...    cats_domain_name=${customer_domain_name}
 
 Add installer user
     Associate Installer with NSG
     ...    cats_org_name=${org_name}
-    ...    cats_nsg_name=${hq_nsg1_name}
+    ...    cats_nsg_name=${mv_nsg1_name}
     ...    cats_installer_username=cats
     
     Associate Installer with NSG
     ...    cats_org_name=${org_name}
-    ...    cats_nsg_name=${branch1_nsg1_name}
+    ...    cats_nsg_name=${ny_nsg1_name}
     ...    cats_installer_username=cats
+
+Update NSGs Address
+    Update NSG Location
+    ...    cats_org_name=${org_name}
+    ...    cats_nsg_name=${mv_nsg1_name}
+    ...    address=${mv_nsg1_address}
+
+    Update NSG Location
+    ...    cats_org_name=${org_name}
+    ...    cats_nsg_name=${ny_nsg1_name}
+    ...    address=${ny_nsg1_address}

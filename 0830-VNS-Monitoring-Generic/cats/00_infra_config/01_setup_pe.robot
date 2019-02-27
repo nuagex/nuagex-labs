@@ -30,7 +30,7 @@ Configure PE Internet
     SSHLibrary.Execute Command
     ...    grep -q -F 'net.ipv4.ip_forward = 1' /usr/lib/sysctl.d/50-default.conf || echo 'net.ipv4.ip_forward = 1' >> /usr/lib/sysctl.d/50-default.conf
 
-    # configure untagged dhcp-enabled interfaces (eth1, eth2) that connects HQ and branch underlays
+    # configure untagged dhcp-enabled interfaces (eth1, eth2) that connects MV and NY underlays
     # eth0 is a management interface
     : FOR    ${INDEX}    IN RANGE    1    3
     \   ${ifcfg_file} =  CATSUtils.Render J2 Template
