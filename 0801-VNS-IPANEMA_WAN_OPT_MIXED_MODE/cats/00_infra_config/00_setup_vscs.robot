@@ -10,16 +10,14 @@ Connect to VSD
     ...    server_password=Alcateldc
     ...    timeout=30s
 
-Generate VSC Internet certificates
-    [Tags]  VSCCERTS  ONETIME
-    # for vsc-i
-    SSHLibrary.Write
-    ...    /opt/vsd/ejbca/deploy/certMgmt.sh -a generate -u ${vsc-internet_hostname} -c ${vsc-internet_hostname} -d ${vsd_fqdn} -f pem -t server -o csp -s admin@${vsc-i_mgmt_ip}:/
+Add certificates to VSC
+    ${rc} =  SSHLibrary.Execute Command
+             ...  /opt/ejabberd/bin/ejabberdctl connected_users | grep ${vsc-internet_hostname}@${vsd_fqdn}
+             ...  return_stdout=False
+             ...  return_rc=True
 
-    SSHLibrary.Read Until Regexp
-    ...    password:
-
-    SSHLibrary.Write    admin${\n}
+    Run Keyword If  $rc==1
+    ...  Generate VSC certificates
 
 
 Configure VSC Internet
@@ -54,3 +52,18 @@ Configure VSC Internet
     VSC.Execute Command    /configure router static-route 10.10.0.0/16 next-hop ${hq_internet_gw_ip}
 
     VSC.Execute Command    /admin save
+
+
+*** Keywords ***
+Generate VSC certificates
+    # for vsc-i
+    SSHLibrary.Execute Command
+    ...  bash /opt/vsd/ejbca/bin/ejbca.sh ra delendentity ${vsc-internet_hostname} -force
+
+    SSHLibrary.Write
+    ...    /opt/vsd/ejbca/deploy/certMgmt.sh -a generate -u ${vsc-internet_hostname} -c ${vsc-internet_hostname} -d ${vsd_fqdn} -f pem -t server -o csp -s admin@${vsc-i_mgmt_ip}:/
+
+    SSHLibrary.Read Until Regexp
+    ...    password:
+
+    SSHLibrary.Write    admin${\n}
