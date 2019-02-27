@@ -46,9 +46,9 @@ ${ny_nsg1_address}             New York, USA
 ##############################
 #     CONNECTION PARAMETERS
 ##############################
-${jumpbox_address}                124.252.253.143
-${vsd_password}                   POgeDQUQEww_Mhke
-${ssh_key_path}                   ~/.ssh/id_rsa
+${jumpbox_address}                TO_BE_FILLED_BY_A_USER
+${vsd_password}                   TO_BE_FILLED_BY_A_USER
+${ssh_key_path}                   TO_BE_FILLED_BY_A_USER
 
 # port forwarding variables
 @{util_port_forwarding}           45100  10.0.0.33

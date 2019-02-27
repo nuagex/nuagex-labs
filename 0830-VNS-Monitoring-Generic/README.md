@@ -53,6 +53,12 @@ ID                        Name                    Status   Expires              
 
 # CATS Docker Configuration 
 
+To run CATS scripts on your lab, you will need to install cats container image locally to your machine. 
+
+1. Make sure docker is running on your machine. 
+2. Pull CATS container image on your local mahcine: 
+   - Command: `docker pull nuagepartnerprogram/cats:5.3.2` 
+   - This will pull CATS container repo locally to your machine.
 
 # Lab Configuration
 
@@ -88,7 +94,7 @@ When the lab deployment is finished, proceed with automatic lab configuration.
    docker run -t \
    -v ${HOME}/.ssh:/root/.ssh \
    -v `pwd`/cats:/home/tests \
-   cats -X /home/tests
+   nuagepartnerprogram/cats:5.3.2 -X /home/tests
    ```
    - Example: 
   ```docker run -t -v ~/.ssh:/root/.ssh -v `pwd`/cats:/home/tests cats -X  /home/tests```
