@@ -4,12 +4,11 @@ Resource          ../vars.robot
 
 *** Test Cases ***
 Connect to VSD
-    ${vsd_conn} =  Linux.Connect To Server
-                    ...    server_address=10.0.0.2
-                    ...    server_login=root
-                    ...    server_password=Alcateldc
-                    ...    timeout=30s
-    Set Suite Variable    ${vsd_conn}
+    Linux.Connect To Server
+    ...    server_address=10.0.0.2
+    ...    server_login=root
+    ...    server_password=Alcateldc
+    ...    timeout=30s
 
 Generate VSC Internet certificates
     [Tags]  VSCCERTS  ONETIME
