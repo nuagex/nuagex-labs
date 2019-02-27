@@ -24,6 +24,12 @@ The Mountain View site and New York branch offices are equipped with the [Branch
 
 Provide a generic VNS monitoring platform to allow two NSG-Vs and PC behind each NSG.
 
+# Uses
+
+Clone this repo locally to your machine and follow below sections carefully: 
+
+> Note: Changes are not merged yet, so you will need to checkout `liveaction` branch to use this repo. 
+
 # Lab Deployment 
 
 The lab deployment process is powered by [nuxctl](https://nuxctl.nuagex.io) CLI tool. The infrastructure deployment activities will be triggered once a user supply the lab template available in this repo to the `nuxctl` tool.
@@ -96,7 +102,7 @@ When the lab deployment is finished, proceed with automatic lab configuration.
    nuagepartnerprogram/cats:5.3.2 -X /home/tests
    ```
    - Example: 
-  ```docker run -t -v ~/.ssh:/root/.ssh -v `pwd`/cats:/home/tests cats -X  /home/tests```
+  ```docker run -t -v ~/.ssh:/root/.ssh -v `pwd`/cats:/home/tests nuagepartnerprogram/cats:5.3.2 -X  /home/tests```
 
 ## Troubleshooting 
 
