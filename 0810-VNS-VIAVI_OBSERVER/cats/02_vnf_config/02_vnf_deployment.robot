@@ -7,37 +7,18 @@ Suite Setup       Login NuageX User
 Set up connection to UtilVM
     [Tags]    solo_run  cats_outside
 
-    # create local SSH port forwarding for UtilVM
     Linux.Connect To Server With Keys
-    ...    server_address=${jumpbox_address}
-    ...    username=admin
+    ...    server_address=${util_mgmt_addr}
+    ...    username=root
     ...    priv_key=${ssh_key_path}
 
-    # port forwarding to access util VM
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{util_port_forwarding}[0]
-    ...    remote_host=@{util_port_forwarding}[1]
-    ...    remote_port=22
-
-    ${util_mgmt_addr} =  Set Variable    localhost
-    ${util_mgmt_port} =  Set Variable    @{util_port_forwarding}[0]
-
-    ${util_conn} =  Linux.Connect To Server
-                    ...    server_address=${util_mgmt_addr}
-                    ...    server_port=${util_mgmt_port}
-                    ...    server_login=root
-                    ...    server_password=Alcateldc
-
-    Set Global Variable    ${util_conn}
 
 Download VNF image and VNF boot ISOs to UtilVM
     [Tags]    VNF_DOWNLOAD  ONETIME
 
-    SSHLibrary.Switch Connection    ${util_conn}
-
     # download qcow2 and md5 files and verify integrity
     SSHLibrary.Execute Command
-    ...    cd /var/www/html && curl -O ${nas_vnf_image_uri} && curl -O ${nas_vnf_image_md5_uri} && md5sum -c img.qcow2.md5
+    ...    cd /var/www/html && curl -O ${nas_vnf_image_url} && curl -O ${nas_vnf_image_md5_url} && md5sum -c img.qcow2.md5
 
     # downloading boot ISOs from observerlive servers
     SSHLibrary.Execute Command
@@ -104,7 +85,6 @@ Deploy VNF in Branch1
     ...    Deploy And Start VNF
            ...    org_name=${org_name}
            ...    vnf_name=${branch1_vnf1_name}
-
 
 
 Deploy VNF in HQ

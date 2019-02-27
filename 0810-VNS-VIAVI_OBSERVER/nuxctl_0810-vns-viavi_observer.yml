@@ -1,7 +1,7 @@
 # nuxctl (nuxctl.nuagex.io) template
 # compatible with nuxctl 0.6.0+ version
-template: 5982662519b6fd00018f9981
-name: viavi-1-underlay-lab2
+template: 5c35217192f86a000180be8f
+name: viavi-observerlive-integration
 sshKeys:
   - name: demo  # WARNING: make sure to use your public key instead of the demo one
     key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0jLLF2c7sSUHCwFJ1cpj0mTNRfemi6XMKxAf7H4gIzs/joL18W+wlSrnHnu801bDLc2RNg8dvOvXmzjzZrKKMInWMXrzb0zjljCPumYWlI/koWAIMzpENjeRjWrB22WFVOVDW4GkphzhchFWFPSF9xxU4i3MPHn3HYZiy6ieLOvknplQDivTXcLwRjvenK35gjLPxo4nFhQWyUdzPLLCb/NUx/CGjkh10qwVfw+AWw3x3boqxwBXitPjLJ+ocfZVohAWupKuvsTNzlh8m39imI5pi9qTFT1x9YtkYsTYCy2iz2HCirqy+8BC/CPCyHuEjs8ZT9OFHHQtjB/qgzfTp"
@@ -23,22 +23,7 @@ services:
     destination:
       port: 3389
       address: 10.0.0.101
-  - name: amqp
-    type: public
-    port: 5672
-    protocols:
-      - tcp
-    destination:
-      port: 5672
-      address: 10.0.0.2
-  - name: stomp
-    type: public
-    port: 61614
-    protocols:
-      - tcp
-    destination:
-      port: 61614
-      address: 10.0.0.2
+
 
 ###################
 #                 #
@@ -93,42 +78,28 @@ networks:
 #################
 servers:
   # - name: vsd01
-  #   image: vsd01_NUX-VNS-5.3.2
+  #   image: vsd01_NUX_5.3.3U3_VNS
   #   flavor: nux.vsd
   #   interfaces:
   #   - index: 0
   #     network: private
   #     address: 10.0.0.2
   # - name: vsc01
-  #   image: vsc01_NUX-VNS-5.3.2
+  #   image: vsc01_NUX_5.3.3U3_VNS
   #   flavor: ceph.vsc
   #   interfaces:
   #   - index: 0
   #     network: private
   #     address: 10.0.0.3
-  # - name: portal
-  #   image: portal_NUX-VNS-5.3.2
-  #   flavor: ceph.vsd
-  #   interfaces:
-  #   - index: 0
-  #     network: private
-  #     address: 10.0.0.4
   # - name: elastic
-  #   image: elastic_NUX-VNS-5.3.2
+  #   image: elastic_NUX_5.3.3U3_VNS
   #   flavor: nux.vsd
   #   interfaces:
   #   - index: 0
   #     network: private
   #     address: 10.0.0.5
-  # - name: catsvm
-  #   image: catsvm_NUX_5.2.2_PORTAL
-  #   flavor: m2.small
-  #   interfaces:
-  #   - index: 0
-  #     network: private
-  #     address: 10.0.0.7
   # - name: utility
-  #   image: utility_NUX-VNS-5.3.2
+  #   image: utility_NUX_5.3.3U3_VNS
   #   flavor: m1.small
   #   interfaces:
   #   - index: 0
@@ -150,7 +121,7 @@ servers:
   # HQ servers
   - name: HQ-nsg1
     flavor: m1.medium
-    image: nux_nsg_5.3.2u1
+    image: nux_nsg_5.3.3U1
     interfaces:
       - network: HQ-Internet
         address: 10.10.99.99
@@ -175,7 +146,7 @@ servers:
   # Branch1 servers
   - name: Branch1-nsg1
     flavor: m1.medium
-    image: nux_nsg_5.3.2u1
+    image: nux_nsg_5.3.3U1
     interfaces:
       - network: Branch1-Internet
         address: 10.10.1.11
