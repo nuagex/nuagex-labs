@@ -15,11 +15,10 @@ The automation harness provided with this lab enables a user to demonstrate the 
 * Bootstrapping NSG-Vs
 * SD-WAN Portal
 
-Once automatically deployed and configured the lab will confirm to the following diagram:
+Once automatically deployed and configured the lab will conform to the following diagram:
 ![lab](./images/image.png)
 
 The Mountain View site and New York branch offices are equipped with the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows to generate and analyze traffic as well as run some real-world applications.
-
 
 # Use cases
 
@@ -53,7 +52,7 @@ ID                        Name                    Status   Expires              
 
 # CATS Docker Configuration 
 
-To run CATS scripts on your lab, you will need to install cats container image locally to your machine. 
+To run CATS scripts on your lab, you will need to pull cats container image locally to your machine. 
 
 1. Make sure docker is running on your machine. 
 2. Pull CATS container image on your local mahcine: 
