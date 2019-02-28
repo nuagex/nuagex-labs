@@ -51,6 +51,8 @@ Once a deployment process ends successfully a user is presented with the paramet
 # 3 Configuration
 After the lab deployment is complete, proceed with automatic lab configuration. Lab configuration is saved in a set of [CATS](http://cats-docs.nuageteam.net) scripts contained in the [cats](./cats/) directory of this repo.
 
+> **WARNING**: since Nuage Networks Hosted VNF feature requires a second disk to be added to the NSG-V image, a standard user will not be able to add it. Please contact the NuageX team on how to convert the regular NSG-V image to the VNF-capable one **before starting the configuration process** (e-mail nuagex+viavi@nuagenetworks.net with your lab ID and request).
+
 The configuration is performed by the CATS tool running in a container on the lab's Jumpbox VM. In order to pull the CATS container and this repository to the lab's jumpbox VM follow the steps below:
 
 1. Login to the jumpbox VM using your nuagex SSH key and the Lab's External IP.
