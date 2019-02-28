@@ -1,7 +1,7 @@
 # nuxctl (nuxctl.nuagex.io) template
 # compatible with nuxctl 0.6.0+ version
 template: 5982662519b6fd00018f9981
-name: Ipanema-1-underlay-mixed-mode
+name: Ipanema-single-underlay-mixed-mode
 sshKeys:
   - name: demo
     key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0jLLF2c7sSUHCwFJ1cpj0mTNRfemi6XMKxAf7H4gIzs/joL18W+wlSrnHnu801bDLc2RNg8dvOvXmzjzZrKKMInWMXrzb0zjljCPumYWlI/koWAIMzpENjeRjWrB22WFVOVDW4GkphzhchFWFPSF9xxU4i3MPHn3HYZiy6ieLOvknplQDivTXcLwRjvenK35gjLPxo4nFhQWyUdzPLLCb/NUx/CGjkh10qwVfw+AWw3x3boqxwBXitPjLJ+ocfZVohAWupKuvsTNzlh8m39imI5pi9qTFT1x9YtkYsTYCy2iz2HCirqy+8BC/CPCyHuEjs8ZT9OFHHQtjB/qgzfTp"
@@ -39,7 +39,6 @@ services:
     destination:
       port: 3389
       address: 10.0.0.199
-
 
 ###################
 #                 #
@@ -113,7 +112,6 @@ networks:
   - name: dummy-wan
     cidr: 255.255.255.0/28
     dhcp: false
-
 
 #################
 #               #
