@@ -38,6 +38,7 @@ The lab is based on the NuageX's **Nuage Networks 5.3.3U3** template and has add
 2. Download the [nuxctl_0810-vns-viavi_observer.yml](nuxctl_0810-vns-viavi_observer.yml) lab definition file created for this lab or clone this repository as a whole.
 3. Replace the [public key](nuxctl_0810-vns-viavi_observer.yml#L7) in the lab definition file with the public key you have in your NuageX user account.
 
+## 2.2 Starting deployment process
 To initiate the deployment routine proceed with the following command:
 ```bash
 # make sure to specify your nuagex public key in the lab template
