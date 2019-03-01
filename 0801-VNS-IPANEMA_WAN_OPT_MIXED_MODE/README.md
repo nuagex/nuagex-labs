@@ -71,7 +71,7 @@ The configuration variables are stored in a single [vars.robot](./cats/vars.robo
 ### 3.1.1 VSD login
 Authentication and authorization with VSD is needed in order to configure objects via VSD API. Make sure to add the VSD password (obtained in the end of the deployment procedure) on line [105](./cats/vars.robot#L105) of the variables file.
 
-### 3.1.3 VNF image path
+### 3.1.2 VNF image path
 The paths to the Ipanema VNF image and a corresponding md5 file should be provided by a user on lines [88-89](./cats/vars.robot#L88-L89). The automation scripts will download the image file and its checksum to the Util VM, which means that Util VM should have reachability to the data storage hosting these files.
 
 You can [contact NuageX representatives](mailto:nuagex+ipanema@nuagenetworks.net) with the request to obtain the paths to these files.
