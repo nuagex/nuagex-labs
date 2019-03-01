@@ -1,7 +1,7 @@
 # nuxctl (nuxctl.nuagex.io) template
 # compatible with nuxctl 0.6.0+ version
 template: 5982662519b6fd00018f9981
-name: Ipanema-1-underlay
+name: Ipanema-single-underlay
 sshKeys:
   - name: demo
     key: "TO_BE_FILLED_BY_A_USER"
@@ -39,22 +39,6 @@ services:
     destination:
       port: 3389
       address: 10.0.0.199
-  - name: amqp
-    type: public
-    port: 5672
-    protocols:
-      - tcp
-    destination:
-      port: 5672
-      address: 10.0.0.2
-  - name: stomp
-    type: public
-    port: 61614
-    protocols:
-      - tcp
-    destination:
-      port: 61614
-      address: 10.0.0.2
 
 ###################
 #                 #
@@ -116,7 +100,6 @@ networks:
   - name: dummy-wan
     cidr: 255.255.255.0/28
     dhcp: false
-
 
 #################
 #               #
