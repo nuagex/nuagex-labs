@@ -6,23 +6,23 @@
 * **designer**: Arun Poonia
 * **validation**: Outside of NuageX lab
 
-This lab deploys a generic VNS lab with NSG-Vs. The lab consists of an Organization comprised of a Mountain View and a New York Branch sites deployed over a single underlay (Internet).
+This lab deploys a generic VNS lab with 2x NSG-Vs. The lab consists of an Organization comprised of a Mountain View site and a New York Branch site that are deployed over a single underlay (Internet).
 
-Both Mountain View and New York branches are equipped with an NSG. Each NSG has one PC present on LAN subnet.
+Both branches are equipped with a single NSG, and each NSG has a single user-PC on the LAN subnet.
 
-The automation harness provided with this lab enables a user to demonstrate the following use case:
+The automation harness provided with this lab enables a user to do any of the following:
 
-* Bootstrapping NSG-Vs
-* SD-WAN Portal
+* Demonstrate the SD-WAN Portal capabilities
+* Using 3rd party monitoring tools to ingest flow data and objects from ES and VSD respectively
 
-Once automatically deployed and configured the lab will conform to the following diagram:
+Once deployed and configured, the lab match what is in the following diagram:
 ![lab](./images/image.png)
 
-The Mountain View site and New York branch offices are equipped with the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows to generate and analyze traffic as well as run some real-world applications.
+The Mountain View and New York branch offices are equipped with a [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) that can be used to generate  traffic using some real-world applications.
 
 # Use cases
 
-Provide a generic VNS monitoring platform to allow two NSG-Vs and PC behind each NSG.
+Provide a generic VNS monitoring setup that includes two NSG-Vs and PC behind each NSG. This setup can be used to showcase our SD-WAN portal and/or 3rd party monitoring (with a single underlay in this version of the lab). The focus will mainly be on API calls to both VSD and ES>
 
 # Uses
 
@@ -32,11 +32,11 @@ Clone this repo locally to your machine and follow below sections carefully:
 
 # Lab Deployment 
 
-The lab deployment process is powered by [nuxctl](https://nuxctl.nuagex.io) CLI tool. The infrastructure deployment activities will be triggered once a user supply the lab template available in this repo to the `nuxctl` tool.
+The lab deployment process is powered by [nuxctl](https://nuxctl.nuagex.io) CLI tool. The infrastructure deployment activities will be triggered once a user supplies the lab template available in this repo to the `nuxctl` tool.
 
 The lab template is based on the **Nuage Networks 5.3.3U3** NuageX template and has additional infra components defined to support the use case demonstration.
 
-Follow below steps to deploy the lab:
+Follow the steps below to deploy the lab:
 1. Make sure you have installed `nuxctl` on your local machine. 
    - If not installed follow [nuxctl](https://nuxctl.nuagex.io) tool to install on your local machine
 2. Update your `nuagex` username and password in [creds_file](./my_creds.yml) file.
@@ -47,7 +47,7 @@ Follow below steps to deploy the lab:
 # before running the command
 nuxctl create-lab -c my_creds.yml -l  nuxctl_0830-vns-monitoring_generic.yml --wait
 ```
-5. On successfull completion you will see output similiar to this: 
+5. On successfull completion of the steps, you will see an output similiar to one below: 
 ```bash 
 
 ID                        Name                    Status   Expires                 External IP      Password
@@ -58,19 +58,19 @@ ID                        Name                    Status   Expires              
 
 # CATS Docker Configuration 
 
-To run CATS scripts on your lab, you will need to pull cats container image locally to your machine. 
+To run CATS scripts on your lab, you will need to pull the CATS container image locally to your machine. 
 
 1. Make sure docker is running on your machine. 
-2. Pull CATS container image on your local mahcine: 
+2. Pull CATS container image on your local machine using the following steps: 
    - Command: `docker pull nuagepartnerprogram/cats:5.3.2` 
    - This will pull CATS container repo locally to your machine.
 
 # Lab Configuration
 
-When the lab deployment is finished, proceed with automatic lab configuration. 
+When the lab deployment is complete, proceed with automatic lab configuration using the following steps:
 
-1. Lab configuration automation is saved in a set of [CATS](http://cats-docs.nuageteam.net) scripts contained in a [cats](./cats/) folder of this repo.
-2. You will need to update variables file located in the [vars.robot](./cats/vars.robot). You must update only variables which are marked with `TO_BE_FILLED_BY_A_USER` string and therefore must be provided by a user before running the configuration scripts: 
+1. The lab configuration automation is saved in a set of [CATS](http://cats-docs.nuageteam.net) scripts contained in the [cats](./cats/) folder of this repo.
+2. You will need to update the variables file located in  [vars.robot](./cats/vars.robot). You should only update variables that are marked with `TO_BE_FILLED_BY_A_USER` string, which are the minimum variable required before running the configuration scripts (see list below): 
    - `Jumpbox` address of your NuageX lab deployed in previous section. 
    - `vsd_password` password associated with `admin` user of VSD UI. 
    - `ssh_key_path` full path of your private key associated with `public_key` 
@@ -85,7 +85,7 @@ When the lab deployment is finished, proceed with automatic lab configuration.
     ${ssh_key_path}                   ~/.ssh/id_rsa
     ```
 
-3. Run your lab configuration using below command: 
+3. Run your lab configuration using the following steps: 
    - Change your working directory to `0830-VNS-Monitoring-Generic` folder. 
    - You will be mounting your `private_key` path and current directory where `cats` scripts are stored.
    - Run below command to complete lab cofigruation. 
@@ -106,7 +106,7 @@ When the lab deployment is finished, proceed with automatic lab configuration.
 
 ## Troubleshooting 
 
-Every Lab configuration generates a report in `cats/reports` directory, you can view `output.xml` file to troubleshoot further.
+Every Lab configuration generates a report in the `cats/reports` directory, you can view the `output.xml` file to troubleshoot , if required.
 
 
 ## Feeback 
