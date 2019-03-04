@@ -5,9 +5,9 @@ Resource          ../vars.robot
 *** Test Cases ***
 Connect to VSD
     Linux.Connect To Server
-    ...    server_address=10.0.0.2
-    ...    server_login=root
-    ...    server_password=Alcateldc
+    ...    server_address=${vsd_ip}
+    ...    username=root
+    ...    priv_key=${ssh_key_path}
     ...    timeout=30s
 
 Add certificates to VSC
