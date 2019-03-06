@@ -4,32 +4,6 @@ Resource          ../vars.robot
 Suite Setup       Login NuageX User
 
 *** Test Cases ***
-Set up port forwarding
-    [Tags]    cats_outside
-
-    Linux.Connect To Server With Keys
-    ...    server_address=${jumpbox_address}
-    ...    username=admin
-    ...    priv_key=${ssh_key_path}
-
-    # port forwarding to access util VM
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{util_port_forwarding}[0]
-    ...    remote_host=@{util_port_forwarding}[1]
-    ...    remote_port=22
-
-    # port forwarding to access Branch1 PC1
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{br1pc1_port_forwarding}[0]
-    ...    remote_host=@{br1pc1_port_forwarding}[1]
-    ...    remote_port=22
-
-    # port forwarding to access HQ PC1
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{hqpc1_port_forwarding}[0]
-    ...    remote_host=@{hqpc1_port_forwarding}[1]
-    ...    remote_port=22
-
 Get NSGs status
     ${hq_nsg1} =  Get NSG
                   ...    name=${hq_nsg1_name}
@@ -43,38 +17,16 @@ Get NSGs status
     Set Suite Variable    ${branch1_nsg1}
 
 
-Setup addresses for CATS OUTSIDE provisioning
-    [Tags]    cats_outside
-
-    ${util_mgmt_addr} =  Set Variable    localhost
-    ${util_mgmt_port} =  Set Variable    @{util_port_forwarding}[0]
-
-    ${branch1_pc1_mgmt_addr} =  Set Variable    localhost
-    ${branch1_pc1_mgmt_port} =  Set Variable    @{br1pc1_port_forwarding}[0]
-
-    ${hq_pc1_mgmt_addr} =  Set Variable    localhost
-    ${hq_pc1_mgmt_port} =  Set Variable    @{hqpc1_port_forwarding}[0]
-
-    Set Suite Variable    ${branch1_pc1_mgmt_addr}
-    Set Suite Variable    ${branch1_pc1_mgmt_port}
-    Set Suite Variable    ${hq_pc1_mgmt_addr}
-    Set Suite Variable    ${hq_pc1_mgmt_port}
-    Set Suite Variable    ${util_mgmt_addr}
-    Set Suite Variable    ${util_mgmt_port}
-
-
 Setup SSH connections to Branch PCs and UtilVM
-    ${util_conn} =  Linux.Connect To Server
+    ${util_conn} =  Linux.Connect To Server With Keys
                     ...    server_address=${util_mgmt_addr}
-                    ...    server_port=${util_mgmt_port}
-                    ...    server_login=root
-                    ...    server_password=Alcateldc
+                    ...    username=root
+                    ...    priv_key=${ssh_key_path}
 
     Set Global Variable    ${util_conn}
 
     ${br1pc1_conn} =  Linux.Connect To Server
                       ...    server_address=${branch1_pc1_mgmt_addr}
-                      ...    server_port=${branch1_pc1_mgmt_port}
                       ...    server_login=centos
                       ...    server_password=Alcateldc
                       ...    prompt=~]$
@@ -84,7 +36,6 @@ Setup SSH connections to Branch PCs and UtilVM
 
     ${hqpc1_conn} =  Linux.Connect To Server
                       ...    server_address=${hq_pc1_mgmt_addr}
-                      ...    server_port=${hq_pc1_mgmt_port}
                       ...    server_login=centos
                       ...    server_password=Alcateldc
                       ...    prompt=~]$
@@ -92,7 +43,7 @@ Setup SSH connections to Branch PCs and UtilVM
 
     Set Global Variable    ${hqpc1_conn}
 
-Activate Branch1-NSG1
+Launch Branch1-NSG1 activation process
     Run Keyword If  "${branch1_nsg1.bootstrap_status}" != "ACTIVE"
     ...    Initiate NSG Bootstrap Procedure
            ...    org_name=${org_name}
@@ -100,7 +51,7 @@ Activate Branch1-NSG1
            ...    installer_pc_connection=${br1pc1_conn}
 
 
-Activate HQ-NSG1
+Launch HQ-NSG1 activation process
     Run Keyword If  "${hq_nsg1.bootstrap_status}" != "ACTIVE"
     ...    Initiate NSG Bootstrap Procedure
            ...    org_name=${org_name}
@@ -152,11 +103,7 @@ Initiate NSG Bootstrap Procedure
 
     linux.Execute Command Over SSH And Maintain Shell
     ...    sudo ip netns exec ns-data python /opt/nsg_bootstrap/nsg_bootstrap.py ${activation_url} > /tmp/bootstrap_${nsg_name}.txt 2>&1 &
-    # ...    sudo=True
-            #  ...    return_rc=True
-    # Log    ${stdout}
-    # Should Be Equal   ${rc}    ${0}
-    # Sleep    1
+
 
 Get activation link for NSG
     [Arguments]
