@@ -1,13 +1,17 @@
 *** Variables ***
 # infra variables
 ${vsd_fqdn}                    vsd01.nuage.lab
+${vsd_mgmt_ip}                 10.0.0.2
+${util_mgmt_ip}                10.0.0.33
 ${vsc-internet_hostname}       vsc-i
-${vsc-mpls_hostname}           vsc-m
 ${vsc-i_mgmt_ip}               10.0.0.10
-
 ${vsc-i_control_ip}            10.10.99.10
 ${hq_internet_gw_ip}           10.10.99.1
-
+${pe_internet_mgmt_ip}         10.0.0.210
+${branch1_pc1_mgmt_addr}       10.0.0.101
+${branch2_pc1_mgmt_addr}       10.0.0.102
+${branch3_pc1_mgmt_addr}       10.0.0.103
+${hq_pc1_mgmt_addr}            10.0.0.199
 
 # basic overlay variables
 ${org_profile_name}            ORG_PROFILE
@@ -81,41 +85,29 @@ ${branch1_vnf1_name}              BRANCH_1_VIPE
 ${branch2_vnf1_name}              BRANCH_2_VIPE
 ${branch3_vnf1_name}              BRANCH_3_VIPE
 ${hq_vnf1_name}                   HQ_VIPE
-${nas_vnf_image_uri}              TO_BE_FILLED_BY_A_USER:GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
-${nas_vnf_image_md5_uri}          TO_BE_FILLED_BY_A_USER:GET_PATH_TO_THE_IMAGE_MD5_FROM_NUAGEX_REPRESENTATIVE
+${nas_vnf_image_uri}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
+${nas_vnf_image_md5_uri}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_MD5_FROM_NUAGEX_REPRESENTATIVE
 ${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
 
 
 ##############################
 #     SALSA PARAMETERS
 ##############################
-${salsa_ip}                    TO_BE_FILLED_BY_A_USER:SALSA_IP_ADDRESS
+${salsa_ip}                    # TO_BE_FILLED_BY_A_USER: SALSA_IP_ADDRESS
 ${salsa_url}                   https://${salsa_ip}:8443
-${salsa_domain}                TO_BE_FILLED_BY_A_USER:Nuage
+${salsa_domain}                # TO_BE_FILLED_BY_A_USER
 
 ##############################
 #     CONNECTION PARAMETERS
 ##############################
-${jumpbox_address}               TO_BE_FILLED_BY_A_USER:LAB_IP_ADDRESS
-${vsd_password}                  TO_BE_FILLED_BY_A_USER:LAB_PASSWORD
-${ssh_key_path}                  TO_BE_FILLED_BY_A_USER:PATH_TO_THE_LABS_PRIV_KEY
+${vsd_password}                # TO_BE_FILLED_BY_A_USER: LAB_PASSWORD
+${ssh_key_path}                ~/.ssh/id_rsa
 
-# port forwarding variables
-@{util_port_forwarding}          45100  10.0.0.33
-@{vsd_port_forwarding}           45102  10.0.0.2
-@{vsci_port_forwarding}          45103  10.0.0.10
-@{vscm_port_forwarding}          45104  10.0.0.20
-@{br1pc1_port_forwarding}        45107  10.0.0.101
-@{br2pc1_port_forwarding}        45108  10.0.0.102
-@{br3pc1_port_forwarding}        45109  10.0.0.103
-@{ubrpc1_port_forwarding}        45112  10.0.0.104
-@{hqpc1_port_forwarding}         45110  10.0.0.199
-@{pe_internet_port_forwarding}   45105  10.0.0.210
 
 *** Keywords ***
 Login NuageX User
     NuageUserMgmt.Login user
-    ...    cats_api_url=https://${jumpbox_address}:8443
+    ...    cats_api_url=https://${vsd_mgmt_ip}:8443
     ...    cats_username=admin
     ...    cats_password=${vsd_password}
     ...    cats_org_name=csp

@@ -5,28 +5,12 @@ Suite Setup       Login NuageX User
 
 *** Test Cases ***
 Setting up connection to UtilVM
-    [Tags]  SOLO-RUN CATS-OUTSIDE
+    [Tags]  SOLO_RUN
 
-    # create local SSH port forwarding for UtilVM
-    Linux.Connect To Server With Keys
-    ...    server_address=${jumpbox_address}
-    ...    username=admin
-    ...    priv_key=${ssh_key_path}
-
-    # port forwarding to access util VM
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{util_port_forwarding}[0]
-    ...    remote_host=@{util_port_forwarding}[1]
-    ...    remote_port=22
-
-    ${util_mgmt_addr} =  Set Variable    localhost
-    ${util_mgmt_port} =  Set Variable    @{util_port_forwarding}[0]
-
-    ${util_conn} =  Linux.Connect To Server
-                    ...    server_address=${util_mgmt_addr}
-                    ...    server_port=${util_mgmt_port}
-                    ...    server_login=root
-                    ...    server_password=Alcateldc
+    ${util_conn} =  Linux.Connect To Server With Keys
+                    ...    server_address=${util_mgmt_ip}
+                    ...    username=root
+                    ...    priv_key=${ssh_key_path}
 
     Set Global Variable    ${util_conn}
 
@@ -50,15 +34,14 @@ Getting the md5sums for VNF disk image
     Set Suite Variable    ${image_md5}
 
 Creating VNF for Branch1
-    ${status}  ${branch1_vnf_state} =  Run Keyword And Ignore Error
-                                       ...    NuageVNF.Get VNF
-                                              ...    name=${branch1_vnf1_name}
-                                              ...    cats_org_name=${org_name}
+    ${status}  ${branch1_vnf_orig_state} =  Run Keyword And Ignore Error
+                                            ...    NuageVNF.Get VNF
+                                                   ...    name=${branch1_vnf1_name}
+                                                   ...    cats_org_name=${org_name}
 
 
     # if vnf is created and its status is not RUNNING -> go thru the configuration steps
-    ${branch1_vnf_state} =  Run Keyword If  $status == 'FAIL' or ($branch1_vnf_state.status != 'RUNNING')
-        # user-defined kw, chech the keywords section in the end of this file
+    ${branch1_vnf_state} =  Run Keyword If  $status == 'FAIL' or ($branch1_vnf_orig_state.status != 'RUNNING')
         ...    Create VNF And Attach Mgmt Interface
                ...    org_name=${org_name}
                ...    vnf_image_url=${vnf_image_url}
@@ -68,18 +51,19 @@ Creating VNF for Branch1
                ...    vnf_mem_size=${vnf_mem_size}
                ...    nsg_name=${branch1_nsg1_name}
                ...    segmentation_id=1
+        ...  ELSE
+             ...    Get Variable Value    ${branch1_vnf_orig_state}
 
     Set Suite Variable     ${branch1_vnf_state}
 
 Creating VNF for Branch2
-    ${status}  ${branch2_vnf_state} =  Run Keyword And Ignore Error
+    ${status}  ${branch2_vnf_orig_state} =  Run Keyword And Ignore Error
                                        ...    NuageVNF.Get VNF
                                               ...    name=${branch2_vnf1_name}
                                               ...    cats_org_name=${org_name}
 
     # if vnf is created and its status is not RUNNING -> go thru the configuration steps
-    ${branch2_vnf_state} =  Run Keyword If  $status == 'FAIL' or ($branch2_vnf_state.status != 'RUNNING')
-        # user-defined kw, chech the keywords section in the end of this file
+    ${branch2_vnf_state} =  Run Keyword If  $status == 'FAIL' or ($branch2_vnf_orig_state.status != 'RUNNING')
         ...    Create VNF And Attach Mgmt Interface
                ...    org_name=${org_name}
                ...    vnf_image_url=${vnf_image_url}
@@ -89,17 +73,19 @@ Creating VNF for Branch2
                ...    vnf_mem_size=${vnf_mem_size}
                ...    nsg_name=${branch2_nsg1_name}
                ...    segmentation_id=2
+        ...  ELSE
+             ...    Get Variable Value    ${branch2_vnf_orig_state}
 
     Set Suite Variable    ${branch2_vnf_state}
 
 Creating VNF for Branch3
-    ${status}  ${branch3_vnf_state} =  Run Keyword And Ignore Error
+    ${status}  ${branch3_vnf_orig_state} =  Run Keyword And Ignore Error
                                        ...    NuageVNF.Get VNF
                                               ...    name=${branch3_vnf1_name}
                                               ...    cats_org_name=${org_name}
 
     # if vnf is created and its status is not RUNNING -> go thru the configuration steps
-    ${branch3_vnf_state} =  Run Keyword If  $status == 'FAIL' or ($branch3_vnf_state.status != 'RUNNING')
+    ${branch3_vnf_state} =  Run Keyword If  $status == 'FAIL' or ($branch3_vnf_orig_state.status != 'RUNNING')
         # user-defined kw, chech the keywords section in the end of this file
         ...    Create VNF And Attach Mgmt Interface
                ...    org_name=${org_name}
@@ -110,17 +96,19 @@ Creating VNF for Branch3
                ...    vnf_mem_size=${vnf_mem_size}
                ...    nsg_name=${branch3_nsg1_name}
                ...    segmentation_id=3
+        ...  ELSE
+             ...    Get Variable Value    ${branch3_vnf_orig_state}
 
     Set Suite Variable    ${branch3_vnf_state}
 
 Creating VNF for HQ
-    ${status}  ${hq_vnf_state} =  Run Keyword And Ignore Error
-                                  ...    NuageVNF.Get VNF
-                                         ...    name=${hq_vnf1_name}
-                                         ...    cats_org_name=${org_name}
+    ${status}  ${hq_vnf_orig_state} =  Run Keyword And Ignore Error
+                                       ...    NuageVNF.Get VNF
+                                              ...    name=${hq_vnf1_name}
+                                              ...    cats_org_name=${org_name}
 
     # if vnf is created and its status is not RUNNING -> go thru the configuration steps
-    ${hq_vnf_state} =  Run Keyword If  $status == 'FAIL' or ($hq_vnf_state.status != 'RUNNING')
+    ${hq_vnf_state} =  Run Keyword If  $status == 'FAIL' or ($hq_vnf_orig_state.status != 'RUNNING')
         # user-defined kw, chech the keywords section in the end of this file
         ...    Create VNF And Attach Mgmt Interface
                ...    org_name=${org_name}
@@ -131,6 +119,8 @@ Creating VNF for HQ
                ...    vnf_mem_size=${vnf_mem_size}
                ...    nsg_name=${hq_nsg1_name}
                ...    segmentation_id=99
+        ...  ELSE
+             ...    Get Variable Value    ${hq_vnf_orig_state}
 
     Set Suite Variable    ${hq_vnf_state}
 
