@@ -1,0 +1,73 @@
+<domain type='kvm'>
+  <name>HQ-IPE1</name>
+  <memory unit='KiB'>2097152</memory>
+  <currentMemory unit='KiB'>2097152</currentMemory>
+  <vcpu placement='static'>1</vcpu>
+  <!-- <cputune>
+    <vcpupin vcpu='0' cpuset='#CPU_1#'/>
+  </cputune> -->
+  <os>
+    <type arch='x86_64'>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <pae/>
+  </features>
+  <cpu mode='host-passthrough'>
+  </cpu>
+  <clock offset='utc'/>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <devices>
+    <controller type='pci' index='0' model='pci-root'/>
+    <controller type='usb' index='0'>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x2'/>
+    </controller>
+  <!-- MGT interface -->
+    <interface type='bridge'>
+      <source bridge='brMGMT'/>
+      <model type='virtio'/>
+    </interface>
+  <!-- LAN interface -->
+    <interface type='bridge'>
+      <source bridge='brLAN'/>
+      <model type='virtio'/>
+    </interface>
+  <!-- WAN interface -->
+    <interface type='bridge'>
+      <source bridge='brWAN'/>
+      <model type='virtio'/>
+    </interface>
+    <serial type='pty'>
+      <target port='0'/>
+    </serial>
+    <console type='pty'>
+      <target type='serial' port='0'/>
+    </console>
+    <input type='mouse' bus='ps2'/>
+    <input type='keyboard' bus='ps2'/>
+    <graphics type='vnc' port='-1' autoport='yes'/>
+    <video>
+      <model type='cirrus' vram='9216' heads='1'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+    </video>
+    <controller type='ide' index='0'>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
+    </controller>
+    <!-- System disk -->
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='writethrough'/>
+      <source file='/var/lib/libvirt/images/HQ-IPE1/img.qcow2'/>
+      <target dev='hda' bus='ide'/>
+    </disk>
+    <!-- Cache disk for WAN Optimization -->
+   <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='writeback'/>
+      <source file='/var/lib/libvirt/images/HQ-IPE1/wan.img'/>
+      <target dev='vda' bus='virtio'/>
+    </disk>
+  </devices>
+</domain>
