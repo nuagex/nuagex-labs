@@ -4,45 +4,6 @@ Resource          ../vars.robot
 Suite Setup       Login NuageX User
 
 *** Test Cases ***
-Set up port forwarding
-    [Tags]    CATS-OUTSIDE
-
-    Linux.Connect To Server With Keys
-    ...    server_address=${jumpbox_address}
-    ...    username=admin
-    ...    priv_key=${ssh_key_path}
-
-    # port forwarding to access util VM
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{util_port_forwarding}[0]
-    ...    remote_host=@{util_port_forwarding}[1]
-    ...    remote_port=22
-
-    # port forwarding to access Branch1 PC1
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{br1pc1_port_forwarding}[0]
-    ...    remote_host=@{br1pc1_port_forwarding}[1]
-    ...    remote_port=22
-
-    # port forwarding to access Branch2 PC1
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{br2pc1_port_forwarding}[0]
-    ...    remote_host=@{br2pc1_port_forwarding}[1]
-    ...    remote_port=22
-
-    # port forwarding to access Branch3 PC1
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{br3pc1_port_forwarding}[0]
-    ...    remote_host=@{br3pc1_port_forwarding}[1]
-    ...    remote_port=22
-
-    # port forwarding to access HQ PC1
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{hqpc1_port_forwarding}[0]
-    ...    remote_host=@{hqpc1_port_forwarding}[1]
-    ...    remote_port=22
-
-
 Get NSGs status
     ${hq_nsg1} =  Get NSG
                   ...    name=${hq_nsg1_name}
@@ -66,48 +27,16 @@ Get NSGs status
     Set Suite Variable    ${branch3_nsg1}
 
 
-Setup addresses for CATS OUTSIDE provisioning
-    [Tags]    CATS-OUTSIDE
-
-    ${util_mgmt_addr} =  Set Variable    localhost
-    ${util_mgmt_port} =  Set Variable    @{util_port_forwarding}[0]
-
-    ${branch1_pc1_mgmt_addr} =  Set Variable    localhost
-    ${branch1_pc1_mgmt_port} =  Set Variable    @{br1pc1_port_forwarding}[0]
-
-    ${branch2_pc1_mgmt_addr} =  Set Variable    localhost
-    ${branch2_pc1_mgmt_port} =  Set Variable    @{br2pc1_port_forwarding}[0]
-
-    ${branch3_pc1_mgmt_addr} =  Set Variable    localhost
-    ${branch3_pc1_mgmt_port} =  Set Variable    @{br3pc1_port_forwarding}[0]
-
-    ${hq_pc1_mgmt_addr} =  Set Variable    localhost
-    ${hq_pc1_mgmt_port} =  Set Variable    @{hqpc1_port_forwarding}[0]
-
-    Set Suite Variable    ${branch1_pc1_mgmt_addr}
-    Set Suite Variable    ${branch1_pc1_mgmt_port}
-    Set Suite Variable    ${branch2_pc1_mgmt_addr}
-    Set Suite Variable    ${branch2_pc1_mgmt_port}
-    Set Suite Variable    ${branch3_pc1_mgmt_addr}
-    Set Suite Variable    ${branch3_pc1_mgmt_port}
-    Set Suite Variable    ${hq_pc1_mgmt_addr}
-    Set Suite Variable    ${hq_pc1_mgmt_port}
-    Set Suite Variable    ${util_mgmt_addr}
-    Set Suite Variable    ${util_mgmt_port}
-
-
 Setup SSH connections to Branch PCs and UtilVM
-    ${util_conn} =  Linux.Connect To Server
-                    ...    server_address=${util_mgmt_addr}
-                    ...    server_port=${util_mgmt_port}
-                    ...    server_login=root
-                    ...    server_password=Alcateldc
+    ${util_conn} =  Linux.Connect To Server With Keys
+                    ...    server_address=${util_mgmt_ip}
+                    ...    username=root
+                    ...    priv_key=${ssh_key_path}
 
     Set Global Variable    ${util_conn}
 
     ${br1pc1_conn} =  Linux.Connect To Server
                       ...    server_address=${branch1_pc1_mgmt_addr}
-                      ...    server_port=${branch1_pc1_mgmt_port}
                       ...    server_login=centos
                       ...    server_password=Alcateldc
                       ...    prompt=~]$
@@ -117,7 +46,6 @@ Setup SSH connections to Branch PCs and UtilVM
 
     ${br2pc1_conn} =  Linux.Connect To Server
                       ...    server_address=${branch2_pc1_mgmt_addr}
-                      ...    server_port=${branch2_pc1_mgmt_port}
                       ...    server_login=centos
                       ...    server_password=Alcateldc
                       ...    prompt=~]$
@@ -127,7 +55,6 @@ Setup SSH connections to Branch PCs and UtilVM
 
     ${br3pc1_conn} =  Linux.Connect To Server
                       ...    server_address=${branch3_pc1_mgmt_addr}
-                      ...    server_port=${branch3_pc1_mgmt_port}
                       ...    server_login=centos
                       ...    server_password=Alcateldc
                       ...    prompt=~]$
@@ -137,7 +64,6 @@ Setup SSH connections to Branch PCs and UtilVM
 
     ${hqpc1_conn} =  Linux.Connect To Server
                       ...    server_address=${hq_pc1_mgmt_addr}
-                      ...    server_port=${hq_pc1_mgmt_port}
                       ...    server_login=centos
                       ...    server_password=Alcateldc
                       ...    prompt=~]$
@@ -222,11 +148,7 @@ Initiate NSG Bootstrap Procedure
 
     linux.Execute Command Over SSH And Maintain Shell
     ...    sudo ip netns exec ns-data python /opt/nsg_bootstrap/nsg_bootstrap.py ${activation_url} > /tmp/bootstrap_${nsg_name}.txt 2>&1 &
-    # ...    sudo=True
-            #  ...    return_rc=True
-    # Log    ${stdout}
-    # Should Be Equal   ${rc}    ${0}
-    # Sleep    1
+
 
 Get activation link for NSG
     [Arguments]

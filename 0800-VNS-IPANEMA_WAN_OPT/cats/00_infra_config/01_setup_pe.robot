@@ -3,24 +3,9 @@ Resource          cats_lib/resources/cats_common.robot
 Resource          ../vars.robot
 
 *** Test Cases ***
-Create port forwarding to access PE Internet
-    # connect to jumpbox
-    Linux.Connect To Server With Keys
-    ...    server_address=${jumpbox_address}
-    ...    username=admin
-    ...    priv_key=${ssh_key_path}
-
-    # port forwarding to access PE Internet
-    SSHLibrary.Create Local SSH Tunnel
-    ...    local_port=@{pe_internet_port_forwarding}[0]
-    ...    remote_host=@{pe_internet_port_forwarding}[1]
-    ...    remote_port=22
-
-
 Configure PE Internet
     Linux.Connect To Server With Keys
-    ...    server_address=localhost
-    ...    server_port=@{pe_internet_port_forwarding}[0]
+    ...    server_address=${pe_internet_mgmt_ip}
     ...    username=root
     ...    priv_key=${ssh_key_path}
 
