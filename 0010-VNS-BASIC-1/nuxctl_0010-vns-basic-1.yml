@@ -152,7 +152,7 @@ networks:
   #   dns:
   #   - 10.0.0.1
   #   dhcp: true
-  - name: dummy1
+  - name: dummy
     cidr: "255.255.255.0/24"
     dns:
     dhcp: false
@@ -208,7 +208,7 @@ servers:
       - network: private
         address: "10.0.0.11"
         index: 0
-      - network: dummy1
+      - network: dummy
         address: "255.255.255.1"
         index: 1
       - network: nsg1-lan
@@ -232,7 +232,7 @@ servers:
       - network: private
         address: "10.0.0.12"
         index: 0
-      - network: dummy1
+      - network: dummy
         address: "255.255.255.2"
         index: 1
       - network: nsg2-lan
