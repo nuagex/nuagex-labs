@@ -116,7 +116,7 @@ services:
   #   destination:
   #     port: 6200
   #     address: 10.0.0.5
-  - name: rdp-branchpc1
+  - name: rdp-branch1pc1
     type: public
     port: 33891
     protocols:
@@ -124,7 +124,7 @@ services:
     destination:
       port: 3389
       address: 10.0.0.101
-  - name: rdp-branchpc2
+  - name: rdp-branch2pc1
     type: public
     port: 33892
     protocols:
@@ -139,14 +139,6 @@ services:
       - tcp
     destination:
       port: 5672
-      address: 10.0.0.2
-  - name: stompows
-    type: public
-    port: 61614
-    protocols:
-      - tcp
-    destination:
-      port: 61614
       address: 10.0.0.2
 
 ###################
