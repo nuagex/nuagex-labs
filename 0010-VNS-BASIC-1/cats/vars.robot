@@ -2,13 +2,13 @@
 ##############################
 #     OVERLAY VARIABLES
 ##############################
-${org_profile_name}            BASIC-VNS-1
-${org_name}                    PEPSI CORP
+${org_profile_name}            BASIC-VNS
+${org_name}                    STARDUCKS
 ${l3domain_template1_name}     EMPTY
-${l3domain_name}               WHOLESALE
-${zone_name}                   BRANCHES
-${subnet1_name}                BRANCH_1
-${subnet2_name}                BRANCH_2
+${l3domain_name}               SDWAN
+${zone_name}                   NEW YORK
+${subnet1_name}                TIMES SQ
+${subnet2_name}                HARLEM
 ${subnet1_network_addr}        192.168.1.0/24
 ${subnet2_network_addr}        192.168.2.0/24
 ${sec_policy1_name}            ALLOW_ALL
@@ -16,12 +16,12 @@ ${sec_policy1_name}            ALLOW_ALL
 ##############################
 #     VNS VARIABLES
 ##############################
-${infra_gw_profile_name}       PEPSI PROFILE
+${infra_gw_profile_name}       NSG_PROFILE
 ${util_mgmt_addr}              10.0.0.33
 ${util1_fqdn}                  utility.nuage.lab
-${vsc_profile1_name}           PEPSI VSC PROFILE
+${vsc_profile1_name}           VSC_PROFILE
 ${vsc1_ip}                     10.0.0.3
-${nsg_template_name}           TEMPLATE_1
+${nsg_template_name}           NSG_TEMPLATE_1
 ${infra_access_profile_name}   IAP_1
 ${nsg1_name}                   NSG_1
 ${nsg2_name}                   NSG_2
