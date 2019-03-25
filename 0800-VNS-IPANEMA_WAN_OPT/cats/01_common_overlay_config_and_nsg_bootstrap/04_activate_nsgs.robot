@@ -27,6 +27,23 @@ Get NSGs status
     Set Suite Variable    ${branch3_nsg1}
 
 
+Verify NSGs booted up
+    # connect to PE to ping NSGs WAN IP addresses
+    Linux.Connect To Server With Keys
+    ...    server_address=${pe_internet_mgmt_ip}
+    ...    username=root
+    ...    priv_key=${ssh_key_path}
+
+    ${ips} =  Create List
+              ...  10.10.1.11
+              ...  10.10.2.12
+              ...  10.10.3.13
+              ...  10.10.99.99
+
+    CATSUtils.Wait For All Hosts To Be Reachable
+    ...    hosts=${ips}
+    ...    timeout=120
+
 Setup SSH connections to Branch PCs and UtilVM
     ${util_conn} =  Linux.Connect To Server With Keys
                     ...    server_address=${util_mgmt_ip}

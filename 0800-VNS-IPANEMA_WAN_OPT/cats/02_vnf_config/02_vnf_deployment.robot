@@ -20,8 +20,12 @@ Downloading VNF files to UtilVM and installing mkisofs utility
     SSHLibrary.Switch Connection    ${util_conn}
 
     # download qcow2 and md5 files and verify integrity
-    SSHLibrary.Execute Command
-    ...    cd /var/www/html && curl -O ${nas_vnf_image_uri} && curl -O ${nas_vnf_image_md5_uri} && md5sum -c img.qcow2.md5
+    ${rc} =  SSHLibrary.Execute Command
+             ...    cd /var/www/html && curl -O ${nas_vnf_image_uri} && curl -O ${nas_vnf_image_md5_uri} && md5sum -c img.qcow2.md5
+             ...    return_stdout=False
+             ...    return_rc=True
+    Should Be Equal As Integers
+    ...    ${rc}    0
 
     # mkisofs is used to create boot.iso files for VNFs
     SSHLibrary.Execute Command

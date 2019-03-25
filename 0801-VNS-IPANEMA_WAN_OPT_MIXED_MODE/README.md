@@ -1,6 +1,6 @@
 # 0801-VNS-IPANEMA_WAN_OPT_MIXED_MODE
 
-* **version:** 1.0.0
+* **version:** 1.1.0
 * **tags:** Infovista, WAN Optimization
 * **requirements**: Nuage 5.3.2+
 * **designer**: [Roman Dodin](mailto:roman.dodin@nokia.com)
@@ -66,21 +66,18 @@ The configuration is performed by the CATS tool running in a container on the la
    ```
 
 ## 3.1 Variables file
-The configuration variables are stored in a single [vars.robot](./cats/vars.robot) file and you need to fill in the values there on the lines marked with `TO_BE_FILLED_BY_A_USER` string. These variables must be filled out before running the configuration scripts.
+The configuration variables are stored in the [vars.robot](./cats/vars.robot) file and most of the them have values. A few of them, though, should be provided by a user at the runtime; these variables are on the lines marked with `TO_BE_FILLED_BY_A_USER` string. A user can either edit the [vars.robot](./cats/vars.robot) file and put values for those variables, or the value can be supplied via arguments as demonstrated in 3.2.
 
-### 3.1.1 VSD login
-Authentication and authorization with VSD is needed in order to configure objects via VSD API. Make sure to add the VSD password (obtained in the end of the deployment procedure) on line [105](./cats/vars.robot#L105) of the variables file.
-
-### 3.1.2 VNF image path
+### 3.1.1 VNF image path
 The paths to the Ipanema VNF image and a corresponding md5 file should be provided by a user on lines [88-89](./cats/vars.robot#L88-L89). The automation scripts will download the image file and its checksum to the Util VM, which means that Util VM should have reachability to the data storage hosting these files.
 
-You can [contact NuageX representatives](mailto:nuagex+ipanema@nuagenetworks.net) with the request to obtain the paths to these files.
+You should [contact NuageX representatives](mailto:nuagex+ipanema@nuagenetworks.net) with the request to obtain the paths to these files.
 
 
 ## 3.2 Starting configuration process
 The configuration process will handle all of the heavy-lifting of the lab configuration. Starting with overlay object creation as well as NSG bootstrapping and activation, finishing with the creation of VNFs and insertion policies.
 
-To launch the configuration sequence proceed with the following command issued on the labs jumpbox VM:
+To launch the configuration sequence proceed with the following command issued on the labs jumpbox VM. Pay attention to the key-value pairs we supply to the end of the `docker run` command; this is the way to provide the variable values without modifying labs [configuration file](./cats/vars.robot).
 
 ```bash
 # issued on the jumpbox VM
@@ -89,7 +86,12 @@ To launch the configuration sequence proceed with the following command issued o
 docker run -t \
   -v ${HOME}/.ssh:/root/.ssh \
   -v /home/admin/nuagex-labs/0801-VNS-IPANEMA_WAN_OPT_MIXED_MODE/cats:/home/tests \
-  nuagepartnerprogram/cats:5.3.2 -X /home/tests
+  nuagepartnerprogram/cats:5.3.2 \
+    -v nas_vnf_image_uri:<GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE> \
+    -v nas_vnf_image_md5_uri:<GET_PATH_TO_THE_IMAGE_MD5SUM_FROM_NUAGEX_REPRESENTATIVE> \
+    -v salsa_ip:<SALSA IP ADDRESS> \
+    -v salsa_domain:<DOMAIN CONFIGURED IN SALSA> \
+    -X /home/tests
 ```
 
 Note, that in order to provide CATS container with passwordless access to the labs components the Jumpbox keys are shared with the container.  
@@ -97,7 +99,18 @@ Jumpbox's `${HOME}/.ssh` folder contents is exposed to the CATS container and mo
 
 > Note, the automated lab configuration does not create Ipanema appliances in the SALSA application, a user needs to manually create them and define the services after running the CATS scripts.
 
-## 3.3 Ipanema Physical Engine configuration
+
+## 3.3 Configuration stages
+The automatic configuration created for this lab completes with the VNFs created and started and the redirection rules configured to direct the traffic through the VNFs. While its beneficial to have an end-to-end automation for a quick validation or testing, its is _too complete_ for the demonstration purposes.
+
+In a demo it is usually desired to go live through the VNF life cycle management and redirection rules creation processes. With this need in mind the lab automation contains tags that a user can leverage to stop configuration at a certain time. The following tags are available:
+
+* **`vnf_config`**  
+  this tag is applied to every step that is specific to the VNF configuration. Thus if a user wants to demonstrate the integration by doing all the VNF configuration themselves, then they should exclude this tag from the execution by supplying `-e vnf_config` string to the list of `nuagepartnerprogram/cats:5.3.2` command flags.  
+  This tag is applied to every file in the [vnf_config](./cats/02_vnf_config) directory, thus every action there would be excluded once this tag is used.
+
+
+## 3.4 Ipanema Physical Engine configuration
 Since the goal of this lab is to demonstrate how a physical Ipanema appliance can be used in a joint solution, the lab simulates a physical appliance using a virtual instance if Ipanema. Read more about it in a [separate documentation article](IPE_deployment.md).
 
 # 4 Branch PCs
@@ -115,3 +128,11 @@ More information on Branch-PC image can be found [here](https://nuagenetworks.ze
 # 5 Use cases
 
 Use cases are to be provisioned by a the user manually after lab configuration completes. Check with the [Infovista Ipanema Integration Guide](http://bit.ly/nuage_ipanema_ig) for use case configuration instructions.
+
+# 6 Changelog
+## 1.1.0
+
+* VSD password is now picked up automatically and should not be filled in by a user.
+* new default behavior: variables are now passed in a `docker run` command instead of changing the vars.robot file.
+* Added a wait timer to wait for NSGs to boot up before starting the bootstrapping procedure.
+* Fixed the VNF disk image checksum verification once copied over to Util
