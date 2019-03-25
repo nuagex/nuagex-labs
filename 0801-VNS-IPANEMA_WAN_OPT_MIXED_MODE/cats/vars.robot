@@ -93,22 +93,37 @@ ${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
 ##############################
 #     SALSA PARAMETERS
 ##############################
-${salsa_ip}                    # TO_BE_FILLED_BY_A_USER:SALSA_IP_ADDRESS
+${salsa_ip}                    # TO_BE_FILLED_BY_A_USER: SALSA_IP_ADDRESS
 ${salsa_url}                   https://${salsa_ip}:8443
-${salsa_domain}                # TO_BE_FILLED_BY_A_USER
+${salsa_domain}                # TO_BE_FILLED_BY_A_USER: SALSA DOMAIN NAME
 
 ##############################
 #     CONNECTION PARAMETERS
 ##############################nuxc  
-${vsd_password}                # TO_BE_FILLED_BY_A_USER:VSD_PASSWORD
+${vsd_password}                # LEAVE EMPTY
 ${ssh_key_path}                ~/.ssh/id_rsa
 ${vsd_ip}                      10.0.0.2
 
 
 *** Keywords ***
 Login NuageX User
+    Run Keyword If  $vsd_password == ""
+    ...  Get NuageX lab password
+
     NuageUserMgmt.Login user
     ...    cats_api_url=https://${vsd_ip}:8443
     ...    cats_username=admin
     ...    cats_password=${vsd_password}
     ...    cats_org_name=csp
+
+Get NuageX lab password
+    Process.Run Process
+    ...  wget -q -O - http://169.254.169.254/2009-04-04/user-data | grep -m1 "content" | awk '{print $3}' | base64 -d | grep -m1 "password" | awk '{print $2}'
+    ...  shell=True
+    ...  alias=passwd
+
+    ${vsd_password} =  Process.Get Process Result
+                       ...  passwd
+                       ...  stdout=True
+
+    Set Global Variable  ${vsd_password}
