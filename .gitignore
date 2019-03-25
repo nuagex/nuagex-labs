@@ -1,4 +1,5 @@
 __*.*
+!__init__.robot
 !__delete.robot
 _CATS
 **/dumptemplate.yml

@@ -108,6 +108,16 @@ Jumpbox's `${HOME}/.ssh` folder contents is exposed to the CATS container and mo
 
 > Note, the automated lab configuration does not create Ipanema appliances in the SALSA application, a user needs to manually create them and define the services after running the CATS scripts.
 
+## 3.3 Configuration stages
+The automatic configuration created for this lab completes with the VNFs created and started and the redirection rules configured to direct the traffic through the VNFs. While its beneficial to have an end-to-end automation for a quick validation or testing, its is _too complete_ for the demonstration purposes.
+
+In a demo it is usually desired to go live through the VNF life cycle management and redirection rules creation processes. With this need in mind the lab automation contains tags that a user can leverage to stop configuration at a certain time. The following tags are available:
+
+* **`vnf_config`**  
+  this tag is applied to every step that is specific to the VNF configuration. Thus if a user wants to demonstrate the integration by doing all the VNF configuration themselves, then they should exclude this tag from the execution by supplying `-e vnf_config` string to the list of `nuagepartnerprogram/cats:5.3.2` command flags.  
+  This tag is applied to every file in the [vnf_config](./cats/02_vnf_config) directory, thus every action there would be excluded once this tag is used.
+
+
 # 4 Branch PCs
 Branch-PCs are emulating branch clients and are Centos7 VMs with Gnome desktop. SSH access to these machines is available via jumpbox VM (i.e. `ssh centos@10.0.0.101`, where `10.0.0.101` is the Branch-PC management address)
 
