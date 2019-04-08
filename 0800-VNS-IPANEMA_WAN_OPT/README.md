@@ -98,7 +98,7 @@ docker run -t \
   nuagepartnerprogram/cats:5.3.2 \
     -v nas_vnf_image_uri:<GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE> \
     -v nas_vnf_image_md5_uri:<GET_PATH_TO_THE_IMAGE_MD5SUM_FROM_NUAGEX_REPRESENTATIVE> \
-    -v salsa_ip:<SALSA IP ADDRESS> \
+    -v salsa_url:<SALSA URL> \
     -v salsa_domain:<DOMAIN CONFIGURED IN SALSA> \
     -X /home/tests
 ```

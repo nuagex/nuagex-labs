@@ -93,8 +93,7 @@ ${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
 ##############################
 #     SALSA PARAMETERS
 ##############################
-${salsa_ip}                    # TO_BE_FILLED_BY_A_USER: SALSA_IP_ADDRESS
-${salsa_url}                   https://${salsa_ip}:8443
+${salsa_url}                   # TO_BE_FILLED_BY_A_USER: SALSA URL (i.e. https://192.168.10.20:20443)
 ${salsa_domain}                # TO_BE_FILLED_BY_A_USER: SALSA DOMAIN NAME
 
 ##############################
