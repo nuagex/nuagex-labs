@@ -5,7 +5,7 @@
 * **requirements**: Nuage 5.4.1+
 * **designer**: [Arun Poonia](mailto:arun.poonia@nokia.com)
 
-This Lab demonstrates a joint integration between **Nuage Networks VNS** and [**LiveAction LiveSP SD-WAN Monitoring**](https://www.viavisolutions.com/en-us/products/observerlive) solution.
+This Lab demonstrates a joint integration between **Nuage Networks VNS** and **LiveAction SD-WAN Monitoring** solution.
 
 Once the lab is deployed and configured, a user will be able to test/learn/demonstrate the following features of a joint solution:
 
@@ -66,10 +66,13 @@ docker run -t \
 ```
 
 Note, that in order to provide CATS container with passwordless access to the labs components the Jumpbox keys are shared with the container.  
-Jumpbox's `${HOME}/.ssh` folder contents is exposed to the CATS container and mounted there by the `/root/.ssh` path. In effect, the `id_rsa` key on the Jumpbox will be available to the CATS container by the `/root/.ssh/id_rsa` path hence its configured on line [84](./cats/vars.robot#L8) of the variables file.
+Jumpbox's `${HOME}/.ssh` folder contents is exposed to the CATS container and mounted there by the `/root/.ssh` path. In effect, the `id_rsa` key on the Jumpbox will be available to the CATS container by the `/root/.ssh/id_rsa` path hence its configured on line [8](./cats/vars.robot#L8) of the variables file.
 
 
 The configuration is successful if every step is marked with the green PASS status. The configuration execution log can be found under `cats/reports` directory (the full path is provided by CATS at the end of the execution output).
 
 > Note, the automated lab configuration creates cronjobs on each PC on NSG side to support traffic scripts.
 
+# 4 Troubleshooting
+
+You must update physical address on each NSG. Even though CATS scripts add NSG address please verify from Nuage Networks VSD that addresses are reflecting on Nuage Networks VSD.
