@@ -46,9 +46,7 @@ Configure VSC Internet
     ...    username=admin
     ...    password=admin
 
-    VSC.Execute Command    /bof static-route ${mv_wan_network}  next-hop ${pe-router}
-    VSC.Execute Command    /bof static-route ${ny_wan_network}  next-hop ${pe-router}
-    VSC.Execute Command    /bof static-route ${hq_wan_network}  next-hop ${pe-router}
+    VSC.Execute Command    /bof static-route ${mv_wan_network} next-hop ${pe-router}
+    VSC.Execute Command    /bof static-route ${ny_wan_network} next-hop ${pe-router}
+    VSC.Execute Command    /bof static-route ${hq_wan_network} next-hop ${pe-router}
     VSC.Execute Command    /bof save
-
-    VSC.Execute Command    /admin save
