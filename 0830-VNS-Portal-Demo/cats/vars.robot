@@ -7,25 +7,20 @@ ${vsd_password}                   # should be empty
 ${lab_ip_address}                 # should be empty
 ${ssh_key_path}                   ~/.ssh/id_rsa
 ${pe-router}                      10.0.0.50
-${pe-mpls_mgmt_ip}                10.0.0.220
-${vsc-internet_mgmt_ip}           10.0.0.10
-${vsc-mpls_mgmt_ip}               10.0.0.20
-${vsc-internet_control_ip}        10.10.1.3
-${vsc-mpls_control_ip}            10.20.1.3
-${vsc-internet_system_ip}         192.168.168.1
-${vsc-mpls_system_ip}             192.168.168.2
+${vsc_mgmt_ip}                    10.0.0.3
+${es_mgmt_ip}                     10.0.0.5
 ${portal_mgmt_ip}                 10.0.0.6
 ${util_mgmt_ip}                   10.0.0.33
-${hq_pc1_mgmt_addr}               10.0.0.110
-${mv_pc1_mgmt_addr}               10.0.0.120
-${ny_pc1_mgmt_addr}               10.0.0.130
+${hq_pc1_mgmt_addr}               10.0.0.30
+${mv_pc1_mgmt_addr}               10.0.0.10
+${ny_pc1_mgmt_addr}               10.0.0.20
 
 
 ##############################
 #     OVERLAY VARIABLES
 ##############################
 ${org_profile_name}               ORG_PROFILE
-${org_name}                       ORG
+${org_name}                       Nokia
 ${l3domain_template_name}         L3_DOMAIN_TEMPLATE
 ${l3domain_name}                  ORG_DOMAIN
 ${hq_zone_name}                   HQ_ZONE
@@ -34,12 +29,12 @@ ${ny_zone_name}                   NY_ZONE
 ${hq_subnet_name}                 HQ_SUB
 ${mv_subnet_name}                 MV_SUB
 ${ny_subnet_name}                 NY_SUB
-${hq_network_addr}                192.168.10.0/24
-${mv_network_addr}                192.168.20.0/24
-${ny_network_addr}                192.168.30.0/24
-${hq_pc1_data_addr}               192.168.10.99
-${mv_pc1_data_addr}               192.168.20.99
-${ny_pc1_data_addr}               192.168.30.99
+${hq_network_addr}                10.30.0.0/24
+${mv_network_addr}                10.10.0.0/24
+${ny_network_addr}                10.20.0.0/24
+${hq_pc1_data_addr}               10.30.0.30
+${mv_pc1_data_addr}               10.10.0.20
+${ny_pc1_data_addr}               10.20.0.20
 ${sec_policy_name}                Allow_All_Demo_POLICY
 
 ##############################
@@ -57,17 +52,17 @@ ${ny_nsg1_name}                   NY-NSG
 ${hq_nsg1_vport1_name}            HQ-VPORT1
 ${mv_nsg1_vport1_name}            MV-VPORT1
 ${ny_nsg1_vport1_name}            NY-VPORT1
-${hq_nsg1_wan1_ip}                10.10.10.10
-${mv_nsg1_wan1_ip}                10.10.20.10
-${ny_nsg1_wan1_ip}                10.10.30.10
-${hq_nsg1_wan2_ip}                10.20.10.10
-${mv_nsg1_wan2_ip}                10.20.20.10
-${ny_nsg1_wan2_ip}                10.20.30.10
+${hq_nsg1_wan1_ip}                10.10.1.10
+${mv_nsg1_wan1_ip}                10.10.2.10
+${ny_nsg1_wan1_ip}                10.10.3.10
 ${hq_nsg1_address}                394 Treat Ave, San Francisco, CA 94110
 ${mv_nsg1_address}                755 Ravendale Dr, Mountain View, CA
 ${ny_nsg1_address}                Ozone Park, New York, NY
 ${perf_monit_name}                Custom Probe
-
+${domain}                         nuage.lab
+${mv_wan_network}                 10.10.1.0/24
+${ny_wan_network}                 10.10.2.0/24
+${hq_wan_network}                 10.10.3.0/24
 
 *** Keywords ***
 Login NuageX User

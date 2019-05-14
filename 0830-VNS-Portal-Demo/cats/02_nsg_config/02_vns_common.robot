@@ -18,18 +18,11 @@ Create Infra GW Profile
 Create VSC Profiles
     Create VSC Profile
     ...    name=${vsc_profile1_name}
-    ...    firstController=${vsc-internet_control_ip}
-
-    Create VSC Profile
-    ...    name=${vsc_profile2_name}
-    ...    firstController=${vsc-mpls_control_ip}
+    ...    firstController=${vsc_mgmt_ip}
 
 Create Underlays
     Create Underlay in Platform Configuration
     ...    name=Internet
-
-    Create Underlay in Platform Configuration
-    ...    name=MPLS
 
 Create Infrastructure Access Profile
     Create Infrastructure Access Profile

@@ -27,18 +27,6 @@ Create Ports and VLANs in Internet NSG Template
     ...    cats_nsg_template_name=${nsg_template_name}
     ...    cats_nsg_port_template_name=port1-Internet
 
-    # port2 INTERNET NETWORK
-    Create Port Template in NSG Template
-    ...    name=port2-Internet
-    ...    physicalName=port2
-    ...    portType=NETWORK
-    ...    cats_nsg_template_name=${nsg_template_name}
-
-    Create VLAN Template in NSG Port Template
-    ...    value=0
-    ...    cats_nsg_template_name=${nsg_template_name}
-    ...    cats_nsg_port_template_name=port2-Internet
-
     # port3 ACCESS
     Create Port Template in NSG Template
     ...    cats_nsg_template_name=${nsg_template_name}
@@ -59,12 +47,6 @@ Associate VSC Profile
     ...    cats_vlan_id=0
     ...    cats_vsc_profile_name=${vsc_profile1_name}
 
-    Associate VSC Profile with NSG VLAN Template
-    ...    cats_nsg_template_name=${nsg_template_name}
-    ...    cats_nsg_port_template_name=port2-Internet
-    ...    cats_vlan_id=0
-    ...    cats_vsc_profile_name=${vsc_profile2_name}
-
 Create Uplink Connections
     Create Uplink Connection in NSG Vlan Template
     ...    cats_nsg_template_name=${nsg_template_name}
@@ -74,13 +56,6 @@ Create Uplink Connections
     ...    role=PRIMARY
     ...    cats_underlay_name=Internet
 
-    Create Uplink Connection in NSG Vlan Template
-    ...    cats_nsg_template_name=${nsg_template_name}
-    ...    cats_nsg_port_template_name=port2-Internet
-    ...    cats_vlan_id=0
-    ...    mode=Dynamic
-    ...    role=SECONDARY
-    ...    cats_underlay_name=MPLS
 
 Create NSG Instances
     # hq

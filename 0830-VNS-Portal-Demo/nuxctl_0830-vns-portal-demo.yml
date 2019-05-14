@@ -71,22 +71,12 @@ networks:
     dhcp: false
 
   # Delhi networks
-  - name: DL-Internet
+  - name: HQ-Internet
     cidr: 10.10.3.0/24
     dns: 10.0.0.1
     dhcp: true
-  - name: DL-LAN1
+  - name: HQ-LAN1
     cidr: 10.30.0.0/24
-    dns: 10.0.0.1
-    dhcp: false
-
-    # London networks
-  - name: LN-Internet
-    cidr: 10.10.4.0/24
-    dns: 10.0.0.1
-    dhcp: true
-  - name: LN-LAN1
-    cidr: 10.40.0.0/24
     dns: 10.0.0.1
     dhcp: false
 
@@ -111,18 +101,6 @@ servers:
       - index: 0
         network: private
         address: 10.0.0.6
-  
-  # VSCs
-  - name: vsc-i
-    image: nux_vsc_5.4.1
-    flavor: ceph.vsc
-    interfaces:
-      - index: 0
-        network: private
-        address: 10.0.0.9
-      - index: 1
-        network: MV-Internet
-        address: 10.10.1.11
 
   # MV servers
   - name: mv-nsg1
@@ -162,7 +140,7 @@ servers:
         index: 1
       - network: NY-LAN1
         address: 10.20.0.10
-        index: 4
+        index: 2
   - name: ny-pc1
     image: nux_branch_pc
     flavor: m1.small
@@ -174,21 +152,21 @@ servers:
         network: NY-LAN1
         address: 10.20.0.20
 
- # DL servers
-  - name: dl-nsg1
+ # HQ servers
+  - name: hq-nsg1
     flavor: m1.medium
     image: nux_nsg_5.4.1
     interfaces:
-      - network: DL-Internet
+      - network: HQ-Internet
         address: 10.10.3.10
         index: 0
       - network: dummy-wan
         address: 255.255.255.3
         index: 1
-      - network: DL-LAN1
+      - network: HQ-LAN1
         address: 10.30.0.10
-        index: 4
-  - name: dl-pc1
+        index: 2
+  - name: hq-pc1
     image: nux_branch_pc
     flavor: m1.small
     interfaces:
@@ -196,34 +174,8 @@ servers:
         network: private
         address: 10.0.0.30
       - index: 1
-        network: DL-LAN1
+        network: HQ-LAN1
         address: 10.30.0.30
-
-
- # LN servers
-  - name: ln-nsg1
-    flavor: m1.medium
-    image: nux_nsg_5.4.1
-    interfaces:
-      - network: LN-Internet
-        address: 10.10.4.10
-        index: 0
-      - network: dummy-wan
-        address: 255.255.255.4
-        index: 1
-      - network: LN-LAN1
-        address: 10.40.0.10
-        index: 4
-  - name: ln-pc1
-    image: nux_branch_pc
-    flavor: m1.small
-    interfaces:
-      - index: 0
-        network: private
-        address: 10.0.0.40
-      - index: 1
-        network: LN-LAN1
-        address: 10.40.0.40
 
   # Routers
   - name: pe-router
@@ -239,9 +191,6 @@ servers:
       - network: NY-Internet
         address: 10.10.2.1
         index: 2
-      - network: DL-Internet
+      - network: HQ-Internet
         address: 10.10.3.1
         index: 3
-      - network: LN-Internet
-        address: 10.10.4.1
-        index: 4

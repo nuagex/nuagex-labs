@@ -23,7 +23,7 @@ Get NSGs status
 Verify NSGs booted up
     # connect to PE Internet to ping NSGs WAN IP addresses
     Linux.Connect To Server With Keys
-    ...    server_address=${pe-internet_mgmt_ip}
+    ...    server_address=${pe-router}
     ...    username=root
     ...    priv_key=${ssh_key_path}
 
@@ -36,20 +36,6 @@ Verify NSGs booted up
     ...    hosts=${ips}
     ...    timeout=120
     
-    # connect to PE MPLS to ping NSGs WAN IP addresses
-    Linux.Connect To Server With Keys
-    ...    server_address=${pe-mpls_mgmt_ip}
-    ...    username=root
-    ...    priv_key=${ssh_key_path}
-
-    ${ips} =  Create List
-              ...  ${hq_nsg1_wan2_ip}
-              ...  ${mv_nsg1_wan2_ip}
-              ...  ${ny_nsg1_wan2_ip}
-
-    CATSUtils.Wait For All Hosts To Be Reachable
-    ...    hosts=${ips}
-    ...    timeout=120
 
 Setup SSH connections to Branch PCs and UtilVM
     ${util_conn} =  Linux.Connect To Server With Keys
