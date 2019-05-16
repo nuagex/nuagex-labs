@@ -73,6 +73,25 @@ The configuration is successful if every step is marked with the green PASS stat
 
 > Note, the automated lab configuration creates cronjobs on each PC on NSG side to support traffic scripts.
 
+## 3.2 LiveSP Configuration 
+
+You must run below commands on LiveSP before you start using for NSGs monitoring. 
+
+1. Connect to your jumpbox VM using `admin` user and private key.
+2. Connect to LiveSP VM using `ubuntu` user and `ubuntu` password.
+3. Run below commands using `livesp` user (Password is `livesp` too)
+
+```
+su - livesp 
+<enter_password_here>
+docker swarm leave 
+docker rm -vf  registry_registry_1
+livesp-install
+```
+4. Once installed you can connect to LiveSP GUI using `https://<jumpbox_ip>:2443` using `admin/admin` credentials. 
+
+> Note: Since LiveSP VM is a snapshot. LiveSP registry fails to get images after a while. Known issue, LiveSP VM team is working on it.
+
 # 4 Troubleshooting
 
 You must update physical address on each NSG. Even though CATS scripts add NSG address please verify from Nuage Networks VSD that addresses are reflecting on Nuage Networks VSD.
