@@ -11,7 +11,7 @@ Ensure HQ NSG is connected to both VSCs
                        ...    cats_nsg_name=${hq_nsg1_name}
 
     ${vsc-internet_conn} =  VSC.Login
-                            ...  vsc_address=${vsc-internet_mgmt_ip}
+                            ...  vsc_address=${vsc_mgmt_ip}
                             ...  username=admin
                             ...  password=admin
 
@@ -25,7 +25,7 @@ Ensure HQ NSG is connected to both VSCs
 
     Local_lib.NSG Should Have Active Controllers
     ...  controller_info=${output}
-    ...  controller_number=2
+    ...  controller_number=1
 
 Ensure MV NSG is connected to both VSCs
     ${mv_nsg_sysid} =  Get NSG System ID
@@ -33,7 +33,7 @@ Ensure MV NSG is connected to both VSCs
                        ...    cats_nsg_name=${mv_nsg1_name}
 
     ${vsc-mpls_conn} =  VSC.Login
-                        ...  vsc_address=${vsc-mpls_mgmt_ip}
+                        ...  vsc_address=${vsc_mgmt_ip}
                         ...  username=admin
                         ...  password=admin
 
@@ -46,7 +46,7 @@ Ensure MV NSG is connected to both VSCs
 
     Local_lib.NSG Should Have Active Controllers
     ...  controller_info=${output}
-    ...  controller_number=2
+    ...  controller_number=1
 
 Ensure NY NSG is connected to both VSCs
     ${ny_nsg_sysid} =  Get NSG System ID
@@ -54,7 +54,7 @@ Ensure NY NSG is connected to both VSCs
                        ...    cats_nsg_name=${ny_nsg1_name}
 
     ${vsc-mpls_conn} =  VSC.Login
-                        ...  vsc_address=${vsc-mpls_mgmt_ip}
+                        ...  vsc_address=${vsc_mgmt_ip}
                         ...  username=admin
                         ...  password=admin
 
@@ -67,4 +67,4 @@ Ensure NY NSG is connected to both VSCs
 
     Local_lib.NSG Should Have Active Controllers
     ...  controller_info=${output}
-    ...  controller_number=2
+    ...  controller_number=1
