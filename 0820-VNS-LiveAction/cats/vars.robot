@@ -15,6 +15,7 @@ ${vsc-mpls_control_ip}            10.20.1.3
 ${vsc-internet_system_ip}         192.168.168.1
 ${vsc-mpls_system_ip}             192.168.168.2
 ${portal_mgmt_ip}                 10.0.0.6
+${livesp_mgmt_ip}                 10.0.0.11
 ${util_mgmt_ip}                   10.0.0.33
 ${hq_pc1_mgmt_addr}               10.0.0.110
 ${mv_pc1_mgmt_addr}               10.0.0.120
