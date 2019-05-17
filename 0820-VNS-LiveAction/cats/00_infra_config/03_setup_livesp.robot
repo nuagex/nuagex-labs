@@ -15,7 +15,7 @@ Connect LiveSP VM
 ## Re-Install LiveSP
 Re Install LiveSP
     SSHLibrary.Execute Command    docker swarm leave 
-    SSHLibrary.Execute Command    docker rm -vf  registry_registry_1 
+    SSHLibrary.Execute Command    docker rm -vf registry_registry_1 
     SSHLibrary.Execute Command    livesp-install -m "Re-install setup"
 
 ## This is a knowsn Bug team is aware of this. 

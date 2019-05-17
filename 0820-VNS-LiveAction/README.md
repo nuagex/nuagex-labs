@@ -49,6 +49,10 @@ The configuration is performed by the CATS tool running in a container on the la
    ```
    ssh -i <path_to_your_nuagex_private_key> admin@<lab_public_ip>
    ```
+2. Clone Github repo on your jumpbox VM using below command:
+   ```
+   git clone https://github.com/nuagex/nuagex-labs.git
+   ```
 
 ## 3.1 Starting configuration process
 The configuration process will handle all of the heavy-lifting of the lab configuration. Starting with overlay object creation as well as NSG bootstrapping and activation, finishing with the creation of traffic scripts between NSGs PCs to support LiveAction traffic.
