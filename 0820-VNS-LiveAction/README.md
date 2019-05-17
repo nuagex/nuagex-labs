@@ -73,9 +73,8 @@ The configuration is successful if every step is marked with the green PASS stat
 
 > Note, the automated lab configuration creates cronjobs on each PC on NSG side to support traffic scripts.
 
-4. Once installed you can connect to LiveSP GUI using `https://<jumpbox_ip>:2443` using `admin/admin` credentials. 
-
-> Note: Since LiveSP VM is a snapshot. LiveSP registry fails to get images after a while. Known issue, LiveSP VM team is working on it.
+## 3.2 LiveSP Connection Details 
+Once installed you can connect to LiveSP GUI using `https://<jumpbox_ip>:2443` using `admin/admin` credentials. 
 
 # 4 Troubleshooting
 
