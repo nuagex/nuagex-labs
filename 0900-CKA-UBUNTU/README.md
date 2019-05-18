@@ -8,7 +8,7 @@ The repository contains two configuration scripts that will install the necessar
 ```bash
 # execute on every VM
 # check the script contents to see what will be installed/configured on each node
-curl -s https://raw.githubusercontent.com/nuagex/nuagex-labs/exfo/0900-CKA-UBUNTU/all_nodes.sh | bash
+curl -s https://raw.githubusercontent.com/nuagex/nuagex-labs/master/0900-CKA-UBUNTU/all_nodes.sh | bash
 ```
 
 Note, that the installation script will install k8s components version `1.13.5-00`. Change the version inside the `all_nodes.sh` script if you'd like a different version.
@@ -17,7 +17,7 @@ Then, on a master node only (lets assume the master is the first VM with the 10.
 
 ```bash
 # execute on master node only
-curl -s https://raw.githubusercontent.com/nuagex/nuagex-labs/exfo/0900-CKA-UBUNTU/master.sh | bash
+curl -s https://raw.githubusercontent.com/nuagex/nuagex-labs/master/0900-CKA-UBUNTU/master.sh | bash
 ```
 
 The result of the `master.sh` command is the `join` command string that you need to run with sudo privileges on the worker nodes. for example:
@@ -31,8 +31,8 @@ sudo kubeadm join 10.0.0.2:6443 --token 6gneym.45l4102hvgz4jmac --discovery-toke
 This will enable your cluster and join nodes to the master. This can be verified with:
 ```
 ubuntu@master:~$ kubectl get nodes
-NAME     STATUS   ROLES    AGE   VERSION
-master   Ready    master   70m   v1.12.2
-node1    Ready    <none>   69m   v1.12.2
-node2    Ready    <none>   69m   v1.12.2
+NAME     STATUS   ROLES    AGE    VERSION
+master   Ready    master   2m3s   v1.13.5
+node1    Ready    <none>   39s    v1.13.5
+node2    Ready    <none>   32s    v1.13.5
 ```
