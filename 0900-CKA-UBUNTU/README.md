@@ -5,12 +5,13 @@ Once the lab is deployed with `nuxctl` the three Ubuntu 18.04 VMs should be conf
 
 The repository contains two configuration scripts that will install the necessary k8s components and the Flannel CNI plugin. The `all_nodes.sh` script should be run first on all nodes:
 
-
 ```bash
 # execute on every VM
 # check the script contents to see what will be installed/configured on each node
 curl -s https://raw.githubusercontent.com/nuagex/nuagex-labs/exfo/0900-CKA-UBUNTU/all_nodes.sh | bash
 ```
+
+Note, that the installation script will install k8s components version `1.13.5-00`. Change the version inside the `all_nodes.sh` script if you'd like a different version.
 
 Then, on a master node only (lets assume the master is the first VM with the 10.0.0.2 IP address) execute the `master.sh` script:
 
