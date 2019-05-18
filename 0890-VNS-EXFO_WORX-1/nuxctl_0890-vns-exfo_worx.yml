@@ -1,0 +1,219 @@
+# nuxctl (nuxctl.nuagex.io) template
+# compatible with nuxctl 0.6.0+ version
+template: 5c9d456635505600017bf9d4
+name: exfo-worx-integration
+sshKeys:
+  - name: demo  # WARNING: make sure to use your public key instead of the demo one
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0jLLF2c7sSUHCwFJ1cpj0mTNRfemi6XMKxAf7H4gIzs/joL18W+wlSrnHnu801bDLc2RNg8dvOvXmzjzZrKKMInWMXrzb0zjljCPumYWlI/koWAIMzpENjeRjWrB22WFVOVDW4GkphzhchFWFPSF9xxU4i3MPHn3HYZiy6ieLOvknplQDivTXcLwRjvenK35gjLPxo4nFhQWyUdzPLLCb/NUx/CGjkh10qwVfw+AWw3x3boqxwBXitPjLJ+ocfZVohAWupKuvsTNzlh8m39imI5pi9qTFT1x9YtkYsTYCy2iz2HCirqy+8BC/CPCyHuEjs8ZT9OFHHQtjB/qgzfTp"
+
+services:
+# - name: vsd-url
+#   type: public
+#   port: 8443
+#   urlScheme: https
+#   protocols:
+#   - tcp
+#   destination:
+#     port: 8443
+#     address: 10.0.0.2
+# - name: elasticsearch-api
+#   type: public
+#   port: 6200
+#   protocols:
+#   - tcp
+#   destination:
+#     port: 6200
+#     address: 10.0.0.5
+  - name: exfo-worx
+    type: public
+    port: 8080
+    protocols:
+      - tcp
+    destination:
+      port: 8080
+      address: 10.0.0.8
+  - name: rdp-hqpc1
+    type: public
+    port: 33899
+    protocols:
+      - tcp
+    destination:
+      port: 3389
+      address: 10.0.0.190
+  - name: rdp-branch1pc1
+    type: public
+    port: 33891
+    protocols:
+      - tcp
+    destination:
+      port: 3389
+      address: 10.0.0.110
+
+
+###################
+#                 #
+# N E T W O R K S #
+#                 #
+###################
+networks:
+  # - name: private
+  #   cidr: 10.0.0.0/24
+  #   dns:
+  #     - 10.0.0.1
+  #   dhcp: true
+
+  # HQ networks
+  - name: HQ-Internet
+    cidr: 10.10.90.0/24
+    dns: 10.0.0.1
+    dhcp: true
+  - name: HQ-LAN1
+    cidr: 192.168.90.0/24
+    dns: 10.0.0.1
+    dhcp: false
+  - name: HQ-LAN2
+    cidr: 192.168.91.0/24
+    dns: 10.0.0.1
+    dhcp: false
+
+  # Branch_1 networks
+  - name: Branch_1-Internet
+    cidr: 10.10.10.0/24
+    dns: 10.0.0.1
+    dhcp: true
+  - name: Branch_1-LAN1
+    cidr: 192.168.10.0/24
+    dns: 10.0.0.1
+    dhcp: false
+
+  # dummy networks
+  # used to isolate second uplink of NSGVs
+  - name: dummy-wan
+    cidr: 255.255.255.0/24
+    dhcp: false
+
+
+#################
+#               #
+# S E R V E R S #
+#               #
+#################
+servers:
+# - name: vsd
+#   image: vsd_nux_base-vns-single-underlay-5.4.1
+#   flavor: nux.vsd
+#   interfaces:
+#   - index: 0
+#     network: private
+#     address: 10.0.0.2
+# - name: vsc
+#   image: vsc_nux_base-vns-single-underlay-5.4.1
+#   flavor: nux.vsc
+#   interfaces:
+#   - index: 0
+#     network: private
+#     address: 10.0.0.3
+# - name: es
+#   image: es_nux_base-vns-single-underlay-5.4.1
+#   flavor: nux.vsd
+#   interfaces:
+#   - index: 0
+#     network: private
+#     address: 10.0.0.5
+# - name: util
+#   image: util_nux_base-vns-single-underlay-5.4.1
+#   flavor: m1.small
+#   interfaces:
+#   - index: 0
+#     network: private
+#     address: 10.0.0.33
+
+  # HQ servers
+  - name: exfo-worx
+    image: nux_exfo_worx_10.1_sp6
+    flavor: m1.large
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.8
+
+  - name: hq-nsg1
+    flavor: m1.medium
+    image: nux_nsg_5.4.1
+    interfaces:
+      - network: HQ-Internet
+        address: 10.10.90.10
+        index: 0
+      - network: dummy-wan
+        address: 255.255.255.1
+        index: 1
+      - network: HQ-LAN2
+        address: 192.168.91.1
+        index: 2
+      - network: HQ-LAN1
+        address: 192.168.90.1
+        index: 3
+
+  - name: hq-pc1
+    image: nux_branch_pc
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.190
+      - index: 1
+        network: HQ-LAN1
+        address: 192.168.90.2
+
+  - name: test-pc
+    image: CentOS-7.5-x86_64-GenericCloud
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.191
+      - index: 1
+        network: HQ-LAN2
+        address: 192.168.91.2
+
+  # Branch_1 servers
+  - name: branch1-nsg1
+    flavor: m1.medium
+    image: nux_nsg_5.4.1
+    interfaces:
+      - network: Branch_1-Internet
+        address: 10.10.10.10
+        index: 0
+      - network: dummy-wan
+        address: 255.255.255.2
+        index: 1
+      - network: Branch_1-LAN1
+        address: 192.168.10.1
+        index: 2
+
+  - name: branch1-pc1
+    image: nux_branch_pc
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.110
+      - index: 1
+        network: Branch_1-LAN1
+        address: 192.168.10.2
+
+
+  # Routers
+  - name: pe-internet
+    flavor: m1.small
+    image: CentOS-7.5-x86_64-GenericCloud
+    interfaces:
+      - network: private
+        address: 10.0.0.210
+        index: 0
+      - network: HQ-Internet
+        address: 10.10.90.1
+        index: 2
+      - network: Branch_1-Internet
+        address: 10.10.10.1
+        index: 3
