@@ -1,55 +1,38 @@
-The lab provides a simple 3-nodes kubernetes cluster running on Ubuntu 18.04 servers to practice with Kubernetes or prepare for the CKA exam.
+The lab provides a simple 3-nodes Kubernetes cluster running on `Ubuntu 18.04` servers to practice Kubernetes skills or prepare for the CKA exam.
 
-## Nodes configuration
-Once the lab is deployed with `nuxctl` the k8s nodes (one master and two nodes) should be configured with some initial commands:
+## Master and worker nodes configuration
+Once the lab is deployed with `nuxctl` the three Ubuntu 18.04 VMs should be configured to act as a k8s master and worker nodes.
 
-Create a `setup.sh` file and include the following portion on all nodes:
-```
-# on all nodes
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+The repository contains two configuration scripts that will install the necessary k8s components and the Flannel CNI plugin. The `all_nodes.sh` script should be run first on all nodes:
 
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-cat << EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
-deb https://apt.kubernetes.io/ kubernetes-xenial main
-EOF
-
-sudo apt-get update
-sudo apt-get install -y docker-ce=18.06.1~ce~3-0~ubuntu kubelet=1.12.2-00 kubeadm=1.12.2-00 kubectl=1.12.2-00
-sudo apt-mark hold docker-ce kubelet kubeadm kubectl
-
-echo "net.bridge.bridge-nf-call-iptables=1" | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
+```bash
+# execute on every VM
+# check the script contents to see what will be installed/configured on each node
+curl -s https://raw.githubusercontent.com/nuagex/nuagex-labs/master/0900-CKA-UBUNTU/all_nodes.sh | bash
 ```
 
-Then, on a master node only, add the following lines
-```
-# on master
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+Note, that the installation script will install k8s components version `1.13.5-00`. Change the version inside the `all_nodes.sh` script if you'd like a different version.
 
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+Then, on a master node only (lets assume the master is the first VM with the 10.0.0.2 IP address) execute the `master.sh` script:
 
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/bc79dd1505b0c8681ece4de4c0d86c5cd2643275/Documentation/kube-flannel.yml
+```bash
+# execute on master node only
+curl -s https://raw.githubusercontent.com/nuagex/nuagex-labs/master/0900-CKA-UBUNTU/master.sh | bash
 ```
 
-Execute the setup file on master first and then run it on the nodes.
+The result of the `master.sh` command is the `join` command string that you need to run with sudo privileges on the worker nodes. for example:
 
-When the script running on master finishes, you will get the `join` command string that you need to run with sudo on the nodes. for example:
-
-```
+```bash
 # on node1/2
+# note, your string will be different, check the output of the `master.sh` command
 sudo kubeadm join 10.0.0.2:6443 --token 6gneym.45l4102hvgz4jmac --discovery-token-ca-cert-hash sha256:53f5c0a2a72a436eed3ac320f531e96bafbab0f082f23063279a2c7c01c85c7a
 ```
 
 This will enable your cluster and join nodes to the master. This can be verified with:
 ```
 ubuntu@master:~$ kubectl get nodes
-NAME     STATUS   ROLES    AGE   VERSION
-master   Ready    master   70m   v1.12.2
-node1    Ready    <none>   69m   v1.12.2
-node2    Ready    <none>   69m   v1.12.2
+NAME     STATUS   ROLES    AGE    VERSION
+master   Ready    master   2m3s   v1.13.5
+node1    Ready    <none>   39s    v1.13.5
+node2    Ready    <none>   32s    v1.13.5
 ```
