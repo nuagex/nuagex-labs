@@ -1,0 +1,196 @@
+# nuxctl (nuxctl.nuagex.io) template
+# compatible with nuxctl 0.6.0+ version
+template: 5c9d456635505600017bf9d4
+name: vns-portal-demo
+sshKeys:
+  - name: demo  # WARNING: make sure to use your public key instead of the demo one
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDw1jIozLL7p5Ar685vgoSqhIEKoxRn/BpvEaiZkZORZo+Ox4HHRGrW+NZJLvmWj+PxxNj6Mw1b6X0uK9eq1VRuW1y1gHK+7T92GxakyreJW1rIC1DfdVxJZXEv+mN17GSSekdUG/FGadjIr4lUwInPr10g2inmICwM+1sEDMiNBC0/e0mGoAdIe+RHngLTdJShxC7EedfNlIianBGykul3zXGiVr51wxHeI3IqD3tRTs6J9+Fyu6XPtH1+MN/rquVJgpposoPMljRDIWDB/elORmtL47ZEzOcHEPe8KJ7Ha4Y+YBiwo751UIptwgy9OHpU87MpJx9tjSmEr/apVdJ7 arunpoonia@Aruns-MacBook-Pro.local"
+
+services:
+  - name: amqp
+    type: public
+    port: 5672
+    protocols:
+      - tcp
+    destination:
+      port: 5672
+      address: 10.0.0.2
+  - name: stomp
+    type: public
+    port: 61614
+    protocols:
+      - tcp
+    destination:
+      port: 61614
+      address: 10.0.0.2
+  - name: vns_portal_ui
+    type: public
+    port: 1443
+    urlScheme: http
+    protocols:
+      - tcp
+    destination:
+      port: 80
+      address: 10.0.0.6
+    credentials:
+      username: superAdmin
+      password: abcd1234
+      organization: csp
+
+###################
+#                 #
+# N E T W O R K S #
+#                 #
+###################
+networks:
+  # - name: private
+  #   cidr: 10.0.0.0/24
+  #   dns:
+  #   - 10.0.0.1
+  #   dhcp: true
+  # Mountain View networks
+
+  # New York networks
+  - name: MV-Internet
+    cidr: 10.10.1.0/24
+    dns: 10.0.0.1
+    dhcp: true
+  - name: MV-LAN1
+    cidr: 10.10.0.0/24
+    dns: 10.0.0.1
+    dhcp: false
+
+  # New York networks
+  - name: NY-Internet
+    cidr: 10.10.2.0/24
+    dns: 10.0.0.1
+    dhcp: true
+  - name: NY-LAN1
+    cidr: 10.20.0.0/24
+    dns: 10.0.0.1
+    dhcp: false
+
+  # Delhi networks
+  - name: HQ-Internet
+    cidr: 10.10.3.0/24
+    dns: 10.0.0.1
+    dhcp: true
+  - name: HQ-LAN1
+    cidr: 10.30.0.0/24
+    dns: 10.0.0.1
+    dhcp: false
+
+  # dummy networks
+  # used to isolate wan interfaces of NSGVs
+  - name: dummy-wan
+    cidr: 255.255.255.0/28
+    dhcp: false
+
+#################
+#               #
+# S E R V E R S #
+#               #
+#################
+servers:
+  # inherit default Servers present in template
+
+  - name: portal
+    image: CentOS-7.5-x86_64-GenericCloud
+    flavor: ceph.vsd
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.6
+
+  # MV servers
+  - name: mv-nsg1
+    flavor: m1.medium
+    image: nux_nsg_5.4.1
+    interfaces:
+      - network: MV-Internet
+        address: 10.10.1.10
+        index: 0
+      - network: dummy-wan
+        address: 255.255.255.1
+        index: 1
+      - network: MV-LAN1
+        address: 10.10.0.10
+        index: 2
+  - name: mv-pc1
+    image: nux_branch_pc
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.10
+      - index: 1
+        network: MV-LAN1
+        address: 10.10.0.20
+
+  # NY servers
+  - name: ny-nsg1
+    flavor: m1.medium
+    image: nux_nsg_5.4.1
+    interfaces:
+      - network: NY-Internet
+        address: 10.10.2.10
+        index: 0
+      - network: dummy-wan
+        address: 255.255.255.2
+        index: 1
+      - network: NY-LAN1
+        address: 10.20.0.10
+        index: 2
+  - name: ny-pc1
+    image: nux_branch_pc
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.20
+      - index: 1
+        network: NY-LAN1
+        address: 10.20.0.20
+
+ # HQ servers
+  - name: hq-nsg1
+    flavor: m1.medium
+    image: nux_nsg_5.4.1
+    interfaces:
+      - network: HQ-Internet
+        address: 10.10.3.10
+        index: 0
+      - network: dummy-wan
+        address: 255.255.255.3
+        index: 1
+      - network: HQ-LAN1
+        address: 10.30.0.10
+        index: 2
+  - name: hq-pc1
+    image: nux_branch_pc
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.30
+      - index: 1
+        network: HQ-LAN1
+        address: 10.30.0.30
+
+  # Routers
+  - name: pe-router
+    flavor: m1.small
+    image: CentOS-7.5-x86_64-GenericCloud
+    interfaces:
+      - network: private
+        address: 10.0.0.50
+        index: 0
+      - network: MV-Internet
+        address: 10.10.1.1
+        index: 1
+      - network: NY-Internet
+        address: 10.10.2.1
+        index: 2
+      - network: HQ-Internet
+        address: 10.10.3.1
+        index: 3

@@ -1,0 +1,20 @@
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+# For details see man 4 crontabs
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name  command to be executed
+*/2 *  *  *  * root /usr/bin/timeout 300 dd if=/dev/zero count=1000000 bs=4096 | ip netns exec ns-data ssh -i /root/.ssh/id_rsa root@{{mv_pc_address}} 'cat > /dev/null'
+*/2 *  *  *  * root /usr/bin/timeout 300 dd if=/dev/zero count=1000000 bs=4096 | ip netns exec ns-data ssh -i /root/.ssh/id_rsa root@{{ny_pc_address}} 'cat > /dev/null'
+*/5 *  *  *  *  root /usr/bin/timeout 250 ip netns exec ns-data iperf -s -p 5201 > /dev/null
+*/5 *  *  *  *  root /usr/bin/timeout 250 ip netns exec ns-data cvlc --random --loop /root/livesp.mp4 :sout=#gather:rtp{sdp=rtsp://:1234/} :network-caching=1500 :sout-all :sout-keep > /dev/null
+*/5 *  *  *  *  root cd /var/www/html && /usr/bin/timeout 180 ip netns exec ns-data python -m SimpleHTTPServer 9000 > /dev/null
+*/5 *  *  *  *  root /usr/bin/timeout 250 ip netns exec ns-data ./sipp -sn uas -mi {{hq_pc_address}} > /dev/null
