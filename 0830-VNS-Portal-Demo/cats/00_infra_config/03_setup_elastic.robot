@@ -22,7 +22,7 @@ Untar Snapshot file
     ...  shell=True
     ...  sudo=True
 
-Move directory 
+Move Snapshot directory 
     SSHLibrary.Execute Command
     ...  cd /root && mv nuage_elastic_backup/ /usr/local/bin/
     ...  shell=True
@@ -34,11 +34,25 @@ Move directory
     ...  sudo=True
 
     SSHLibrary.Execute Command
-    ...  systemctl status elasticsearch
+    ...  systemctl restart elasticsearch
     ...  shell=True
     ...  sudo=True
+
+    Sleep    20
 
     SSHLibrary.Execute Command
     ...  curl -X PUT "localhost:9200/_snapshot/my_nuage_backup" -H 'Content-Type: application/json' -d' { "type": "fs", "settings": { "location": "/usr/local/bin/nuage_elastic_backup/", "compress": true } }'
     ...  shell=True
     ...  sudo=True
+
+    # transfer restore files
+    SSHLibrary.Put File
+    ...  source=${CURDIR}/scripts/restore.sh
+    ...  destination=/usr/local/bin/restore.sh
+    ...  mode=0755
+
+    # transfer delete files
+    SSHLibrary.Put File
+    ...  source=${CURDIR}/scripts/delete.sh
+    ...  destination=/usr/local/bin/delete.sh
+    ...  mode=0755
