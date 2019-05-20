@@ -4,7 +4,7 @@ Resource          ../vars.robot
 Force Tags        pe-config
 
 *** Test Cases ***
-Configure PE Internet
+Configure PE Router
     Linux.Connect To Server With Keys
     ...    server_address=${pe-router}
     ...    username=root
@@ -40,7 +40,7 @@ Configure PE Internet
     ## should be only configured on the internet PE
     SSHLibrary.Execute Command    iptables -t nat -A POSTROUTING -o eth0 ! -d 10.0.0.0/8 -j MASQUERADE
 
-Configure VSC Internet
+Configure VSC VM
     VSC.Login
     ...    vsc_address=${vsc_mgmt_ip}
     ...    username=admin
