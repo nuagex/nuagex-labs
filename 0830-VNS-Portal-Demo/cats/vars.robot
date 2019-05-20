@@ -20,7 +20,7 @@ ${ny_pc1_mgmt_addr}               10.0.0.20
 #     OVERLAY VARIABLES
 ##############################
 ${org_profile_name}               ORG_PROFILE
-${org_name}                       Nokia
+${org_name}                       Portal-Demo
 ${l3domain_template_name}         L3_DOMAIN_TEMPLATE
 ${l3domain_name}                  ORG_DOMAIN
 ${hq_zone_name}                   HQ_ZONE
