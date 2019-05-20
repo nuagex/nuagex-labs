@@ -23,7 +23,7 @@ ${org_profile_name}               ORG_PROFILE
 ${org_name}                       Portal-Demo
 ${l3domain_template_name}         L3_DOMAIN_TEMPLATE
 ${l3domain_name}                  ORG_DOMAIN
-${hq_zone_name}                   HQ_ZONE
+${hq_zone_name}                   DL_ZONE
 ${mv_zone_name}                   MV_ZONE
 ${ny_zone_name}                   NY_ZONE
 ${hq_subnet_name}                 HQ_SUB
