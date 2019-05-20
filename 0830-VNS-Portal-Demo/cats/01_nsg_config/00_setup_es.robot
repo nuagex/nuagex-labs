@@ -10,8 +10,8 @@ Connect to ES VM
                ...    username=root
                ...    priv_key=${ssh_key_path}
 
-Copy Snapshot file
+Run delete indexes script
     SSHLibrary.Execute Command
-    ...  /usr/local/bin/delete.sh
+    ...  bash /usr/local/bin/delete.sh
     ...  shell=True
     ...  sudo=True
