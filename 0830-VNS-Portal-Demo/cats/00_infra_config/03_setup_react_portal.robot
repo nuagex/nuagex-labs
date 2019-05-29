@@ -62,7 +62,7 @@ Download docker images tar file
 
 Import images 
     SSHLibrary.Execute Command
-        ...  gunzip -c /root/${react_file_url} | docker load
+        ...  gunzip -c /root/${react_tar_file_name} | docker load
         ...  shell=True
         ...  sudo=True
 
