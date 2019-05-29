@@ -4,13 +4,13 @@ Resource          ../vars.robot
 Suite Setup       Login NuageX User
 
 *** Test Cases ***
-Connect to portal host
+Connect to react portal host
     ${conn} =  Linux.Connect To Server With Keys
                ...    server_address=${portal_react_mgmt_ip}
                ...    username=root
                ...    priv_key=${ssh_key_path}
 
-Install docker and docker compose on Portal VM
+Install docker and docker compose on react Portal VM
     [Tags]  portal-docker-installation
 
     SSHLibrary.Execute Command
@@ -33,7 +33,7 @@ Install docker and docker compose on Portal VM
     ...  shell=True
     ...  sudo=True
 
-Template portal configuration file
+Template react portal configuration file
     Process.Run Process
     ...  curl -s ifconfig.io
     ...  shell=True
@@ -45,7 +45,7 @@ Template portal configuration file
 
     ${data} =  CATSUtils.Render J2 Template
                ...  source=${CURDIR}/data/portal_vars.j2
-               ...  portal_fqdn=${lab_ip}:1443
+               ...  portal_fqdn=${lab_ip}:2443
                ...  vsd_fqdn=vsd.${domain}:8443
                ...  vsd_auth_username=proxy
                ...  vsd_auth_password=proxy
@@ -54,9 +54,15 @@ Template portal configuration file
 
     SSHLibrary.Execute Command    cat > /home/centos/portal.properties <<EOF${\n}${data}${\n}EOF
 
+Download docker images tar file 
+    SSHLibrary.Execute Command
+        ...  cd /root && curl -L -O  ${react_file_url}
+        ...  shell=True
+        ...  sudo=True
+
 Import images 
     SSHLibrary.Execute Command
-        ...  gunzip -c /root/nuage-portal-container-5.3.0-5.tar.gz | docker load
+        ...  gunzip -c /root/${react_file_url} | docker load
         ...  shell=True
         ...  sudo=True
 
