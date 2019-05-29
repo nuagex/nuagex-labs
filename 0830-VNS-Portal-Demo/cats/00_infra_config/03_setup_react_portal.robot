@@ -56,7 +56,7 @@ Template react portal configuration file
 
 Download docker images tar file 
     SSHLibrary.Execute Command
-        ...  cd /root && curl -L -O  ${react_file_url}
+        ...  cd /root && curl -L -O ${react_file_url}
         ...  shell=True
         ...  sudo=True
 
