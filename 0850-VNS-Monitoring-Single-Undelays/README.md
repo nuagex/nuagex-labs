@@ -26,20 +26,7 @@ Both the HQ and the branchs are equipped with a Nuage Networks NSG. The headquar
 
 # Use cases
 
-Provide a generic VNS monitoring setup that includes two NSG-Vs and PC behind each NSG. This setup can be used to showcase our SD-WAN portal and/or 3rd party monitoring (with a single underlay in this version of the lab). The focus will mainly be on API calls to both VSD and ES.
-
-# Uses
-
-Clone this repo locally to your machine and follow below sections carefully: 
-
-
-```
- git clone https://github.com/nuagex/nuagex-labs.git
- git checkout liveaction
- cd 0830-VNS-Monitoring-Generic
-```
-
-> Note: Changes are not merged yet, so you will need to checkout `liveaction` branch to use this repo. 
+Provide a generic VNS monitoring setup that includes three NSG-Vs and PC behind each NSG. This setup can be used to showcase our SD-WAN portal and/or 3rd party monitoring (with a single underlay in this version of the lab). The focus will mainly be on API calls to both VSD and ES.
 
 # Deployment 
 
