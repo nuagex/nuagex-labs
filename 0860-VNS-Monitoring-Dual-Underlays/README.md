@@ -32,7 +32,8 @@ Provide a generic VNS monitoring setup that includes three NSG-Vs and PC behind 
 
 The lab is meant to be deployed on NuageX platform and is automated by the [nuxctl](https://nuxctl.nuagex.io) CLI tool. All of the infrastructure deployment will be completed after a user runs the the tool against the [lab template](nuxctl_0860-vns-monitoring_dual_underlays.yml) supplied within this repo.
 
-The lab is based on the NuageX's **Base VNS Template - 5.4.1 - Single Underlay** template and has additional infra components required to support the LiveAction integration and use case demonstration
+The lab is based on the NuageX's **Base VNS Template - 5.4.1 - Dual Underlay** template and has additional infra components required to support the integration and use case demonstration.
+
 
 ## 2.1 Prerequisites
 1. [Download](https://nuxctl.nuagex.io#download) `nuxctl` for your operating system.
@@ -85,8 +86,8 @@ The configuration is successful if every step is marked with the green PASS stat
 
 > Note, the automated lab configuration creates cronjobs on each PC on NSG side to support traffic scripts.
 
-## 3.2 LiveSP Connection Details
-Once installed you can connect to LiveSP GUI using `https://<jumpbox_ip>:2443` using `admin/admin` credentials. 
+## 3.2 Portal Connection Details
+Once installed you can connect to SD-WAN Portal GUI using `https://<jumpbox_ip>:1443` using `superAdmin/abcd1234/csp` credentials.
 
 # 4 Troubleshooting
 
