@@ -43,14 +43,14 @@ Clone this repo locally to your machine and follow below sections carefully:
 
 # Deployment 
 
-The lab is meant to be deployed on NuageX platform and is automated by the [nuxctl](https://nuxctl.nuagex.io) CLI tool. All of the infrastructure deployment will be completed after a user runs the the tool against the [lab template](nuxctl_0850-vns-monitoring_single_underlays) supplied within this repo.
+The lab is meant to be deployed on NuageX platform and is automated by the [nuxctl](https://nuxctl.nuagex.io) CLI tool. All of the infrastructure deployment will be completed after a user runs the the tool against the [lab template](nuxctl_0850-vns-monitoring_single_underlays.yml) supplied within this repo.
 
 The lab is based on the NuageX's **Base VNS Template - 5.4.1 - Single Underlay** template and has additional infra components required to support the LiveAction integration and use case demonstration
 
 ## 2.1 Prerequisites
 1. [Download](https://nuxctl.nuagex.io#download) `nuxctl` for your operating system.
-2. Download the [nuxctl_0850-vns-monitoring_single_underlays](nuxctl_0850-vns-monitoring_single_underlays) lab definition file created for this lab or clone this repository as a whole.
-3. Replace the [public key](nuxctl_0850-vns-monitoring_single_underlays#L7) in the lab definition file with the public key you have in your NuageX user account.
+2. Download the [nuxctl_0850-vns-monitoring_single_underlays](nuxctl_0850-vns-monitoring_single_underlays.yml) lab definition file created for this lab or clone this repository as a whole.
+3. Replace the [public key](nuxctl_0850-vns-monitoring_single_underlays.yml#L7) in the lab definition file with the public key you have in your NuageX user account.
 
 ## 2.2 Starting deployment process
 To initiate the deployment routine proceed with the following command:

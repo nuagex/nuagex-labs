@@ -5,7 +5,7 @@
 * **requirements**: Nuage 5.4.1+
 * **designer**: Arun Poonia
 
-This lab deploys a generic VNS lab with 3x NSG-Vs. The lab consists of an Organization comprised of a San Francisco HQ site, a Mountain View site and a New York Branch site that are deployed over a single underlay (Internet).
+This lab deploys a generic VNS lab with 3x NSG-Vs. The lab consists of an Organization comprised of a San Francisco HQ site, a Mountain View site and a New York Branch site that are deployed over a dual underlays (Internet, MPLS).
 
 All branches are equipped with a single NSG, and each NSG has a single user-PC on the LAN subnet.
 
@@ -20,7 +20,7 @@ Once a lab is deployed and configured using automation scripts, it will match th
 
 ![lab](./images/image.png)
 
-The lab models an Organization with a headquarters (HQ) and a branch sites deployed over single underlay (Internet).
+The lab models an Organization with a headquarters (HQ) and a branch sites deployed over dual underlay (Internet,MPLS).
 
 Both the HQ and the branchs are equipped with a Nuage Networks NSG. The headquarters site user devices and branch offices user devices are emulated using the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows to generate and analyze traffic as well as run some real-world applications. Although the devices are not needed to demonstrate the features of a joint solution, they are used here as the Installer PCs to automatically bootstrap the NSGs.
 
@@ -43,14 +43,14 @@ Clone this repo locally to your machine and follow below sections carefully:
 
 # Deployment 
 
-The lab is meant to be deployed on NuageX platform and is automated by the [nuxctl](https://nuxctl.nuagex.io) CLI tool. All of the infrastructure deployment will be completed after a user runs the the tool against the [lab template](nuxctl_0860-vns-monitoring_dual_underlays) supplied within this repo.
+The lab is meant to be deployed on NuageX platform and is automated by the [nuxctl](https://nuxctl.nuagex.io) CLI tool. All of the infrastructure deployment will be completed after a user runs the the tool against the [lab template](nuxctl_0860-vns-monitoring_dual_underlays.yml) supplied within this repo.
 
 The lab is based on the NuageX's **Base VNS Template - 5.4.1 - Single Underlay** template and has additional infra components required to support the LiveAction integration and use case demonstration
 
 ## 2.1 Prerequisites
 1. [Download](https://nuxctl.nuagex.io#download) `nuxctl` for your operating system.
-2. Download the [nuxctl_0860-vns-monitoring_dual_underlays](nuxctl_0860-vns-monitoring_dual_underlays) lab definition file created for this lab or clone this repository as a whole.
-3. Replace the [public key](nuxctl_0860-vns-monitoring_dual_underlays#L7) in the lab definition file with the public key you have in your NuageX user account.
+2. Download the [nuxctl_0860-vns-monitoring_dual_underlays](nuxctl_0860-vns-monitoring_dual_underlays.yml) lab definition file created for this lab or clone this repository as a whole.
+3. Replace the [public key](nuxctl_0860-vns-monitoring_dual_underlays.yml#L7) in the lab definition file with the public key you have in your NuageX user account.
 
 ## 2.2 Starting deployment process
 To initiate the deployment routine proceed with the following command:
