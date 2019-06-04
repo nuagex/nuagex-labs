@@ -1,0 +1,6 @@
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+*/5 *  *  *  *  root /usr/bin/timeout 180 ip netns exec ns-data ping -s 1300 -i 0.1 172.19.4.101
+*/5 *  *  *  *  root /usr/bin/timeout 180 ip netns exec ns-data curl http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_h264.mov > /dev/null
