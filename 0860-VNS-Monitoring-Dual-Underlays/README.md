@@ -1,4 +1,4 @@
-# 0860-VNS-MONITORING-GENERIC
+# 0860-VNS-MONITORING-Dual-Underlays
 
 * **version:** 1.0.0
 * **tags:** Monitoring
