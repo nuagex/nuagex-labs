@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot rpa="false" generated="20190221 22:56:52.670" generator="Robot 3.1.1 (Python 2.7.15 on linux2)">
+<suite source="/home/tests" id="s1" name="Tests">
+<suite source="/home/tests/00_aar_stats" id="s1-s1" name="00 Aar Stats">
+<suite source="/home/tests/00_aar_stats/01.robot" id="s1-s1-s1" name="01">
+<kw type="setup" name="Login NuageX User" library="vars">
+<msg timestamp="20190221 22:56:54.675" level="TRACE">Arguments: [  ]</msg>
+<kw name="Login user" library="nuageusermgmt">
+<arguments>
+<arg>cats_api_url=https://${jumpbox_address}:8443</arg>
+<arg>cats_username=admin</arg>
+<arg>cats_password=${vsd_password}</arg>
+<arg>cats_org_name=csp</arg>
+</arguments>
+<msg timestamp="20190221 22:56:54.676" level="TRACE">Arguments: [ ${cats_api_url}='https://124.252.253.91:8443' | ${cats_username}='admin' | ${cats_password}='jb_GVPhD_KRan2XB' | ${cats_cert}=None | ${cats_private_key}=None | ${cats_org_name}='csp' ]</msg>
+<kw name="User Login" library="NuageVSD">
+<doc>Try to log in a user with a given username, password and organization.</doc>
+<arguments>
+<arg>cats_api_url=${cats_api_url}</arg>
+<arg>cats_username=${cats_username}</arg>
+<arg>cats_password=${cats_password}</arg>
+<arg>cats_cert=${cats_cert}</arg>
+<arg>cats_private_key=${cats_private_key}</arg>
+<arg>cats_org_name=${cats_org_name}</arg>
+</arguments>
+<msg timestamp="20190221 22:56:54.678" level="TRACE">Arguments: [ cats_api_url='https://124.252.253.91:8443' | cats_username='admin' | cats_password='jb_GVPhD_KRan2XB' | cats_cert=None | cats_private_key=None | cats_org_name='csp' ]</msg>
+<msg timestamp="20190221 22:56:54.678" level="INFO">Try authentication with Username and Password</msg>
+<msg timestamp="20190221 22:56:54.679" level="INFO">CATS :: Trying to login a user "admin" with a password "jb_GVPhD_KRan2XB" of organization "csp" using API endpoint "https://124.252.253.91:8443"</msg>
+<msg timestamp="20190221 22:56:54.681" level="INFO">&gt; GET https://124.252.253.91:8443/nuage/api/v5_0/me </msg>
+<msg timestamp="20190221 22:56:54.681" level="DEBUG">&gt; headers: {'X-Nuage-Organization': u'csp', 'Content-Type': 'application/json', 'Authorization': u'XREST YWRtaW46amJfR1ZQaERfS1JhbjJYQg=='}</msg>
+<msg timestamp="20190221 22:56:54.681" level="DEBUG">&gt; data:
+  null</msg>
+<msg timestamp="20190221 22:56:54.683" level="DEBUG">Starting new HTTPS connection (1): 124.252.253.91:8443</msg>
+<msg timestamp="20190221 22:56:55.051" level="DEBUG">https://124.252.253.91:8443 "GET /nuage/api/v5_0/me HTTP/1.1" 200 None</msg>
+<msg timestamp="20190221 22:56:55.053" level="INFO">&lt; GET https://124.252.253.91:8443/nuage/api/v5_0/me  [200] </msg>
+<msg timestamp="20190221 22:56:55.053" level="DEBUG">&lt; headers: {'X-XSS-Protection': '1', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': 'default-src', 'Access-Control-Expose-Headers': 'X-Nuage-Organization, X-Nuage-ProxyUser, X-Nuage-OrderBy, X-Nuage-FilterType, X-Nuage-Filter, X-Nuage-Page, X-Nuage-PageSize, X-Nuage-Count, X-Nuage-Custom, X-Nuage-ClientType, X-SSL-Client-CN, X-SSL-Client-ORG, X-SSL-Client-UID, X-SSL-Issuer-CN, X-SSL-Client-DN, X-SSL-Issuer-DN', 'Transfer-Encoding': 'chunked', 'Set-Cookie': 'rememberMe=deleteMe; Path=/nuage; Max-Age=0; Expires=Wed, 20-Feb-2019 22:56:55 GMT', 'Strict-Transport-Security': 'max-age=31536000', 'Expires': 'Wed, 31 Dec 1969 16:00:00 PST', 'Server': 'nginx/1.15.3', 'Connection': 'keep-alive', 'Pragma': 'No-cache', 'Cache-Control': 'no-cache', 'Date': 'Thu, 21 Feb 2019 22:56:55 GMT', 'Access-Control-Allow-Origin': '*', 'Referrer-Policy': 'origin', 'Content-Type': 'application/json', 'X-Frame-Options': 'deny'}</msg>
+<msg timestamp="20190221 22:56:55.054" level="DEBUG">&lt; data:
+[
+    {
+        "flowCollectionEnabled": true, 
+        "externalID": null, 
+        "APIKey": "b72d4d82-cd91-4dd9-9e02-a5741adf0597", 
+        "enterpriseID": "76046673-d0ea-4a67-b6af-2829952f0812", 
+        "vssStatsInterval": 30, 
+        "enterpriseName": "CSP", 
+        "role": "CSPROOT", 
+        "licenseCapabilities": [
+            "ENCRYPTION_ENABLED"
+        ], 
+        "externalId": null, 
+        "aarProbeStatsInterval": 30, 
+        "statisticsEnabled": true, 
+        "aarFlowStatsInterval": 30, 
+        "entityScope": null, 
+        "avatarType": null, 
+        "password": null, 
+        "ID": "44f0c9e5-48c4-4a86-ab54-222cdf0f2733", 
+        "userName": "admin", 
+        "mobileNumber": null, 
+        "firstName": "admin", 
+        "APIKeyExpiry": 1550860795844, 
+        "lastName": "admin", 
+        "email": "admin@nuagex.io", 
+        "statsTSDBServerAddress": "elastic.nuage.lab:9300", 
+        "avatarData": null
+    }
+]</msg>
+<msg timestamp="20190221 22:56:55.054" level="DEBUG">[NURESTSession] Started session with username admin in enterprise csp</msg>
+<msg timestamp="20190221 22:56:55.054" level="TRACE">CATS :: User Login function produced the following results:
+session_params:&lt;vspk.v5_0.nuvsdsession.NUVSDSession object at 0x7f8e95716f50&gt;, active_user_obj:&lt;class 'vspk.v5_0.nume.NUMe'&gt; (ID=44f0c9e5-48c4-4a86-ab54-222cdf0f2733), active_user_name/role:admin/CSPROOT, csproot_session:&lt;vspk.v5_0.nuvsdsession.NUVSDSession object at 0x7f8e95716f50&gt;, csproot_user_obj:&lt;class 'vspk.v5_0.nume.NUMe'&gt; (ID=44f0c9e5-48c4-4a86-ab54-222cdf0f2733), csproot_user_name/role:admin/CSPROOT</msg>
+<msg timestamp="20190221 22:56:55.055" level="TRACE">Return: &lt;vspk.v5_0.nuvsdsession.NUVSDSession object at 0x7f8e95716f50&gt;</msg>
+<status status="PASS" endtime="20190221 22:56:55.055" starttime="20190221 22:56:54.677"></status>
+</kw>
+<msg timestamp="20190221 22:56:55.055" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190221 22:56:55.055" starttime="20190221 22:56:54.676"></status>
+</kw>
+<msg timestamp="20190221 22:56:55.055" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190221 22:56:55.055" starttime="20190221 22:56:54.675"></status>
+</kw>
+<test id="s1-s1-s1-t1" name="Create new application">
+<kw name="Create Application" library="aar">
+<arguments>
+<arg>cats_org_name=${org_name}</arg>
+<arg>name=APP_NAME</arg>
+<arg>preClassificationPath=DEFAULT</arg>
+<arg>protocol=TCP</arg>
+<arg>sourceIP=192.168.16.1</arg>
+<arg>sourcePort=2001</arg>
+<arg>destinationIP=172.168.16.1</arg>
+<arg>destinationPort=3001</arg>
+<arg>etherType=0x0800</arg>
+<arg>enablePPS=False</arg>
+<arg>DSCP=2</arg>
+</arguments>
+<msg timestamp="20190221 22:56:55.058" level="TRACE">Arguments: [ ${cats_reuse}='True' | ${cats_org_name}='PAN' | ${cats_application_signature_name}=None | &amp;{kwargs}={'DSCP': '2', 'destinationIP': '172.168.16.1', 'destinationPort': '3001', 'enablePPS': 'False', 'etherType': '0x0800', 'name': 'APP_NAME', 'preClassificationPath': 'DEFAULT', 'protocol': 'TCP', 'sourceIP': '192.168.16.1', 'sourcePort': '2001'} ]</msg>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>$cats_application_signature_name is not None</arg>
+<arg>Create Dictionary</arg>
+<arg>L7 APPLICATION SIGNATURE=${cats_application_signature_name}</arg>
+<arg>L7 APPLICATION SIGNATURE PARENT PATH=@[${cats_org_name}]</arg>
+</arguments>
+<assign>
+<var>${cats_associations}</var>
+</assign>
+<msg timestamp="20190221 22:56:55.060" level="TRACE">Arguments: [ '$cats_application_signature_name is not None' | 'Create Dictionary' | 'L7 APPLICATION SIGNATURE=${cats_application_signature_name}' | 'L7 APPLICATION SIGNATURE PARENT PATH=@[${cats_org_name}]' ]</msg>
+<msg timestamp="20190221 22:56:55.064" level="TRACE">Return: None</msg>
+<msg timestamp="20190221 22:56:55.064" level="INFO">${cats_associations} = None</msg>
+<status status="PASS" endtime="20190221 22:56:55.064" starttime="20190221 22:56:55.060"></status>
+</kw>
+<kw name="Get Organization" library="network">
+<arguments>
+<arg>name=${cats_org_name}</arg>
+</arguments>
+<assign>
+<var>${parent}</var>
+</assign>
+<msg timestamp="20190221 22:56:55.065" level="TRACE">Arguments: [ ${cats_org_name}=None | &amp;{kwargs}={'name': 'PAN'} ]</msg>
+<kw name="Get Vsd Object" library="NuageVSD">
+<doc>Generic Keyword for fetching VSD (VSPK) object. Intenally used in many High-Level Keywords.</doc>
+<arguments>
+<arg>cats_obj_type=ORGANIZATION</arg>
+<arg>cats_parent_obj=CURRENT_USER</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${obj}</var>
+</assign>
+<msg timestamp="20190221 22:56:55.067" level="TRACE">Arguments: [ cats_obj_type='ORGANIZATION' | cats_parent_obj='CURRENT_USER' | name='PAN' ]</msg>
+<msg timestamp="20190221 22:56:55.069" level="DEBUG">CATS :: Proceeding as a user "admin"</msg>
+<msg timestamp="20190221 22:56:55.069" level="TRACE">CATS TRACE :: Parent object is &lt;class 'vspk.v5_0.nume.NUMe'&gt; (ID=44f0c9e5-48c4-4a86-ab54-222cdf0f2733) </msg>
+<msg timestamp="20190221 22:56:55.069" level="TRACE">CATS TRACE :: Resulting set of object's parameters" {u'name': u'PAN'}</msg>
+<msg timestamp="20190221 22:56:55.069" level="TRACE">CATS :: compute_args function returned
+{u'name': u'PAN'}</msg>
+<msg timestamp="20190221 22:56:55.069" level="TRACE">CATS TRACE :: Filters for "Organization" object: "('name',)"</msg>
+<msg timestamp="20190221 22:56:55.069" level="TRACE">{u'name': u'PAN'}</msg>
+<msg timestamp="20190221 22:56:55.069" level="TRACE">CATS TRACE :: parse_nuage_filter() returned filter object: {u'filter_string': u'name == "PAN"', u'filter_type': u'__standard_filter'}</msg>
+<msg timestamp="20190221 22:56:55.069" level="TRACE">&gt; CATS TRACE :: get_object_by_filter() function was called with the following parameters                 parent=&lt;class 'vspk.v5_0.nume.NUMe'&gt; (ID=44f0c9e5-48c4-4a86-ab54-222cdf0f2733), fetcher={'rest_name': 'enterprise'}, filter_string={u'filter_string': u'name == "PAN"', u'filter_type': u'__standard_filter'}</msg>
+<msg timestamp="20190221 22:56:55.070" level="INFO">&gt; GET https://124.252.253.91:8443/nuage/api/v5_0/enterprises </msg>
+<msg timestamp="20190221 22:56:55.070" level="DEBUG">&gt; headers: {'X-Nuage-Organization': u'csp', 'X-Nuage-PageSize': '1', 'X-Nuage-Page': '0', 'X-Nuage-Filter': u'name == "PAN"', 'Content-Type': 'application/json', 'Authorization': u'XREST YWRtaW46YjcyZDRkODItY2Q5MS00ZGQ5LTllMDItYTU3NDFhZGYwNTk3'}</msg>
+<msg timestamp="20190221 22:56:55.070" level="DEBUG">&gt; data:
+  null</msg>
+<msg timestamp="20190221 22:56:55.210" level="DEBUG">https://124.252.253.91:8443 "GET /nuage/api/v5_0/enterprises HTTP/1.1" 200 None</msg>
+<msg timestamp="20190221 22:56:55.212" level="INFO">&lt; GET https://124.252.253.91:8443/nuage/api/v5_0/enterprises  [200] </msg>
+<msg timestamp="20190221 22:56:55.212" level="DEBUG">&lt; headers: {'X-XSS-Protection': '1', 'Content-Security-Policy': 'default-src', 'Access-Control-Expose-Headers': 'X-Nuage-Organization, X-Nuage-ProxyUser, X-Nuage-OrderBy, X-Nuage-FilterType, X-Nuage-Filter, X-Nuage-Page, X-Nuage-PageSize, X-Nuage-Count, X-Nuage-Custom, X-Nuage-ClientType, X-SSL-Client-CN, X-SSL-Client-ORG, X-SSL-Client-UID, X-SSL-Issuer-CN, X-SSL-Client-DN, X-SSL-Issuer-DN', 'Transfer-Encoding': 'chunked', 'X-Nuage-Page': '0', 'X-Nuage-Filter': 'name == "PAN"', 'X-Frame-Options': 'deny', 'Access-Control-Allow-Origin': '*', 'Expires': 'Wed, 31 Dec 1969 16:00:00 PST', 'X-Nuage-Count': '1', 'X-Nuage-FilterType': 'none', 'Pragma': 'No-cache', 'Date': 'Thu, 21 Feb 2019 22:56:55 GMT', 'Set-Cookie': 'rememberMe=deleteMe; Path=/nuage; Max-Age=0; Expires=Wed, 20-Feb-2019 22:56:55 GMT', 'Strict-Transport-Security': 'max-age=31536000', 'Server': 'nginx/1.15.3', 'Connection': 'keep-alive', 'X-Content-Type-Options': 'nosniff', 'X-Nuage-OrderBy': 'name ASC', 'Cache-Control': 'no-cache', 'Referrer-Policy': 'origin', 'Content-Type': 'application/json', 'X-Nuage-PageSize': '1'}</msg>
+<msg timestamp="20190221 22:56:55.213" level="DEBUG">&lt; data:
+[
+    {
+        "receiveMultiCastListID": "640781b6-c9f5-4a8c-9ead-b64246fcd554", 
+        "flowCollectionEnabled": "DISABLED", 
+        "allowGatewayManagement": true, 
+        "enableApplicationPerformanceManagement": true, 
+        "DHCPLeaseInterval": 24, 
+        "floatingIPsQuota": 100, 
+        "allowedForwardingMode": null, 
+        "externalID": null, 
+        "parentID": null, 
+        "owner": "44f0c9e5-48c4-4a86-ab54-222cdf0f2733", 
+        "children": null, 
+        "associatedEnterpriseSecurityID": "2a3f1ccc-d981-455d-90eb-ef44c635d43b", 
+        "VNFManagementEnabled": true, 
+        "localAS": 65000, 
+        "customerID": 934893413, 
+        "encryptionManagementMode": "DISABLED", 
+        "LDAPAuthorizationEnabled": false, 
+        "sendMultiCastListID": "db84f448-e8cd-467d-bc24-c8ab2862ba17", 
+        "associatedKeyServerMonitorID": "79249ac8-7a67-4321-9888-a7d9f94e84f7", 
+        "description": null, 
+        "dictionaryVersion": 2, 
+        "entityScope": "ENTERPRISE", 
+        "avatarType": null, 
+        "parentType": null, 
+        "lastUpdatedBy": "43f8868f-4bc1-472c-9d19-533dcfcb1ee0", 
+        "associatedGroupKeyEncryptionProfileID": "ee638b00-ae45-4856-838b-5ad41435e0de", 
+        "virtualFirewallRulesEnabled": true, 
+        "creationDate": 1550351987000, 
+        "allowTrustedForwardingClass": true, 
+        "ID": "11312b0b-9301-4959-891c-72cd78253bb6", 
+        "name": "PAN", 
+        "BGPEnabled": true, 
+        "avatarData": null, 
+        "LDAPEnabled": false, 
+        "lastUpdatedDate": 1550351991000, 
+        "enterpriseProfileID": "105c98a5-0df5-4533-bcd4-a2831b3a9b6a", 
+        "allowedForwardingClasses": [
+            "A", 
+            "B", 
+            "C", 
+            "D", 
+            "E", 
+            "F", 
+            "G", 
+            "H"
+        ], 
+        "floatingIPsUsed": 0, 
+        "sharedEnterprise": false, 
+        "allowAdvancedQOSConfiguration": true
+    }
+]</msg>
+<msg timestamp="20190221 22:56:55.215" level="TRACE">CATS TRACE :: Matched filters: "name == "PAN""</msg>
+<msg timestamp="20190221 22:56:55.215" level="INFO">CATS :: Object "Organization" of a parent "NUMe" has been fetched using the specified attributes: "name == "PAN""</msg>
+<msg timestamp="20190221 22:56:55.215" level="TRACE">Return: &lt;vspk.v5_0.nuenterprise.NUEnterprise object at 0x7f8e95701810&gt;</msg>
+<msg timestamp="20190221 22:56:55.216" level="INFO">${obj} = &lt;class 'vspk.v5_0.nuenterprise.NUEnterprise'&gt; (ID=11312b0b-9301-4959-891c-72cd78253bb6)</msg>
+<status status="PASS" endtime="20190221 22:56:55.216" starttime="20190221 22:56:55.066"></status>
+</kw>
+<msg timestamp="20190221 22:56:55.216" level="TRACE">Return: &lt;vspk.v5_0.nuenterprise.NUEnterprise object at 0x7f8e95701810&gt;</msg>
+<msg timestamp="20190221 22:56:55.216" level="INFO">${parent} = &lt;class 'vspk.v5_0.nuenterprise.NUEnterprise'&gt; (ID=11312b0b-9301-4959-891c-72cd78253bb6)</msg>
+<status status="PASS" endtime="20190221 22:56:55.216" starttime="20190221 22:56:55.065"></status>
+</kw>
+<kw name="Create Vsd Object" library="NuageVSD">
+<doc>Generic KW for creation of VSD Objects</doc>
+<arguments>
+<arg>cats_obj_type=APPLICATION</arg>
+<arg>cats_parent_obj=${parent}</arg>
+<arg>cats_associations=${cats_associations}</arg>
+<arg>cats_reuse=${cats_reuse}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${obj}</var>
+</assign>
+<msg timestamp="20190221 22:56:55.217" level="TRACE">Arguments: [ cats_obj_type='APPLICATION' | cats_parent_obj=&lt;vspk.v5_0.nuenterprise.NUEnterprise object at 0x7f8e95701810&gt; | cats_associations=None | cats_reuse=True | name='APP_NAME' | preClassificationPath='DEFAULT' | protocol='TCP' | sourceIP='192.168.16.1' | sourcePort='2001' | destinationIP='172.168.16.1' | destinationPort='3001' | etherType='0x0800' | enablePPS='False' | DSCP='2' ]</msg>
+<msg timestamp="20190221 22:56:55.218" level="DEBUG">CATS :: Proceeding as a user "admin"</msg>
+<msg timestamp="20190221 22:56:55.218" level="TRACE">CATS TRACE :: Parent object is &lt;class 'vspk.v5_0.nuenterprise.NUEnterprise'&gt; (ID=11312b0b-9301-4959-891c-72cd78253bb6) </msg>
+<msg timestamp="20190221 22:56:55.219" level="TRACE">CATS TRACE :: Received association parameters: None</msg>
+<msg timestamp="20190221 22:56:55.219" level="TRACE">CATS TRACE :: Resulting set of object's parameters" {u'protocol': u'TCP', u'name': u'APP_NAME', u'destinationIP': u'172.168.16.1', u'etherType': u'0x0800', u'DSCP': u'2', u'preClassificationPath': u'DEFAULT', u'destinationPort': u'3001', u'sourcePort': u'2001', u'sourceIP': u'192.168.16.1', u'enablePPS': u'False'}</msg>
+<msg timestamp="20190221 22:56:55.220" level="TRACE">CATS :: compute_args function returned
+{u'DSCP': u'2',
+ u'destinationIP': u'172.168.16.1',
+ u'destinationPort': u'3001',
+ u'enablePPS': False,
+ u'etherType': u'0x0800',
+ u'name': u'APP_NAME',
+ u'preClassificationPath': u'DEFAULT',
+ u'protocol': u'TCP',
+ u'sourceIP': u'192.168.16.1',
+ u'sourcePort': u'2001'}</msg>
+<msg timestamp="20190221 22:56:55.220" level="TRACE">CATS TRACE :: Filters for "Application" object: "('name',)"</msg>
+<msg timestamp="20190221 22:56:55.220" level="TRACE">CATS TRACE :: In "cats_reuse" phase...</msg>
+<msg timestamp="20190221 22:56:55.220" level="TRACE">CATS TRACE :: parse_nuage_filter() returned filter object: {u'filter_string': u'name == "APP_NAME"', u'filter_type': u'__standard_filter'}</msg>
+<msg timestamp="20190221 22:56:55.220" level="TRACE">&gt; CATS TRACE :: get_object_by_filter() function was called with the following parameters                 parent=&lt;class 'vspk.v5_0.nuenterprise.NUEnterprise'&gt; (ID=11312b0b-9301-4959-891c-72cd78253bb6), fetcher={'rest_name': 'application'}, filter_string={u'filter_string': u'name == "APP_NAME"', u'filter_type': u'__standard_filter'}</msg>
+<msg timestamp="20190221 22:56:55.220" level="INFO">&gt; GET https://124.252.253.91:8443/nuage/api/v5_0/enterprises/11312b0b-9301-4959-891c-72cd78253bb6/applications </msg>
+<msg timestamp="20190221 22:56:55.220" level="DEBUG">&gt; headers: {'X-Nuage-Organization': u'csp', 'X-Nuage-PageSize': '1', 'X-Nuage-Page': '0', 'X-Nuage-Filter': u'name == "APP_NAME"', 'Content-Type': 'application/json', 'Authorization': u'XREST YWRtaW46YjcyZDRkODItY2Q5MS00ZGQ5LTllMDItYTU3NDFhZGYwNTk3'}</msg>
+<msg timestamp="20190221 22:56:55.221" level="DEBUG">&gt; data:
+  null</msg>
+<msg timestamp="20190221 22:56:55.618" level="DEBUG">https://124.252.253.91:8443 "GET /nuage/api/v5_0/enterprises/11312b0b-9301-4959-891c-72cd78253bb6/applications HTTP/1.1" 200 0</msg>
+<msg timestamp="20190221 22:56:55.619" level="INFO">&lt; GET https://124.252.253.91:8443/nuage/api/v5_0/enterprises/11312b0b-9301-4959-891c-72cd78253bb6/applications  [200] </msg>
+<msg timestamp="20190221 22:56:55.619" level="DEBUG">&lt; headers: {'Content-Length': '0', 'X-XSS-Protection': '1', 'Content-Security-Policy': 'default-src', 'Access-Control-Expose-Headers': 'X-Nuage-Organization, X-Nuage-ProxyUser, X-Nuage-OrderBy, X-Nuage-FilterType, X-Nuage-Filter, X-Nuage-Page, X-Nuage-PageSize, X-Nuage-Count, X-Nuage-Custom, X-Nuage-ClientType, X-SSL-Client-CN, X-SSL-Client-ORG, X-SSL-Client-UID, X-SSL-Issuer-CN, X-SSL-Client-DN, X-SSL-Issuer-DN', 'X-Nuage-Count': '0', 'X-Nuage-Page': '0', 'X-Nuage-Filter': 'name == "APP_NAME"', 'X-Frame-Options': 'deny', 'Access-Control-Allow-Origin': '*', 'Expires': 'Wed, 31 Dec 1969 16:00:00 PST', 'X-Nuage-FilterType': 'none', 'Pragma': 'No-cache', 'Date': 'Thu, 21 Feb 2019 22:56:55 GMT', 'Set-Cookie': 'rememberMe=deleteMe; Path=/nuage; Max-Age=0; Expires=Wed, 20-Feb-2019 22:56:55 GMT', 'Strict-Transport-Security': 'max-age=31536000', 'Server': 'nginx/1.15.3', 'Connection': 'keep-alive', 'X-Content-Type-Options': 'nosniff', 'X-Nuage-OrderBy': 'name ASC', 'Cache-Control': 'no-cache', 'Referrer-Policy': 'origin', 'X-Nuage-PageSize': '1'}</msg>
+<msg timestamp="20190221 22:56:55.619" level="DEBUG">&lt; data:
+null</msg>
+<msg timestamp="20190221 22:56:55.621" level="INFO">&gt; POST https://124.252.253.91:8443/nuage/api/v5_0/enterprises/11312b0b-9301-4959-891c-72cd78253bb6/applications </msg>
+<msg timestamp="20190221 22:56:55.621" level="DEBUG">&gt; headers: {'X-Nuage-Organization': u'csp', 'Content-Type': 'application/json', 'Authorization': u'XREST YWRtaW46YjcyZDRkODItY2Q5MS00ZGQ5LTllMDItYTU3NDFhZGYwNTk3'}</msg>
+<msg timestamp="20190221 22:56:55.621" level="DEBUG">&gt; data:
+  {
+    "protocol": "TCP", 
+    "destinationPort": "3001", 
+    "symmetry": null, 
+    "etherType": "0x0800", 
+    "preClassificationPath": "DEFAULT", 
+    "bandwidth": null, 
+    "externalID": null, 
+    "parentID": null, 
+    "owner": null, 
+    "lastUpdatedDate": null, 
+    "networkSymmetry": null, 
+    "oneWayJitter": null, 
+    "enablePPS": false, 
+    "description": null, 
+    "DSCP": "2", 
+    "entityScope": null, 
+    "parentType": null, 
+    "lastUpdatedBy": null, 
+    "performanceMonitorType": null, 
+    "appId": null, 
+    "sourcePort": "2001", 
+    "postClassificationPath": null, 
+    "creationDate": null, 
+    "sourceIP": "192.168.16.1", 
+    "ID": null, 
+    "associatedL7ApplicationSignatureID": null, 
+    "oneWayDelay": null, 
+    "name": "APP_NAME", 
+    "destinationIP": "172.168.16.1", 
+    "optimizePathSelection": null, 
+    "certificateCommonName": null, 
+    "readOnly": null, 
+    "oneWayLoss": null
+}</msg>
+<msg timestamp="20190221 22:56:55.815" level="DEBUG">https://124.252.253.91:8443 "POST /nuage/api/v5_0/enterprises/11312b0b-9301-4959-891c-72cd78253bb6/applications HTTP/1.1" 201 902</msg>
+<msg timestamp="20190221 22:56:55.817" level="INFO">&lt; POST https://124.252.253.91:8443/nuage/api/v5_0/enterprises/11312b0b-9301-4959-891c-72cd78253bb6/applications  [201] </msg>
+<msg timestamp="20190221 22:56:55.817" level="DEBUG">&lt; headers: {'Content-Length': '902', 'X-XSS-Protection': '1', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': 'default-src', 'Access-Control-Expose-Headers': 'X-Nuage-Organization, X-Nuage-ProxyUser, X-Nuage-OrderBy, X-Nuage-FilterType, X-Nuage-Filter, X-Nuage-Page, X-Nuage-PageSize, X-Nuage-Count, X-Nuage-Custom, X-Nuage-ClientType, X-SSL-Client-CN, X-SSL-Client-ORG, X-SSL-Client-UID, X-SSL-Issuer-CN, X-SSL-Client-DN, X-SSL-Issuer-DN', 'Set-Cookie': 'rememberMe=deleteMe; Path=/nuage; Max-Age=0; Expires=Wed, 20-Feb-2019 22:56:55 GMT', 'Strict-Transport-Security': 'max-age=31536000', 'Server': 'nginx/1.15.3', 'X-Nuage-Request-ID': 'cd5dcf77-7007-4b68-ac58-70bbc89a0915', 'Connection': 'keep-alive', 'Date': 'Thu, 21 Feb 2019 22:56:55 GMT', 'Access-Control-Allow-Origin': '*', 'Referrer-Policy': 'origin', 'Content-Type': 'application/json', 'X-Frame-Options': 'deny'}</msg>
+<msg timestamp="20190221 22:56:55.817" level="DEBUG">&lt; data:
+[
+    {
+        "protocol": "TCP", 
+        "performanceMonitorType": "FIRST_PACKET", 
+        "symmetry": false, 
+        "etherType": "0x0800", 
+        "preClassificationPath": "DEFAULT", 
+        "bandwidth": null, 
+        "externalID": null, 
+        "parentID": "11312b0b-9301-4959-891c-72cd78253bb6", 
+        "owner": "44f0c9e5-48c4-4a86-ab54-222cdf0f2733", 
+        "children": null, 
+        "description": null, 
+        "networkSymmetry": false, 
+        "oneWayJitter": null, 
+        "enablePPS": false, 
+        "lastUpdatedDate": 1550789815000, 
+        "DSCP": "2", 
+        "entityScope": "ENTERPRISE", 
+        "parentType": "enterprise", 
+        "lastUpdatedBy": "44f0c9e5-48c4-4a86-ab54-222cdf0f2733", 
+        "destinationPort": "3001", 
+        "appId": 11513, 
+        "sourcePort": "2001", 
+        "postClassificationPath": null, 
+        "ID": "9df04d73-b295-4d73-b622-f80bc386e91c", 
+        "creationDate": 1550789815000, 
+        "sourceIP": "192.168.16.1", 
+        "oneWayDelay": null, 
+        "associatedL7ApplicationSignatureID": null, 
+        "name": "APP_NAME", 
+        "destinationIP": "172.168.16.1", 
+        "optimizePathSelection": null, 
+        "certificateCommonName": "*", 
+        "readOnly": false, 
+        "oneWayLoss": null
+    }
+]</msg>
+<msg timestamp="20190221 22:56:55.819" level="TRACE">CATS :: obj_has_all_attributes received the following attrs to compare
+{u'DSCP': u'2',
+ u'destinationIP': u'172.168.16.1',
+ u'destinationPort': u'3001',
+ u'enablePPS': False,
+ u'etherType': u'0x0800',
+ u'name': u'APP_NAME',
+ u'preClassificationPath': u'DEFAULT',
+ u'protocol': u'TCP',
+ u'sourceIP': u'192.168.16.1',
+ u'sourcePort': u'2001'} 
+
+ AND 
+
+ {'DSCP': u'2',
+ 'ID': u'9df04d73-b295-4d73-b622-f80bc386e91c',
+ 'appId': 11513,
+ 'associatedL7ApplicationSignatureID': None,
+ 'bandwidth': None,
+ 'certificateCommonName': u'*',
+ 'creationDate': 1550789815000,
+ 'description': None,
+ 'destinationIP': u'172.168.16.1',
+ 'destinationPort': u'3001',
+ 'enablePPS': False,
+ 'entityScope': u'ENTERPRISE',
+ 'etherType': u'0x0800',
+ 'externalID': None,
+ 'lastUpdatedBy': u'44f0c9e5-48c4-4a86-ab54-222cdf0f2733',
+ 'lastUpdatedDate': 1550789815000,
+ 'name': u'APP_NAME',
+ 'networkSymmetry': False,
+ 'oneWayDelay': None,
+ 'oneWayJitter': None,
+ 'oneWayLoss': None,
+ 'optimizePathSelection': None,
+ 'owner': u'44f0c9e5-48c4-4a86-ab54-222cdf0f2733',
+ 'parentID': u'11312b0b-9301-4959-891c-72cd78253bb6',
+ 'parentType': u'enterprise',
+ 'performanceMonitorType': u'FIRST_PACKET',
+ 'postClassificationPath': None,
+ 'preClassificationPath': u'DEFAULT',
+ 'protocol': u'TCP',
+ 'readOnly': False,
+ 'sourceIP': u'192.168.16.1',
+ 'sourcePort': u'2001',
+ 'symmetry': False}</msg>
+<msg timestamp="20190221 22:56:55.820" level="TRACE">&gt; CATS :: Objects are equal by the specified parameters!</msg>
+<msg timestamp="20190221 22:56:55.821" level="INFO">CATS :: Object of type "NUApplication" has been created/modified correctly according to the passed parameters</msg>
+<msg timestamp="20190221 22:56:55.821" level="TRACE">Return: &lt;vspk.v5_0.nuapplication.NUApplication object at 0x7f8e95716950&gt;</msg>
+<msg timestamp="20190221 22:56:55.821" level="INFO">${obj} = &lt;class 'vspk.v5_0.nuapplication.NUApplication'&gt; (ID=9df04d73-b295-4d73-b622-f80bc386e91c)</msg>
+<status status="PASS" endtime="20190221 22:56:55.821" starttime="20190221 22:56:55.217"></status>
+</kw>
+<msg timestamp="20190221 22:56:55.821" level="TRACE">Return: &lt;vspk.v5_0.nuapplication.NUApplication object at 0x7f8e95716950&gt;</msg>
+<status status="PASS" endtime="20190221 22:56:55.821" starttime="20190221 22:56:55.057"></status>
+</kw>
+<status status="PASS" endtime="20190221 22:56:55.822" critical="yes" starttime="20190221 22:56:55.055"></status>
+</test>
+<status status="PASS" endtime="20190221 22:56:55.823" starttime="20190221 22:56:52.697"></status>
+</suite>
+<status status="PASS" endtime="20190221 22:56:55.827" starttime="20190221 22:56:52.695"></status>
+</suite>
+<status status="PASS" endtime="20190221 22:56:55.829" starttime="20190221 22:56:52.673"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="Tests" pass="1">Tests</stat>
+<stat fail="0" id="s1-s1" name="00 Aar Stats" pass="1">Tests.00 Aar Stats</stat>
+<stat fail="0" id="s1-s1-s1" name="01" pass="1">Tests.00 Aar Stats.01</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
