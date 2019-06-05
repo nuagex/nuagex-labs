@@ -1,0 +1,7 @@
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+# *  *  *  *  * user-name  command to be executed
+*/15 *  *  *  * root /usr/bin/timeout 600 ip netns exec ns-data cvlc rtsp://172.17.1.101:1234/ --sout=file/ps:video.mp4 --loop
+*/5 *  *  *  *  root /usr/bin/timeout 180 ip netns exec ns-data curl http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_h264.mov > /dev/null

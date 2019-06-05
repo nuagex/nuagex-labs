@@ -1,0 +1,389 @@
+---
+# Custom template (empty)
+template: 5980ee745a38da00012d158d
+
+# Update the name of the lab environment
+name: Partner Onboarding - Visibility & Monitoring Test
+
+# Update expiration date
+expires: "2019-03-28T17:13:11.278Z"
+
+# Add ssh keys
+sshKeys:
+  - name: demo  # WARNING: make sure to use your public key instead of the demo one
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDw1jIozLL7p5Ar685vgoSqhIEKoxRn/BpvEaiZkZORZo+Ox4HHRGrW+NZJLvmWj+PxxNj6Mw1b6X0uK9eq1VRuW1y1gHK+7T92GxakyreJW1rIC1DfdVxJZXEv+mN17GSSekdUG/FGadjIr4lUwInPr10g2inmICwM+1sEDMiNBC0/e0mGoAdIe+RHngLTdJShxC7EedfNlIianBGykul3zXGiVr51wxHeI3IqD3tRTs6J9+Fyu6XPtH1+MN/rquVJgpposoPMljRDIWDB/elORmtL47ZEzOcHEPe8KJ7Ha4Y+YBiwo751UIptwgy9OHpU87MpJx9tjSmEr/apVdJ7 arunpoonia@Aruns-MacBook-Pro.local"
+services:
+  - name: vsd
+    type: public
+    port: 8443
+    urlScheme: https
+    protocols:
+    - tcp
+    destination:
+      port: 18443
+      address: 10.0.0.2
+  - name: elastic
+    type: public
+    port: 6200
+    urlScheme: https
+    protocols:
+    - tcp
+    destination:
+      port: 6200
+      address: 10.0.0.5
+  - name: rdp-branch1pc1
+    type: public
+    port: 33891
+    protocols:
+      - tcp
+    destination:
+      port: 3389
+      address: 10.0.0.201
+  - name: rdp-branch2pc1
+    type: public
+    port: 33892
+    protocols:
+      - tcp
+    destination:
+      port: 3389
+      address: 10.0.0.202
+  - name: rdp-branch3pc1
+    type: public
+    port: 33893
+    protocols:
+      - tcp
+    destination:
+      port: 3389
+      address: 10.0.0.203
+  - name: rdp-branch4pc1
+    type: public
+    port: 33894
+    protocols:
+      - tcp
+    destination:
+      port: 3389
+      address: 10.0.0.204
+  - name: rdp-branch5pc1
+    type: public
+    port: 33895
+    protocols:
+      - tcp
+    destination:
+      port: 3389
+      address: 10.0.0.205
+  - name: amqp
+    type: public
+    port: 5672
+    protocols:
+      - tcp
+    destination:
+      port: 5672
+      address: 10.0.0.2
+  - name: stomp
+    type: public
+    port: 61614
+    protocols:
+      - tcp
+    destination:
+      port: 61614
+      address: 10.0.0.2
+
+networks:
+  # - name: private
+  #   cidr: 10.0.0.0/24
+  #   dns:
+  #   - 10.0.0.1
+  #   dhcp: true
+
+  - name: internet-hq
+    cidr: 10.1.255.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: mpls-hq
+    cidr: 10.2.255.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+
+  - name: internet-branch1
+    cidr: 10.1.1.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: mpls-branch1
+    cidr: 10.2.1.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: lan-branch1
+    cidr: 172.17.1.0/24
+    dhcp: false
+
+  - name: internet-branch2
+    cidr: 10.1.2.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: mpls-branch2
+    cidr: 10.2.2.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: lan-branch2
+    cidr: 172.17.2.0/24
+    dhcp: false
+
+  - name: internet-branch3
+    cidr: 10.1.3.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: mpls-branch3
+    cidr: 10.2.3.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: lan-branch3
+    cidr: 172.17.3.0/24
+    dhcp: false
+
+  - name: internet-branch4
+    cidr: 10.1.4.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: mpls-branch4
+    cidr: 10.2.4.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: lan-branch4
+    cidr: 172.17.4.0/24
+    dhcp: false
+
+  - name: internet-branch5
+    cidr: 10.1.5.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: mpls-branch5
+    cidr: 10.2.5.0/24
+    dns:
+    - 10.0.0.1
+    dhcp: true
+  - name: lan-branch5
+    cidr: 172.17.5.0/24
+    dhcp: false
+
+servers:
+  - name: vsd01
+    image: vsd01_NUX_VNS_INTEGRATION_5.2.3u2
+    flavor: nux.vsd
+    interfaces:
+    - index: 0
+      network: private
+      address: 10.0.0.2
+  - name: vsc-internet
+    image: vsc-internet_NUX_VNS_INTEGRATION_5.2.3u2
+    flavor: vsc
+    interfaces:
+    - index: 0
+      network: private
+      address: 10.0.0.21
+    - index: 1
+      network: internet-hq
+      address: 10.1.255.3
+  - name: vsc-mpls
+    image: vsc-mpls_NUX_VNS_INTEGRATION_5.2.3u2
+    flavor: vsc
+    interfaces:
+    - index: 0
+      network: private
+      address: 10.0.0.20
+    - index: 1
+      network: mpls-hq
+      address: 10.2.255.3
+  - name: utility
+    image: utility_NUX_VNS_INTEGRATION_5.2.3u2
+    flavor: m1.small
+    interfaces:
+    - index: 0
+      network: private
+      address: 10.0.0.33
+  - name: elastic
+    image: elastic_NUX_VNS_INTEGRATION_5.2.3u2
+    flavor: nux.vsd
+    interfaces:
+    - index: 0
+      network: private
+      address: 10.0.0.5
+  - name: pe-internet
+    image: pe-internet_NUX_VNS_INTEGRATION_5.2.3u2
+    flavor: m1.small
+    interfaces:
+    - index: 0
+      network: private
+      address: 10.0.0.101
+    - index: 1
+      network: internet-hq
+      address: 10.1.255.1
+    - index: 2
+      network: internet-branch1
+      address: 10.1.1.1
+    - index: 3
+      network: internet-branch2
+      address: 10.1.2.1
+    - index: 4
+      network: internet-branch3
+      address: 10.1.3.1
+    - index: 5
+      network: internet-branch4
+      address: 10.1.4.1
+    - index: 6
+      network: internet-branch5
+      address: 10.1.5.1
+  - name: pe-mpls
+    image: pe-mpls_NUX_VNS_INTEGRATION_5.2.3u2
+    flavor: m1.small
+    interfaces:
+    - index: 0
+      network: private
+      address: 10.0.0.100
+    - index: 1
+      network: mpls-hq
+      address: 10.2.255.1
+    - index: 2
+      network: mpls-branch1
+      address: 10.2.1.1
+    - index: 3
+      network: mpls-branch2
+      address: 10.2.2.1
+    - index: 4
+      network: mpls-branch3
+      address: 10.2.3.1
+    - index: 5
+      network: mpls-branch4
+      address: 10.2.4.1
+    - index: 6
+      network: mpls-branch5
+      address: 10.2.5.1
+  - name: branch1
+    flavor: m1.medium
+    image: nux_nsg_5.2.3u2
+    interfaces:
+      - network: internet-branch1
+        address: 10.1.1.50
+        index: 0
+      - network: mpls-branch1
+        address: 10.2.1.50
+        index: 1
+      - network: lan-branch1
+        address: 172.17.1.1
+        index: 2
+  - name: pc-branch1
+    image: nux_branch_pc
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.201
+      - index: 1
+        network: lan-branch1
+        address: 172.17.1.101
+
+  - name: branch2
+    flavor: m1.medium
+    image: nux_nsg_5.2.3u2
+    interfaces:
+      - network: internet-branch2
+        address: 10.1.2.50
+        index: 0
+      - network: mpls-branch2
+        address: 10.2.2.50
+        index: 1
+      - network: lan-branch2
+        address: 172.17.2.1
+        index: 2
+  - name: pc-branch2
+    image: nux_branch_pc
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.202
+      - index: 1
+        network: lan-branch2
+        address: 172.17.2.101
+
+  - name: branch3
+    flavor: m1.medium
+    image: nux_nsg_5.2.3u2
+    interfaces:
+      - network: internet-branch3
+        address: 10.1.3.50
+        index: 0
+      - network: mpls-branch3
+        address: 10.2.3.50
+        index: 1
+      - network: lan-branch3
+        address: 172.17.3.1
+        index: 2
+  - name: pc-branch3
+    image: nux_branch_pc
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.203
+      - index: 1
+        network: lan-branch3
+        address: 172.17.3.101
+
+  - name: branch4
+    flavor: m1.medium
+    image: nux_nsg_5.2.3u2
+    interfaces:
+      - network: internet-branch4
+        address: 10.1.4.50
+        index: 0
+      - network: mpls-branch4
+        address: 10.2.4.50
+        index: 1
+      - network: lan-branch4
+        address: 172.17.4.1
+        index: 2
+  - name: pc-branch4
+    image: nux_branch_pc
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.204
+      - index: 1
+        network: lan-branch4
+        address: 172.17.4.101
+
+  - name: branch5
+    flavor: m1.medium
+    image: nux_nsg_5.2.3u2
+    interfaces:
+      - network: internet-branch5
+        address: 10.1.5.50
+        index: 0
+      - network: mpls-branch5
+        address: 10.2.5.50
+        index: 1
+      - network: lan-branch5
+        address: 172.17.5.1
+        index: 2
+  - name: pc-branch5
+    image: nux_branch_pc
+    flavor: m1.small
+    interfaces:
+      - index: 0
+        network: private
+        address: 10.0.0.205
+      - index: 1
+        network: lan-branch5
+        address: 172.17.5.101
