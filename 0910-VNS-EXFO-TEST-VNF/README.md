@@ -17,7 +17,7 @@ Once the lab is deployed and configured, a user will be able to test/learn/demon
 # 1 Lab topology and components
 Once a lab is deployed and configured using automation scripts, it will match the following diagram:
 
-![lab](images/netrounds-lab.png)
+![lab](images/exfo-lab.png)
 
 The lab models an Organization with a headquarters (HQ) and a branch site deployed over a single underlay (Internet).
 
