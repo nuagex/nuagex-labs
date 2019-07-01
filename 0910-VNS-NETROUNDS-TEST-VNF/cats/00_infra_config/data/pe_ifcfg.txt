@@ -1,5 +1,0 @@
-BOOTPROTO=dhcp
-DEVICE=eth{{index}}
-ONBOOT=yes
-DEFROUTE=no
-TYPE=Ethernet
