@@ -64,23 +64,23 @@ ${ems_pc_data_addr}                    10.100.4.10
 #     NSG VNF PARAMETERS
 ##############################
 ${vnf_mem_size}                   2048
-${branch1_vnf1_name}              branch1
-${hq_vnf1_name}                   hq1
-${nas_vnf_image_url}              http://files.nuagedemos.net/ex6yxaiy9nhgafo/img.qcow2
-${nas_vnf_image_md5_url}          http://files.nuagedemos.net/ex6yxaiy9nhgafo/img.qcow2.md5
+${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: GET_FROM_EXFO_WORX_DASHBOARD
+${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: GET_FROM_EXFO_WORX_DASHBOARD
+${nas_vnf_image_url}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
+${nas_vnf_image_md5_url}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
 ${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
 
 
 ##############################
 #     VIAVI PARAMETERS
 ##############################
-${branch1_vnf1_boot_iso_url}      http://files.nuagedemos.net/ex6yxaiy9nhgafo/branch1.iso
-${hq_vnf1_boot_iso_url}           http://files.nuagedemos.net/ex6yxaiy9nhgafo/hq1.iso
+${branch1_vnf1_boot_iso_url}      # TO_BE_FILLED_BY_A_USER: GET_FROM_EXFO_WORX_DASHBOARD
+${hq_vnf1_boot_iso_url}           # TO_BE_FILLED_BY_A_USER: GET_FROM_EXFO_WORX_DASHBOARD
 
 ##############################
 #     CONNECTION PARAMETERS
 ##############################
-${vsd_password}                   VAL_ZPbQoG_OlEBP
+${vsd_password}                   # TO_BE_FILLED_BY_A_USER: LAB_PASSWORD
 ${ssh_key_path}                   ~/.ssh/id_rsa
 ${vsd_ip}                         10.0.0.2
 
