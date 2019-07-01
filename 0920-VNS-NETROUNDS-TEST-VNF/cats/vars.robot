@@ -65,23 +65,22 @@ ${ems_pc_data_addr}                    10.100.4.10
 #     NSG VNF PARAMETERS
 ##############################
 ${vnf_mem_size}                   2048
-${branch1_vnf1_name}              branch1
-${hq_vnf1_name}                   hq1
-${nas_vnf_image_url}              http://files.nuagedemos.net/netrounds-test-agent_2.27.0.8.qcow2
-${nas_vnf_image_md5_url}          http://files.nuagedemos.net/img.qcow2.md5
-${vnf_image_url}                  http://${util1_fqdn}/netrounds-test-agent_2.27.0.8.qcow2
-
+${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: GET_FROM_NETROUNDS_CLOUD_CONTROL_CENTER
+${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: GET_FROM_NETROUNDS_CLOUD_CONTROL_CENTER
+${nas_vnf_image_url}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
+${nas_vnf_image_md5_url}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
+${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
 
 ##############################
 #     VIAVI PARAMETERS
 ##############################
-${branch1_vnf1_boot_iso_url}      http://files.nuagedemos.net/branch1.iso
-${hq_vnf1_boot_iso_url}           http://files.nuagedemos.net/hq1.iso
+${branch1_vnf1_boot_iso_url}      # TO_BE_FILLED_BY_A_USER: GET_FROM_NETROUNDS_CLOUD_CONTROL_CENTER
+${hq_vnf1_boot_iso_url}           # TO_BE_FILLED_BY_A_USER: GET_FROM_NETROUNDS_CLOUD_CONTROL_CENTER
 
 ##############################
 #     CONNECTION PARAMETERS
 ##############################
-${vsd_password}                   Ky3Behl6KoECrOZH
+${vsd_password}                   # TO_BE_FILLED_BY_A_USER: LAB_PASSWORD
 ${ssh_key_path}                   ~/.ssh/id_rsa
 ${vsd_ip}                         10.0.0.2
 
