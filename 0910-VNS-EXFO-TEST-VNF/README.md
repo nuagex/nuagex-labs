@@ -1,4 +1,4 @@
-# 0810-VNS-EXFO-TEST-VNF
+# 0910-VNS-EXFO-TEST-VNF
 
 * **version:** 1.0.0
 * **tags:** EXFO
@@ -82,7 +82,7 @@ The paths to the EXFO Agent image and a corresponding md5 file should be provide
 You can [contact NuageX representatives](mailto:nuagex+EXFO@nuagenetworks.net) with the request to obtain the paths to these files.
 
 ### 3.1.4 Boot ISO
-Initial configuration of the EXFO agents is done by means of the boot ISO files. The steps to generate these iso files can be found in the Integration steps with screenshots. Fill in the ISO download links on the lines [77-78](./cats/vars.robot#L77-L78) and automation scripts will download the ISO files for the agents accordingly.
+Initial configuration of the EXFO agents is done by means of the boot ISO files. The steps to generate these iso files can be found in the Integration guide with screenshots. Fill in the ISO download links on the lines [77-78](./cats/vars.robot#L77-L78) and automation scripts will download the ISO files for the agents accordingly.
 
 ## 3.2 Starting configuration process
 The configuration process will handle all of the heavy-lifting of the lab configuration. Starting with overlay object creation as well as NSG bootstrapping and activation, finishing with the creation of the VNFs.
