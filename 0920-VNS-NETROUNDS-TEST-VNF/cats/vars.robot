@@ -65,8 +65,8 @@ ${ems_pc_data_addr}                    10.100.4.10
 #     NSG VNF PARAMETERS
 ##############################
 ${vnf_mem_size}                   2048
-${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: GET_FROM_NETROUNDS_CLOUD_CONTROL_CENTER
-${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: GET_FROM_NETROUNDS_CLOUD_CONTROL_CENTER
+${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: GET_FROM_NETROUNDS_CLOUD_CONTROL_CENTER. eg: branch1
+${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: GET_FROM_NETROUNDS_CLOUD_CONTROL_CENTER eg: hq1
 ${nas_vnf_image_url}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
 ${nas_vnf_image_md5_url}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
 ${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
@@ -74,8 +74,8 @@ ${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
 ##############################
 #     VIAVI PARAMETERS
 ##############################
-${branch1_vnf1_boot_iso_url}      # TO_BE_FILLED_BY_A_USER: GET_FROM_NETROUNDS_CLOUD_CONTROL_CENTER
-${hq_vnf1_boot_iso_url}           # TO_BE_FILLED_BY_A_USER: GET_FROM_NETROUNDS_CLOUD_CONTROL_CENTER
+${branch1_vnf1_boot_iso_url}      # TO_BE_FILLED_BY_A_USER: FILE NAME SHOULD BE {branch1_vnf1_name}.iso(Line 67/68). Example branch1.iso
+${hq_vnf1_boot_iso_url}           # TO_BE_FILLED_BY_A_USER: FILE NAME SHOULD BE {hq1_vnf1_name}.iso(Line 67/68). Example hq1.iso
 
 ##############################
 #     CONNECTION PARAMETERS
