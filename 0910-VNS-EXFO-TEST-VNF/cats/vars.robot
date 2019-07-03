@@ -11,7 +11,7 @@ ${util_mgmt_addr}              10.0.0.33
 
 # basic overlay variables
 ${org_profile_name}            ORG_PROFILE
-${org_name}                    EXFO
+${org_name}                    NETROUND
 ${l3domain_template1_name}     DOMAIN_TEMPLATE
 ${customer_domain_name}        CUSTOMER
 ${hq_zone_name}                HQ
@@ -31,7 +31,8 @@ ${util1_fqdn}                  util.nuage.lab
 ${vsc_profile1_name}           VSC-INTERNET
 ${vsc-i_ctrl_ip}               10.10.99.10
 ## NSG template names
-${nsg_inet_template_name}      INTERNET_NSG
+${nsg_inet_branch_template_name}  INTERNET_NSG_BRANCH
+${nsg_inet_hq_template_name}      INTERNET_NSG_HQ
 ## NSG names
 ${hq_nsg1_name}                HQ-NSG1
 ${branch1_nsg1_name}           BRANCH1-NSG1
@@ -64,18 +65,18 @@ ${ems_pc_data_addr}                    10.100.4.10
 #     NSG VNF PARAMETERS
 ##############################
 ${vnf_mem_size}                   2048
-${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: GET_FROM_EXFO_WORX_DASHBOARD
-${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: GET_FROM_EXFO_WORX_DASHBOARD
+${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: This is set when you create VVerifier on EXFO WORX. eg: branch1
+${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: This is set when you create VVerifier on EXFO WORX. eg: hq1
 ${nas_vnf_image_url}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
 ${nas_vnf_image_md5_url}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
-${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
+${vnf_image_url}                  http://${util1_fqdn}/netrounds-test-agent_2.27.0.8.qcow2
 
 
 ##############################
 #     VIAVI PARAMETERS
 ##############################
-${branch1_vnf1_boot_iso_url}      # TO_BE_FILLED_BY_A_USER: GET_FROM_EXFO_WORX_DASHBOARD
-${hq_vnf1_boot_iso_url}           # TO_BE_FILLED_BY_A_USER: GET_FROM_EXFO_WORX_DASHBOARD
+${branch1_vnf1_boot_iso_url}      # TO_BE_FILLED_BY_A_USER: FILE NAME SHOULD BE {branch1_vnf1_name}.iso(Line 67/68). Example branch1.iso
+${hq_vnf1_boot_iso_url}           # TO_BE_FILLED_BY_A_USER: FILE NAME SHOULD BE {branch1_vnf1_name}.iso(Line 67/68). Example hq1.iso
 
 ##############################
 #     CONNECTION PARAMETERS
