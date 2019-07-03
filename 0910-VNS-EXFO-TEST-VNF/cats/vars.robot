@@ -11,7 +11,7 @@ ${util_mgmt_addr}              10.0.0.33
 
 # basic overlay variables
 ${org_profile_name}            ORG_PROFILE
-${org_name}                    NETROUND
+${org_name}                    EXFO
 ${l3domain_template1_name}     DOMAIN_TEMPLATE
 ${customer_domain_name}        CUSTOMER
 ${hq_zone_name}                HQ
