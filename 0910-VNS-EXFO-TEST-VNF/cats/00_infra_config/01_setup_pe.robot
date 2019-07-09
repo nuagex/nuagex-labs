@@ -35,3 +35,7 @@ Configure PE Internet
     ## NAT the internet traffic that is not destined to the local addressing
     ## should be only configured on the internet PE
     SSHLibrary.Execute Command    iptables -t nat -A POSTROUTING -o eth0 ! -d 10.0.0.0/8 -j MASQUERADE
+    SSHLibrary.Execute Command    iptables -t nat -A POSTROUTING -s 10.10.1.11/32 -j SNAT --to 10.0.0.210
+    SSHLibrary.Execute Command    iptables -t nat -A POSTROUTING -s 10.10.99.99/32 -j SNAT --to 10.0.0.210
+    SSHLibrary.Execute Command    iptables -t nat -A POSTROUTING -j MASQUERADE
+    
