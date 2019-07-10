@@ -67,8 +67,8 @@ ${ems_pc_data_addr}                    10.100.4.10
 ${vnf_mem_size}                   2048
 ${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: This is set when you create VVerifier on EXFO WORX. eg: branch1
 ${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: This is set when you create VVerifier on EXFO WORX. eg: hq1
-${nas_vnf_image_url}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
-${nas_vnf_image_md5_url}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
+${nas_vnf_image_url}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE (rename the image img.qcow2)
+${nas_vnf_image_md5_url}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE (rename the file img.qcow2.md5)
 ${vnf_image_url}                  http://${util1_fqdn}/netrounds-test-agent_2.27.0.8.qcow2
 
 
