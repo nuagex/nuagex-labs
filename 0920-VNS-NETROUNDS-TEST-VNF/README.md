@@ -71,9 +71,8 @@ The configuration variables are stored in a single [vars.robot](./cats/vars.robo
 ### 3.1.1 VSD login
 Authentication and authorization with VSD is needed in order to configure objects via VSD API. Make sure to add the VSD password (obtained in the end of the deployment procedure) on line [83](./cats/vars.robot#L83) of the variables file.
 
-### 3.1.2 VNF names
-The automation scripts assume that the Netrounds Virtual Test Agent names configured in Netrounds Cloud Control Center match the names of the VNF instances defined in Nuage Networks VSD.  
-To comply with this naming requirement it is recommended to create the Agents in the Cloud Control Center and then use these names in the [vars.robot](./cats/vars.robot) file. Specifically, these names are defined on the lines [68-69](./cats/vars.robot#L68-L69).  
+### 3.1.2 VNF names  
+The names that are used while generating the bootstrap iso file are the names that will be assigned to the VNFs on Netrounds Cloud Control Center. Use those names in the Variable file [vars.robot](./cats/vars.robot) file. Specifically, these names are defined on the lines [68-69](./cats/vars.robot#L68-L69).  
 For example, if the Netrounds agents are created with the names `nuage_agent1` and `nuage_agent2` then these names should be set as the VNF names on the above mentioned lines of the variables file.
 
 ### 3.1.3 VNF image path
