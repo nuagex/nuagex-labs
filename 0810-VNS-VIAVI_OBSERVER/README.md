@@ -19,7 +19,7 @@ Once the lab is deployed and configured, a user will be able to test/learn/demon
 # 1 Lab topology and components
 Once a lab is deployed and configured using automation scripts, it will match the following diagram:
 
-![lab](https://gitlab.com/rdodin/pics/wikis/uploads/603ee0b6520a1a08e6d1610f6e988daa/image.png)
+![lab](images/viavi-lab.png)
 
 The lab models an Organization with a headquarters (HQ) and a branch site deployed over a single underlay (Internet).
 
