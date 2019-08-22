@@ -35,3 +35,15 @@ Configure PE Internet
     ## NAT the internet traffic that is not destined to the local addressing
     ## should be only configured on the internet PE
     SSHLibrary.Execute Command    iptables -t nat -A POSTROUTING -o eth0 ! -d 10.0.0.0/8 -j MASQUERADE
+    SSHLibrary.Execute Command    iptables -t nat -A POSTROUTING -o eth0 ! -d 10.0.0.0/8 -j MASQUERADE
+    SSHLibrary.Execute Command    ip r a 10.100.99.0/24 via 10.10.99.1
+    SSHLibrary.Execute Command    ip r a 10.100.1.0/24 via 10.10.1.11
+
+Configure Viavi Fusion Server
+    Linux.Connect To Server With Keys
+    ...    server_address=10.0.0.220
+    ...    username=root
+    ...    priv_key=${ssh_key_path}
+
+    # enable IP routing
+    SSHLibrary.Execute Command    ip r a 10.100.0.0/16 via 10.0.0.210
