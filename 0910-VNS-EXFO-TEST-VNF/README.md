@@ -36,6 +36,7 @@ The lab is based on the NuageX's **Nuage Networks 5.4.1** template and has addit
 1. [Download](https://nuxctl.nuagex.io#download) `nuxctl` for your operating system.
 2. Download the [nuxctl_0910-vns-exfo.yml](nuxctl_0910-vns-exfo.yml) lab definition file created for this lab or clone this repository as a whole.
 3. Replace the [public key](nuxctl_0910-vns-exfo.yml#L7) in the lab definition file with the public key you have in your NuageX user account.
+4. Get a License for EXFO Worx from either Nuage or EXFO and apply the license to EXFO WORX VM. More details on how to login to EXFO WORX VM can be found in Integration guide.
 
 ## 2.2 Starting deployment process
 To initiate the deployment routine proceed with the following command:
