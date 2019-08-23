@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<domain type="kvm">
+   <metadata>
+      <nuage-vnf-metadata>
+         <image-uri>http://util.nuage.lab/img.qcow2</image-uri>
+         <image-md5-checksum>bfe6076acddb07775555e54c1fe6e69d</image-md5-checksum>
+         <iso-uri>http://util.nuage.lab/branch1.iso</iso-uri>
+         <iso-md5-checksum>275780778e12ef3533cf277a92953dfa</iso-md5-checksum>
+      </nuage-vnf-metadata>
+   </metadata>
+   <uuid>$VNF_UUID</uuid>
+   <memory unit="MiB">$VNF_MEMORY</memory>
+   <name>$VNF_UUID</name>
+   <vcpu placement="static">$VNF_VCPU</vcpu>
+   <sysinfo type="smbios">
+      <bios>
+         <entry name="vendor">EXFO</entry>
+      </bios>
+      <system>
+         <entry name="manufacturer">EXFO</entry>
+         <entry name="product">OpenStack EXFO</entry>
+         <entry name="version">9.1.0</entry>
+      </system>
+   </sysinfo>
+   <os>
+      <type arch="x86_64" machine="pc-i440fx-rhel7.0.0">hvm</type>
+      <boot dev="hd"/>
+      <smbios mode="sysinfo"/>
+      <boot dev="cdrom"/>
+      <bootmenu enable="yes" timeout="3000"/>
+   </os>
+   <features>
+      <acpi/>
+      <apic/>
+      <pae/>
+   </features>
+   <devices>
+      <disk device="disk" type="file">
+         <driver cache="none" name="qemu" type="qcow2"/>
+         <source file="${VNF_IMAGE_LOCATION}"/>
+         <target dev="sda" bus="ide"/>
+      </disk>
+      <disk device="cdrom" type="file">
+         <driver name="qemu" type="raw"/>
+         <source file="${VNF_ISO_LOCATION}"/>
+         <target bus="ide" dev="hdc"/>
+         <readonly/>
+      </disk>
+      <disk type="block" device="disk">
+         <driver name="qemu" type="raw" cache="none"/>
+         <source dev="/dev/disk/by-label/WANDISK"/>
+         <target dev="vda" bus="virtio"/>
+         <alias name="virtio-disk0"/>
+      </disk>
+      <console type="pty" tty="/dev/pts/2">
+         <source path="/dev/pts/2"/>
+         <target type="serial" port="0"/>
+         <alias name="serial0"/>
+      </console>
+      <emulator>/usr/libexec/qemu-kvm</emulator>
+   </devices>
+   <title>$VNF_NAME</title>
+</domain>
+
