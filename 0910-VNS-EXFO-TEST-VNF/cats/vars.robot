@@ -69,7 +69,7 @@ ${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: This is set when you
 ${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: This is set when you create VVerifier on EXFO WORX. eg: hq1
 ${nas_vnf_image_url}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE (rename the image img.qcow2)
 ${nas_vnf_image_md5_url}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE (rename the file img.qcow2.md5)
-${vnf_image_url}                  http://${util1_fqdn}/netrounds-test-agent_2.27.0.8.qcow2
+${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
 
 
 ##############################
