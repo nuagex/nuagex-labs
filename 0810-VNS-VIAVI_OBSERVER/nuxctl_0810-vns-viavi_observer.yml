@@ -1,7 +1,7 @@
 # nuxctl (nuxctl.nuagex.io) template
 # compatible with nuxctl 0.6.0+ version
 template: 5c9e0f9917b3be0001d99745
-name: viavi-fusion-lab-541-chandra
+name: viavi-fusion-lab-541
 sshKeys:
   - name: demo  # WARNING: make sure to use your public key instead of the demo one
     key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDL37mdc9EUEtruOyDrqJIyJ5FKUyddGThBSDl+w8d/R2jLXtJobrr2k/iSTDkswsZSqm0GKRe2OBUw1tUaJ1gmgSOck4hW5vIieselITytMCxgja+tJ8vPxuAcs++ZDCi6qZZOXnRG6OkVVLQ2p+PIVn5etSuureaGUu0Wjub+/EvsfL1FcS279jqsxJwFtMiPdSrLY2EHav1+/O9bAGsbva+HWDaTzh+AyTstwYX7+IEEShtaVfDvPC+p/EN799JKK4HFwYLE2U0L9ld1LTTbYpX7pT9KlSN5AhdaUyhlPMB6QWh2+qWYY5J46YhRtf1LoxEFWDPjrMuCZVmbs0w1aSnjJhSA8Xu9WHiEq8hwCIcJiFY88JAmGUMJsmnXViyXWLYG0Wr+980ufalTCVh2NX/QSbwtYlB5jpzvUyB35yzk6w986DJFY4ukhPaex+op0NvOAwJ88lJwWFhrOQuGtoy5yXa3kHTdVfatORrRZWGHRrr3+PYdoDD17j+vYPlTWNiZ7y/Tyufj2/O1QCZEzEOxNQSLhvjvtFtMTpvsJFYAU4HXhXuBLNIQoTgj8l85Kz36A30wWs/Jhw/W5kZYooH2mFJpwFwVNzCv+e+lS+MsvJaB4dY1Sc+nRP5Y2xj5zPoQafSab7kuHpiwNfKW0MWpzCPr0pkYkzFUaDBDKQ== cs@Chandrashekars-MacBook-Pro.local"
