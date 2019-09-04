@@ -10,7 +10,7 @@ Create VNF management domain
     ...    cats_org_name=${org_name}
     ...    cats_L3_domain_template_name=${l3domain_template1_name}
     ...    underlayEnabled=ENABLED
-    ...    PATEnabled=ENABLED
+    ...    PATEnabled=DISABLED
 
 Add DHCP server for the management domain
     Create DHCP Option in L3 Domain

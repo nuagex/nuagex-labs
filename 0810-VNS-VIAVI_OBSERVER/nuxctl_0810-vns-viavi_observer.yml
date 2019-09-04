@@ -1,10 +1,10 @@
 # nuxctl (nuxctl.nuagex.io) template
 # compatible with nuxctl 0.6.0+ version
-template: 5c35217192f86a000180be8f
-name: viavi-observerlive-integration
+template: 5c9e0f9917b3be0001d99745
+name: viavi-fusion-lab-541-chandra
 sshKeys:
   - name: demo  # WARNING: make sure to use your public key instead of the demo one
-    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0jLLF2c7sSUHCwFJ1cpj0mTNRfemi6XMKxAf7H4gIzs/joL18W+wlSrnHnu801bDLc2RNg8dvOvXmzjzZrKKMInWMXrzb0zjljCPumYWlI/koWAIMzpENjeRjWrB22WFVOVDW4GkphzhchFWFPSF9xxU4i3MPHn3HYZiy6ieLOvknplQDivTXcLwRjvenK35gjLPxo4nFhQWyUdzPLLCb/NUx/CGjkh10qwVfw+AWw3x3boqxwBXitPjLJ+ocfZVohAWupKuvsTNzlh8m39imI5pi9qTFT1x9YtkYsTYCy2iz2HCirqy+8BC/CPCyHuEjs8ZT9OFHHQtjB/qgzfTp"
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDL37mdc9EUEtruOyDrqJIyJ5FKUyddGThBSDl+w8d/R2jLXtJobrr2k/iSTDkswsZSqm0GKRe2OBUw1tUaJ1gmgSOck4hW5vIieselITytMCxgja+tJ8vPxuAcs++ZDCi6qZZOXnRG6OkVVLQ2p+PIVn5etSuureaGUu0Wjub+/EvsfL1FcS279jqsxJwFtMiPdSrLY2EHav1+/O9bAGsbva+HWDaTzh+AyTstwYX7+IEEShtaVfDvPC+p/EN799JKK4HFwYLE2U0L9ld1LTTbYpX7pT9KlSN5AhdaUyhlPMB6QWh2+qWYY5J46YhRtf1LoxEFWDPjrMuCZVmbs0w1aSnjJhSA8Xu9WHiEq8hwCIcJiFY88JAmGUMJsmnXViyXWLYG0Wr+980ufalTCVh2NX/QSbwtYlB5jpzvUyB35yzk6w986DJFY4ukhPaex+op0NvOAwJ88lJwWFhrOQuGtoy5yXa3kHTdVfatORrRZWGHRrr3+PYdoDD17j+vYPlTWNiZ7y/Tyufj2/O1QCZEzEOxNQSLhvjvtFtMTpvsJFYAU4HXhXuBLNIQoTgj8l85Kz36A30wWs/Jhw/W5kZYooH2mFJpwFwVNzCv+e+lS+MsvJaB4dY1Sc+nRP5Y2xj5zPoQafSab7kuHpiwNfKW0MWpzCPr0pkYkzFUaDBDKQ== cs@Chandrashekars-MacBook-Pro.local"
 
 services:
   - name: rdp-hqpc1
@@ -23,6 +23,14 @@ services:
     destination:
       port: 3389
       address: 10.0.0.101
+  - name: fusion-dashboard
+    type: public
+    port: 9443
+    protocols:
+      - tcp
+    destination:
+      port: 9443
+      address: 10.0.0.220
 
 
 ###################
@@ -108,7 +116,7 @@ servers:
 
   # VSCs
   - name: vsc-i
-    image: nux_vsc_5.3.2
+    image: vsc_nux_base-vns-single-underlay-5.4.1
     flavor: ceph.vsc
     interfaces:
       - index: 0
@@ -121,7 +129,7 @@ servers:
   # HQ servers
   - name: HQ-nsg1
     flavor: m1.medium
-    image: nux_nsg_5.3.3U1
+    image: nux_nsg_5.4.1
     interfaces:
       - network: HQ-Internet
         address: 10.10.99.99
@@ -146,7 +154,7 @@ servers:
   # Branch1 servers
   - name: Branch1-nsg1
     flavor: m1.medium
-    image: nux_nsg_5.3.3U1
+    image: nux_nsg_5.4.1
     interfaces:
       - network: Branch1-Internet
         address: 10.10.1.11
@@ -205,4 +213,20 @@ servers:
         index: 1
       - network: Branch1-Internet
         address: 10.10.1.1
+        index: 2
+
+
+ # Routers
+  - name: viavi-fusion
+    flavor: nux.vsd
+    image: viavi-fusion_NUX_VIAVI_FUSION-5.4.1
+    interfaces:
+      - network: private
+        address: 10.0.0.220
+        index: 0
+      - network: HQ-Internet
+        address: 10.10.99.220
+        index: 1
+      - network: Branch1-Internet
+        address: 10.10.1.220
         index: 2

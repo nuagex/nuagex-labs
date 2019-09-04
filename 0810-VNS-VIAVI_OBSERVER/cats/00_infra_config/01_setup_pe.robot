@@ -36,7 +36,7 @@ Configure PE Internet
     ## should be only configured on the internet PE
     SSHLibrary.Execute Command    iptables -t nat -A POSTROUTING -o eth0 ! -d 10.0.0.0/8 -j MASQUERADE
     SSHLibrary.Execute Command    iptables -t nat -A POSTROUTING -o eth0 ! -d 10.0.0.0/8 -j MASQUERADE
-    SSHLibrary.Execute Command    ip r a 10.100.99.0/24 via 10.10.99.1
+    SSHLibrary.Execute Command    ip r a 10.100.99.0/24 via 10.10.99.99
     SSHLibrary.Execute Command    ip r a 10.100.1.0/24 via 10.10.1.11
 
 Configure Viavi Fusion Server

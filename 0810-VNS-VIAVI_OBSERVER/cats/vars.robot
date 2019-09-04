@@ -1,6 +1,6 @@
 *** Variables ***
 # infra variables
-${vsd_fqdn}                    vsd01.nuage.lab
+${vsd_fqdn}                    vsd.nuage.lab
 ${vsc-internet_hostname}       vsc-i
 ${vsc-i_mgmt_ip}               10.0.0.10
 
@@ -27,7 +27,7 @@ ${sec_policy1_name}            ALLOW_ALL
 # VNS variables
 ${infra_gw_profile_name}       IGW
 ${infra_access_profile_name}   IAP
-${util1_fqdn}                  utility.nuage.lab
+${util1_fqdn}                  util.nuage.lab
 ${vsc_profile1_name}           VSC-INTERNET
 ${vsc-i_ctrl_ip}               10.10.99.10
 ## NSG template names
@@ -64,18 +64,18 @@ ${ems_pc_data_addr}                    10.100.4.10
 #     NSG VNF PARAMETERS
 ##############################
 ${vnf_mem_size}                   2048
-${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: GET_FROM_OBSERVERLIVE_WEB_APP
-${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: GET_FROM_OBSERVERLIVE_WEB_APP
-${nas_vnf_image_url}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE
-${nas_vnf_image_md5_url}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_MD5_FROM_NUAGEX_REPRESENTATIVE
+${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: example branch1. Refer integration guide for more info 
+${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: example hq1. Refer integration guide for more info 
+${nas_vnf_image_url}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE (rename the image img.qcow2)
+${nas_vnf_image_md5_url}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE (rename the image img.qcow2.md5)
 ${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
 
 
 ##############################
 #     VIAVI PARAMETERS
 ##############################
-${branch1_vnf1_boot_iso_url}      # TO_BE_FILLED_BY_A_USER: GET_FROM_OBSERVERLIVE_WEB_APP
-${hq_vnf1_boot_iso_url}           # TO_BE_FILLED_BY_A_USER: GET_FROM_OBSERVERLIVE_WEB_APP
+${branch1_vnf1_boot_iso_url}      # TO_BE_FILLED_BY_A_USER: FILE NAME SHOULD BE {branch1_vnf1_name}.iso(Line 67/68). Example branch1.iso
+${hq_vnf1_boot_iso_url}           # TO_BE_FILLED_BY_A_USER: FILE NAME SHOULD BE {hq1_vnf1_name}.iso(Line 67/68). Example hq1.iso
 
 ##############################
 #     CONNECTION PARAMETERS
