@@ -1,0 +1,42 @@
+forgot.password.sender.address: forgot@organization.com
+gr.dc: '1'
+gr.dc1.address: 0.0.0.0
+gr.dc2.address: 0.0.0.0
+gr.enabled: false
+ha.enabled: false
+ha.node1.address: {{ local_ip }}
+ha.node2.address: ''
+ha.node3.address: ''
+jms.password: csproot
+jms.username: csproot@csp
+new.account.sender.address: new@organization.com
+password.reset.sender.address: reset@organization.com
+proxy.enabled: false
+proxy.port: '8000'
+proxy.url: 0.0.0.0
+smtp.host: 0.0.0.0
+smtp.password: ''
+smtp.port: '25'
+smtp.secureConnection: false
+smtp.user: ''
+spring.data.jest.uri: http://{{ vstats_ip }}:9200
+sso.custom.entityId: com:nokia:vnsportal:sp
+sso.custom.idp.metadata: idp.metadata.xml
+sso.custom.imagename: nuage/vnsportal-eauth-saml-XYZ
+sso.custom.imagetag: 1.0.0
+sso.custom.impersonate.attribute: impersonatedUser
+sso.custom.keystore.key.alias: vnsportal
+sso.custom.keystore.key.password: changeit
+sso.custom.keystore.password: changeit
+sso.entityId: com:nokia:vnsportal:sp
+sso.idp.metadata: idp.metadata.xml
+sso.impersonate.attribute: impersonatedUser
+sso.keystore.key.alias: vnsportal
+sso.keystore.key.password: changeit
+sso.keystore.password: changeit
+sso.profile: 0
+vnsportal.csp.fqdn: {{ portal_fqdn }}
+vsd.host: 10.0.0.2:8443
+vsd.root.org: csp
+vsd.root.password: {{ vsd_auth_username }}
+vsd.root.username: {{ vsd_auth_password }}
