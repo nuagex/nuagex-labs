@@ -38,7 +38,7 @@ Move Snapshot directory
     ...  shell=True
     ...  sudo=True
 
-    Sleep    20
+    Sleep    60
 
     SSHLibrary.Execute Command
     ...  curl -X PUT "localhost:9200/_snapshot/my_nuage_backup" -H 'Content-Type: application/json' -d' { "type": "fs", "settings": { "location": "/usr/local/bin/nuage_elastic_backup/", "compress": true } }'
