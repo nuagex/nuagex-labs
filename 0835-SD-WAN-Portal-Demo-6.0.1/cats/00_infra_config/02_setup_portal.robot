@@ -40,8 +40,8 @@ Template portal configuration file
                ...  portal_fqdn=${lab_ip}:443
                ...  local_ip=${portal_mgmt_ip}
                ...  vsd_fqdn=vsd.${domain}:8443
-               ...  vsd_auth_username=vnsportal
-               ...  vsd_auth_password=vnsportal
+               ...  vsd_auth_username=proxy
+               ...  vsd_auth_password=proxy
                ...  vstats_ip=${es_mgmt_ip}
                ...  servlet_session_secure=false
 
