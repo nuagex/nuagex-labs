@@ -56,7 +56,7 @@ Template portal configuration file
 
 Run portal bootstrap scripts
     SSHLibrary.Execute Command
-        ...  docker run --rm --env-file /home/centos/portal.properties -v /var/run/docker.sock:/docker.sock -v /opt:/mnt:z -v /etc:/hostetc:z nuage/vnsportal-bootstrap:latest
+        ...  docker run --rm --env-file /home/centos/portal.properties -v /var/run/docker.sock:/docker.sock -v /opt:/mnt:z -v /etc:/hostetc:z nuage/vnsportal-bootstrap:3.2.3-91
         ...  shell=True
         ...  sudo=True
 
