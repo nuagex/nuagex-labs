@@ -10,7 +10,6 @@ ${pe-router}                      10.0.0.50
 ${vsc_mgmt_ip}                    10.0.0.3
 ${es_mgmt_ip}                     10.0.0.5
 ${portal_mgmt_ip}                 10.0.0.6
-${portal_react_mgmt_ip}           10.0.0.7
 ${util_mgmt_ip}                   10.0.0.33
 ${hq_pc1_mgmt_addr}               10.0.0.30
 ${mv_pc1_mgmt_addr}               10.0.0.10
@@ -64,9 +63,6 @@ ${domain}                         nuage.lab
 ${mv_wan_network}                 10.10.1.0/24
 ${ny_wan_network}                 10.10.2.0/24
 ${hq_wan_network}                 10.10.3.0/24
-## Update this for any new release.
-${react_file_url}                 http://files.nuagedemos.net/nuage-portal-container-5.3.0-5.tar.gz 
-${react_tar_file_name}            nuage-portal-container-5.3.0-5.tar.gz
 
 *** Keywords ***
 Login NuageX User

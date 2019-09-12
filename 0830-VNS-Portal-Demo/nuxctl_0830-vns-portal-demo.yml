@@ -102,15 +102,7 @@ servers:
         network: private
         address: 10.0.0.6
 
-  - name: react-portal
-    image: CentOS-7.5-x86_64-GenericCloud
-    flavor: ceph.vsd
-    interfaces:
-      - index: 0
-        network: private
-        address: 10.0.0.7
-
-  # MV servers
+   # MV servers
   - name: mv-nsg1
     flavor: m1.medium
     image: nux_nsg_5.4.1
