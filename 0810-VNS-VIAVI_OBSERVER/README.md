@@ -68,7 +68,7 @@ The configuration variables are stored in a single [vars.robot](./cats/vars.robo
 Authentication and authorization with VSD is needed in order to configure objects via VSD API. Make sure to add the VSD password (obtained in the end of the deployment procedure) on line [83](./cats/vars.robot#L83) of the variables file.
 
 ### 3.1.2 VNF names
-You should use the bash script provided along with Integration guide to generate the Bootstrap ISOs for the VNF agents. The name provided to the bash script should match the name of hte VNF names on lines [67-68](./cats/vars.robot#L67-L68).  
+You should use the generate-vpma-config-iso.sh bash script provided along with Integration guide (appendix of the Integration Guide) to generate the Bootstrap ISOs for the VNF agents. The name provided to the bash script should match the name of hte VNF names on lines [67-68](./cats/vars.robot#L67-L68).  
 For example, if the VIAVI agents are created with the names `nuage_agent1` and `nuage_agent2` then these names should be set as the VNF names on the above mentioned lines of the variables file.
 
 ### 3.1.3 VNF image path
