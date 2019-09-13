@@ -1,20 +1,16 @@
-# 0810-VNS-VIAVI_OBSERVER
+# 0810-VNS-VIAVI_FUSION
 
 * **version:** 1.0.0
 * **tags:** VIAVI
 * **requirements**: Nuage 5.2.3+
-* **designer**: [Roman Dodin](mailto:roman.dodin@nokia.com)
+* **designer**: [Chandrashekar Dashudu](mailto:chandrashekar.dashudu@nokia.com)
 
-This Lab demonstrates a joint integration between **Nuage Networks VNS** and [**VIAVI Observer Live**](https://www.viavisolutions.com/en-us/products/observerlive) solutions.
-
-> **Note**, a user account in ObserverLive service is a prerequisite to demonstrate the integration.
+This Lab demonstrates a joint integration between **Nuage Networks VNS** and [**VIAVI Fusion**](https://www.viavisolutions.com/en-us/products/fusion) solutions.
 
 Once the lab is deployed and configured, a user will be able to test/learn/demonstrate the following features of a joint solution:
 
-* VIAVI VNF deployment and Observer Live service discovery.
+* VIAVI VNF deployment and Viavi Fusion VNF (vPMA) discovery.
 * Network test between the sites - proactive, ongoing network link testing performed by VIAVI VNF agents.
-* Service validation - establishing visibility between the cloud and on-premises VNF agents.
-* Remote user troubleshooting - leveraging VIAVI Windows agent connected to the Observer Live system.
 
 # 1 Lab topology and components
 Once a lab is deployed and configured using automation scripts, it will match the following diagram:
@@ -24,26 +20,25 @@ Once a lab is deployed and configured using automation scripts, it will match th
 The lab models an Organization with a headquarters (HQ) and a branch site deployed over a single underlay (Internet).
 
 Both the HQ and the branch are equipped with a Nuage Networks NSG running VIAVI Virtual Agent leveraging the **Hosted VNF** feature of Nuage Networks VNS.  
-The branch site is also equipped with a Windows 10 machine running a VIAVI Windows Agent for Remote User Troubleshooting use case demonstration.
 
 The headquarters site user devices and branch offices user devices are emulated using the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows to generate and analyze traffic as well as run some real-world applications. Although the devices are not needed to demonstrate the features of a joint solution, they are used here as the Installer PCs to automatically bootstrap the NSGs.
 
 # 2 Deployment
-The lab is meant to be deployed on [NuageX](https://nuagex.io) platform and is automated by the [nuxctl](https://nuxctl.nuagex.io) CLI tool. All of the infrastructure deployment will be completed after a user runs the the tool against the [lab template](nuxctl_0810-vns-viavi_observer.yml) supplied within this repo.
+The lab is meant to be deployed on [NuageX](https://nuagex.io) platform and is automated by the [nuxctl](https://nuxctl.nuagex.io) CLI tool. All of the infrastructure deployment will be completed after a user runs the the tool against the [lab template](nuxctl_0810-vns-viava_fusion.yml) supplied within this repo.
 
-The lab is based on the NuageX's **Nuage Networks 5.3.3U3** template and has additional infra components required to support the VIAVI integration and use case demonstration.
+The lab is based on the NuageX's **Nuage Networks 5.4.1** template and has additional infra components required to support the VIAVI integration and use case demonstration.
 
 ## 2.1 Prerequisites
 1. [Download](https://nuxctl.nuagex.io#download) `nuxctl` for your operating system.
-2. Download the [nuxctl_0810-vns-viavi_observer.yml](nuxctl_0810-vns-viavi_observer.yml) lab definition file created for this lab or clone this repository as a whole.
-3. Replace the [public key](nuxctl_0810-vns-viavi_observer.yml#L7) in the lab definition file with the public key you have in your NuageX user account.
+2. Download the [nuxctl_0810-vns-viava_fusion.yml](nuxctl_0810-vns-viava_fusion.yml) lab definition file created for this lab or clone this repository as a whole.
+3. Replace the [public key](nuxctl_0810-vns-viava_fusion.yml#L7) in the lab definition file with the public key you have in your NuageX user account.
 
 ## 2.2 Starting deployment process
 To initiate the deployment routine proceed with the following command:
 ```bash
 # make sure to specify your nuagex public key in the lab template
 # before running the command
-nuxctl create-lab -l nuxctl_0810-vns-viavi_observer.yml --wait
+nuxctl create-lab -l nuxctl_0810-vns-viava_fusion.yml --wait
 ```
 
 Once a deployment process ends successfully a user is presented with the parameters of a newly created lab. Take a note of the `Password` and `External IP` parameters as they will be referenced in the configuration process.
@@ -63,7 +58,7 @@ The configuration is performed by the CATS tool running in a container on the la
 2. Pull down the CATS container and clone this repository by running the setup script with this command:
    ```bash
    # issued on the jumpbox
-   curl https://raw.githubusercontent.com/nuagex/nuagex-labs/master/helpers/setup_5.3.2.sh | bash
+   curl https://raw.githubusercontent.com/nuagex/nuagex-labs/master/helpers/setup_5.4.1.sh | bash
    ```
 
 ## 3.1 Variables file
@@ -73,8 +68,7 @@ The configuration variables are stored in a single [vars.robot](./cats/vars.robo
 Authentication and authorization with VSD is needed in order to configure objects via VSD API. Make sure to add the VSD password (obtained in the end of the deployment procedure) on line [83](./cats/vars.robot#L83) of the variables file.
 
 ### 3.1.2 VNF names
-The automation scripts assume that the VIAVI Virtual Agent names configured in VIAVI ObserverLive web application match the names of the VNF instances defined in Nuage Networks VSD.  
-To comply with this naming requirement it is recommended to create the Agents in the ObserverLive web app and then use these names in the [vars.robot](./cats/vars.robot) file. Specifically, these names are defined on the lines [67-68](./cats/vars.robot#L67-L68).  
+You should use the bash script provided along with Integration guide to generate the Bootstrap ISOs for the VNF agents. The name provided to the bash script should match the name of hte VNF names on lines [67-68](./cats/vars.robot#L67-L68).  
 For example, if the VIAVI agents are created with the names `nuage_agent1` and `nuage_agent2` then these names should be set as the VNF names on the above mentioned lines of the variables file.
 
 ### 3.1.3 VNF image path
@@ -83,7 +77,7 @@ The paths to the VIAVI Agent image and a corresponding md5 file should be provid
 You can [contact NuageX representatives](mailto:nuagex+viavi@nuagenetworks.net) with the request to obtain the paths to these files.
 
 ### 3.1.4 Boot ISO
-Initial configuration of the VIAVI agents is done by means of the boot ISO files. These files are generated by the ObserverLive application during the agents creation process and are presented to a user via the download links. Fill in the ISO download links provided by the ObserverLive app on the lines [77-78](./cats/vars.robot#L77-L78) and automation scripts will download the ISO files for the agents accordingly.
+Initial configuration of the VIAVI agents is done by means of the boot ISO files. You should use the bash script provided along with Integration guide to generate the Bootstrap ISOs for the VNF agents. Fill in the ISO download links provided by the Fusion app on the lines [77-78](./cats/vars.robot#L77-L78) and automation scripts will download the ISO files for the agents accordingly.
 
 ## 3.2 Starting configuration process
 The configuration process will handle all of the heavy-lifting of the lab configuration. Starting with overlay object creation as well as NSG bootstrapping and activation, finishing with the creation of the VNFs.
@@ -97,7 +91,7 @@ To launch the configuration sequence proceed with the following command issued o
 docker run -t \
   -v ${HOME}/.ssh:/root/.ssh \
   -v /home/admin/nuagex-labs/0810-VNS-VIAVI_OBSERVER/cats:/home/tests \
-  nuagepartnerprogram/cats:5.3.2 -X /home/tests
+  nuagepartnerprogram/cats:5.4.1 -X /home/tests
 ```
 
 Note, that in order to provide CATS container with passwordless access to the labs components the Jumpbox keys are shared with the container.  
@@ -106,7 +100,7 @@ Jumpbox's `${HOME}/.ssh` folder contents is exposed to the CATS container and mo
 
 The configuration is successful if every step is marked with the green PASS status. The configuration execution log can be found under `cats/reports` directory (the full path is provided by CATS at the end of the execution output).
 
-> Note, the automated lab configuration does not create agents in the ObserverLive application, a user needs to manually create them before running the CATS scripts.
+> Note, the automated lab configuration does not create agents in the Fusion application, a user needs to manually create them before running the CATS scripts.
 
 # 4 Use cases
 Use cases are to be provisioned by a the user manually after lab configuration completes.
