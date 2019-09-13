@@ -3,6 +3,6 @@
 # it will pull the CATS container and clone the nuagex-lab repo
 # to enable automatic configuration of a lab
 cd ~
-docker pull nuagepartnerprogram/cats:5.3.2
+docker pull nuagepartnerprogram/cats:5.4.1
 rm -rf ~/nuagex-labs
 git clone https://github.com/nuagex/nuagex-labs
