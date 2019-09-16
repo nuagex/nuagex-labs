@@ -90,7 +90,7 @@ To launch the configuration sequence proceed with the following command issued o
 ## -X -- stop the execution on first error
 docker run -t \
   -v ${HOME}/.ssh:/root/.ssh \
-  -v /home/admin/nuagex-labs/0810-VNS-VIAVI_OBSERVER/cats:/home/tests \
+  -v /home/admin/nuagex-labs/0810-VNS-VIAVI_FUSION/cats:/home/tests \
   nuagepartnerprogram/cats:5.4.1 -X /home/tests
 ```
 
