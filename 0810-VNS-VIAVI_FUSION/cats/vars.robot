@@ -64,8 +64,8 @@ ${ems_pc_data_addr}                    10.100.4.10
 #     NSG VNF PARAMETERS
 ##############################
 ${vnf_mem_size}                   2048
-${branch1_vnf1_name}              # TO_BE_FILLED_BY_A_USER: example branch1. Refer integration guide for more info 
-${hq_vnf1_name}                   # TO_BE_FILLED_BY_A_USER: example hq1. Refer integration guide for more info 
+${branch1_vnf1_name}              branch1
+${hq_vnf1_name}                   hq1
 ${nas_vnf_image_url}              # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE (rename the image img.qcow2)
 ${nas_vnf_image_md5_url}          # TO_BE_FILLED_BY_A_USER: GET_PATH_TO_THE_IMAGE_FROM_NUAGEX_REPRESENTATIVE (rename the image img.qcow2.md5)
 ${vnf_image_url}                  http://${util1_fqdn}/img.qcow2
