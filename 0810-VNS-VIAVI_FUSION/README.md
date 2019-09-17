@@ -88,6 +88,7 @@ To launch the configuration sequence proceed with the following command issued o
 # issued on the jumpbox VM
 # flags
 ## -X -- stop the execution on first error
+cd ~/
 docker run -t \
   -v ${HOME}/.ssh:/root/.ssh \
   -v /home/admin/nuagex-labs/0810-VNS-VIAVI_FUSION/cats:/home/tests \
