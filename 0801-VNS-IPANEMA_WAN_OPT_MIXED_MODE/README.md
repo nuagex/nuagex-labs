@@ -83,6 +83,7 @@ To launch the configuration sequence proceed with the following command issued o
 # issued on the jumpbox VM
 # flags
 ## -X -- stop the execution if error occurs
+cd ~/
 docker run -t \
   -v ${HOME}/.ssh:/root/.ssh \
   -v /home/admin/nuagex-labs/0801-VNS-IPANEMA_WAN_OPT_MIXED_MODE/cats:/home/tests \
