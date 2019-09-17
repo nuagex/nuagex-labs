@@ -24,21 +24,21 @@ Both the HQ and the branch are equipped with a Nuage Networks NSG running VIAVI 
 The headquarters site user devices and branch offices user devices are emulated using the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows to generate and analyze traffic as well as run some real-world applications. Although the devices are not needed to demonstrate the features of a joint solution, they are used here as the Installer PCs to automatically bootstrap the NSGs.
 
 # 2 Deployment
-The lab is meant to be deployed on [NuageX](https://nuagex.io) platform and is automated by the [nuxctl](https://nuxctl.nuagex.io) CLI tool. All of the infrastructure deployment will be completed after a user runs the the tool against the [lab template](nuxctl_0810-vns-viava_fusion.yml) supplied within this repo.
+The lab is meant to be deployed on [NuageX](https://nuagex.io) platform and is automated by the [nuxctl](https://nuxctl.nuagex.io) CLI tool. All of the infrastructure deployment will be completed after a user runs the the tool against the [lab template](nuxctl_0810-vns-viavi_fusion.yml) supplied within this repo.
 
 The lab is based on the NuageX's **Nuage Networks 5.4.1** template and has additional infra components required to support the VIAVI integration and use case demonstration.
 
 ## 2.1 Prerequisites
 1. [Download](https://nuxctl.nuagex.io#download) `nuxctl` for your operating system.
-2. Download the [nuxctl_0810-vns-viava_fusion.yml](nuxctl_0810-vns-viava_fusion.yml) lab definition file created for this lab or clone this repository as a whole.
-3. Replace the [public key](nuxctl_0810-vns-viava_fusion.yml#L7) in the lab definition file with the public key you have in your NuageX user account.
+2. Download the [nuxctl_0810-vns-viavi_fusion.yml](nuxctl_0810-vns-viavi_fusion.yml) lab definition file created for this lab or clone this repository as a whole.
+3. Replace the [public key](nuxctl_0810-vns-viavi_fusion.yml#L7) in the lab definition file with the public key you have in your NuageX user account.
 
 ## 2.2 Starting deployment process
 To initiate the deployment routine proceed with the following command:
 ```bash
 # make sure to specify your nuagex public key in the lab template
 # before running the command
-nuxctl create-lab -l nuxctl_0810-vns-viava_fusion.yml --wait
+nuxctl create-lab -l nuxctl_0810-vns-viavi_fusion.yml --wait
 ```
 
 Once a deployment process ends successfully a user is presented with the parameters of a newly created lab. Take a note of the `Password` and `External IP` parameters as they will be referenced in the configuration process.
