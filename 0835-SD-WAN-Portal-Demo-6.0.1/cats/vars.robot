@@ -15,7 +15,7 @@ ${util_mgmt_ip}                   10.0.0.33
 ${hq_pc1_mgmt_addr}               10.0.0.30
 ${mv_pc1_mgmt_addr}               10.0.0.10
 ${ny_pc1_mgmt_addr}               10.0.0.20
-
+${license_url}                    license_value
 
 ##############################
 #     OVERLAY VARIABLES

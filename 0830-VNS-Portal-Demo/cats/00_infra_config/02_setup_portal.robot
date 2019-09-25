@@ -60,7 +60,7 @@ Run portal bootstrap scripts
         ...  shell=True
         ...  sudo=True
 
-Copy portal license File 
+Copy portal license file from Partner Program Team
     SSHLibrary.Execute Command    cd /root && curl -L -O ${license_url}
 
 Copy portal license file
