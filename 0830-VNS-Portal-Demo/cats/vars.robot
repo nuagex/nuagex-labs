@@ -63,6 +63,7 @@ ${domain}                         nuage.lab
 ${mv_wan_network}                 10.10.1.0/24
 ${ny_wan_network}                 10.10.2.0/24
 ${hq_wan_network}                 10.10.3.0/24
+${license_url}                    license_value
 
 *** Keywords ***
 Login NuageX User

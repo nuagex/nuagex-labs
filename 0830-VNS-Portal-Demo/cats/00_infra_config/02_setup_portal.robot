@@ -60,9 +60,12 @@ Run portal bootstrap scripts
         ...  shell=True
         ...  sudo=True
 
+Copy portal license File 
+    SSHLibrary.Execute Command    cd /root && curl -L -O ${license_url}
+
 Copy portal license file
     SSHLibrary.Execute Command
-        ...  cp /home/centos/vns-portal.license /opt/vnsportal/tomcat-instance1/
+        ...  cp /root/vns-portal.license /opt/vnsportal/tomcat-instance1/
         ...  shell=True
         ...  sudo=True
 
