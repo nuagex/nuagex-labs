@@ -58,7 +58,7 @@ Run portal bootstrap scripts
 
 Copy portal license file from Partner Program Team
     SSHLibrary.Execute Command    cd /root && curl -L -O ${license_url}
-    SSHLibrary.Execute Command.   mv /root/vns-portal*.license /root/vns-portal.license
+    SSHLibrary.Execute Command    mv /root/vns-portal*.license /root/vns-portal.license
 
 Copy portal license file
     SSHLibrary.Execute Command
