@@ -65,7 +65,7 @@ Copy portal license file from Partner Program Team
 
 Copy portal license file
     SSHLibrary.Execute Command
-        ...  cp /root/vns-portal.license /opt/vnsportal/tomcat-instance1/
+        ...  cp /root/vns-portal-*.license /opt/vnsportal/tomcat-instance1/vns-portal.license
         ...  shell=True
         ...  sudo=True
 
