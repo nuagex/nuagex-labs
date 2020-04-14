@@ -1,0 +1,1185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot rpa="false" generated="20190904 22:48:25.288" generator="Robot 3.1.1 (Python 2.7.15 on linux2)">
+<suite source="/home/tests/00_infra_config" id="s1" name="00 Infra Config">
+<suite source="/home/tests/00_infra_config/01_setup_pe.robot" id="s1-s1" name="01 Setup Pe">
+<test id="s1-s1-t1" name="Configure PE Router">
+<kw name="Connect to Server With Keys" library="linux">
+<arguments>
+<arg>server_address=${pe-router}</arg>
+<arg>username=root</arg>
+<arg>priv_key=${ssh_key_path}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:27.880" level="TRACE">Arguments: [ ${server_address}='10.0.0.50' | ${server_port}='22' | ${username}='root' | ${priv_key}='~/.ssh/id_rsa' | ${priv_key_password}=None | ${delay}='0.5' | ${prompt}=None | ${timeout}='3' | ${newline}='LF' ]</msg>
+<kw name="Parse Path" library="CATSUtils">
+<arguments>
+<arg>${priv_key}</arg>
+</arguments>
+<assign>
+<var>${p_path}</var>
+</assign>
+<msg timestamp="20190904 22:48:27.881" level="TRACE">Arguments: [ '~/.ssh/id_rsa' ]</msg>
+<msg timestamp="20190904 22:48:27.881" level="TRACE">Return: {'dir_name': '/root/.ssh', 'file_name': 'id_rsa', 'full_path': '/root/.ssh/id_rsa'}</msg>
+<msg timestamp="20190904 22:48:27.881" level="INFO">${p_path} = {u'file_name': u'id_rsa', u'full_path': u'/root/.ssh/id_rsa', u'dir_name': u'/root/.ssh'}</msg>
+<status status="PASS" endtime="20190904 22:48:27.881" starttime="20190904 22:48:27.880"></status>
+</kw>
+<kw name="Open Connection" library="SSHLibrary">
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<arguments>
+<arg>${server_address}</arg>
+<arg>port=${server_port}</arg>
+<arg>prompt=${prompt}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>newline=${newline}</arg>
+</arguments>
+<assign>
+<var>${conn_index}</var>
+</assign>
+<msg timestamp="20190904 22:48:27.882" level="TRACE">Arguments: [ '10.0.0.50' | port=22 | prompt=None | timeout='3' | newline='LF' ]</msg>
+<msg timestamp="20190904 22:48:27.882" level="TRACE">Return: 1</msg>
+<msg timestamp="20190904 22:48:27.882" level="INFO">${conn_index} = 1</msg>
+<status status="PASS" endtime="20190904 22:48:27.882" starttime="20190904 22:48:27.881"></status>
+</kw>
+<kw name="Login With Public Key" library="SSHLibrary">
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<arguments>
+<arg>${username}</arg>
+<arg>${p_path['full_path']}</arg>
+<arg>password=${priv_key_password}</arg>
+<arg>delay=${delay}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:27.883" level="TRACE">Arguments: [ 'root' | '/root/.ssh/id_rsa' | password=None | delay='0.5' ]</msg>
+<msg timestamp="20190904 22:48:27.884" level="INFO">Logging into '10.0.0.50:22' as 'root'.</msg>
+<msg timestamp="20190904 22:48:27.919" level="DEBUG">Adding ssh-ed25519 host key for 10.0.0.50: cac499be0ddef9fbec448b0da0a532e3</msg>
+<msg timestamp="20190904 22:48:27.920" level="DEBUG">Trying discovered key 22bd1b2e2aed03a1ee57b159219e41ee in /root/.ssh/id_rsa</msg>
+<msg timestamp="20190904 22:48:27.985" level="DEBUG">[chan 0] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:29.295" level="INFO">Read output: Last login: Wed Sep  4 22:37:41 2019 from 10.0.0.1
+[root@pe-router ~]#</msg>
+<msg timestamp="20190904 22:48:29.295" level="TRACE">Return: 'Last login: Wed Sep  4 22:37:41 2019 from 10.0.0.1\r\r\n[root@pe-router ~]# '</msg>
+<status status="PASS" endtime="20190904 22:48:29.295" starttime="20190904 22:48:27.883"></status>
+</kw>
+<msg timestamp="20190904 22:48:29.295" level="TRACE">Return: 1</msg>
+<status status="PASS" endtime="20190904 22:48:29.296" starttime="20190904 22:48:27.877"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>sysctl -w net.ipv4.ip_forward=1</arg>
+</arguments>
+<msg timestamp="20190904 22:48:29.296" level="TRACE">Arguments: [ 'sysctl -w net.ipv4.ip_forward=1' ]</msg>
+<msg timestamp="20190904 22:48:29.297" level="INFO">Executing command 'sysctl -w net.ipv4.ip_forward=1'.</msg>
+<msg timestamp="20190904 22:48:29.297" level="DEBUG">[chan 1] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:29.321" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:29.321" level="TRACE">Return: 'net.ipv4.ip_forward = 1'</msg>
+<status status="PASS" endtime="20190904 22:48:29.322" starttime="20190904 22:48:29.296"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>grep -q -F 'net.ipv4.ip_forward = 1' /usr/lib/sysctl.d/50-default.conf || echo 'net.ipv4.ip_forward = 1' &gt;&gt; /usr/lib/sysctl.d/50-default.conf</arg>
+</arguments>
+<msg timestamp="20190904 22:48:29.322" level="TRACE">Arguments: [ "grep -q -F 'net.ipv4.ip_forward = 1' /usr/lib/sysctl.d/50-default.conf || echo 'net.ipv4.ip_forward = 1' &gt;&gt; /usr/lib/sysctl.d/50-default.conf" ]</msg>
+<msg timestamp="20190904 22:48:29.322" level="INFO">Executing command 'grep -q -F 'net.ipv4.ip_forward = 1' /usr/lib/sysctl.d/50-default.conf || echo 'net.ipv4.ip_forward = 1' &gt;&gt; /usr/lib/sysctl.d/50-default.conf'.</msg>
+<msg timestamp="20190904 22:48:29.323" level="DEBUG">[chan 2] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:29.409" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:29.409" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:29.409" starttime="20190904 22:48:29.322"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>sudo ifdown eth0 &amp;&amp; sudo ifup eth0</arg>
+</arguments>
+<msg timestamp="20190904 22:48:29.410" level="TRACE">Arguments: [ 'sudo ifdown eth0 &amp;&amp; sudo ifup eth0' ]</msg>
+<msg timestamp="20190904 22:48:29.411" level="INFO">Executing command 'sudo ifdown eth0 &amp;&amp; sudo ifup eth0'.</msg>
+<msg timestamp="20190904 22:48:29.411" level="DEBUG">[chan 3] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:32.057" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:32.057" level="TRACE">Return: '\nDetermining IP information for eth0... done.'</msg>
+<status status="PASS" endtime="20190904 22:48:32.057" starttime="20190904 22:48:29.410"></status>
+</kw>
+<kw type="for" name="${INDEX} IN RANGE [ 1 | 4 ]">
+<kw type="foritem" name="${INDEX} = 1">
+<kw name="Render J2 Template" library="CATSUtils">
+<arguments>
+<arg>source=/home/tests/00_infra_config/data/pe_ifcfg.j2</arg>
+<arg>index=${INDEX}</arg>
+</arguments>
+<assign>
+<var>${ifcfg_file}</var>
+</assign>
+<msg timestamp="20190904 22:48:32.059" level="TRACE">Arguments: [ source='/home/tests/00_infra_config/data/pe_ifcfg.j2' | index=1 ]</msg>
+<msg timestamp="20190904 22:48:32.063" level="TRACE">Return: 'BOOTPROTO=dhcp\nDEVICE=eth1\nONBOOT=yes\nDEFROUTE=no\nTYPE=Ethernet'</msg>
+<msg timestamp="20190904 22:48:32.063" level="INFO">${ifcfg_file} = BOOTPROTO=dhcp
+DEVICE=eth1
+ONBOOT=yes
+DEFROUTE=no
+TYPE=Ethernet</msg>
+<status status="PASS" endtime="20190904 22:48:32.063" starttime="20190904 22:48:32.058"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth${INDEX} &lt;&lt;EOF${\n}${ifcfg_file}${\n}EOF</arg>
+</arguments>
+<msg timestamp="20190904 22:48:32.064" level="TRACE">Arguments: [ 'cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth1 &lt;&lt;EOF\nBOOTPROTO=dhcp\nDEVICE=eth1\nONBOOT=yes\nDEFROUTE=no\nTYPE=Ethernet\nEOF' ]</msg>
+<msg timestamp="20190904 22:48:32.064" level="INFO">Executing command 'cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth1 &lt;&lt;EOF
+BOOTPROTO=dhcp
+DEVICE=eth1
+ONBOOT=yes
+DEFROUTE=no
+TYPE=Ethernet
+EOF'.</msg>
+<msg timestamp="20190904 22:48:32.065" level="DEBUG">[chan 4] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:32.119" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:32.119" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:32.119" starttime="20190904 22:48:32.064"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>sudo ifdown eth${INDEX} &amp;&amp; sudo ifup eth${INDEX}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:32.120" level="TRACE">Arguments: [ 'sudo ifdown eth1 &amp;&amp; sudo ifup eth1' ]</msg>
+<msg timestamp="20190904 22:48:32.120" level="INFO">Executing command 'sudo ifdown eth1 &amp;&amp; sudo ifup eth1'.</msg>
+<msg timestamp="20190904 22:48:32.120" level="DEBUG">[chan 5] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:34.720" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:34.721" level="TRACE">Return: '\nDetermining IP information for eth1... done.'</msg>
+<status status="PASS" endtime="20190904 22:48:34.721" starttime="20190904 22:48:32.120"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:48:34.721" starttime="20190904 22:48:32.058"></status>
+</kw>
+<kw type="foritem" name="${INDEX} = 2">
+<kw name="Render J2 Template" library="CATSUtils">
+<arguments>
+<arg>source=/home/tests/00_infra_config/data/pe_ifcfg.j2</arg>
+<arg>index=${INDEX}</arg>
+</arguments>
+<assign>
+<var>${ifcfg_file}</var>
+</assign>
+<msg timestamp="20190904 22:48:34.722" level="TRACE">Arguments: [ source='/home/tests/00_infra_config/data/pe_ifcfg.j2' | index=2 ]</msg>
+<msg timestamp="20190904 22:48:34.723" level="TRACE">Return: 'BOOTPROTO=dhcp\nDEVICE=eth2\nONBOOT=yes\nDEFROUTE=no\nTYPE=Ethernet'</msg>
+<msg timestamp="20190904 22:48:34.724" level="INFO">${ifcfg_file} = BOOTPROTO=dhcp
+DEVICE=eth2
+ONBOOT=yes
+DEFROUTE=no
+TYPE=Ethernet</msg>
+<status status="PASS" endtime="20190904 22:48:34.724" starttime="20190904 22:48:34.722"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth${INDEX} &lt;&lt;EOF${\n}${ifcfg_file}${\n}EOF</arg>
+</arguments>
+<msg timestamp="20190904 22:48:34.724" level="TRACE">Arguments: [ 'cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth2 &lt;&lt;EOF\nBOOTPROTO=dhcp\nDEVICE=eth2\nONBOOT=yes\nDEFROUTE=no\nTYPE=Ethernet\nEOF' ]</msg>
+<msg timestamp="20190904 22:48:34.725" level="INFO">Executing command 'cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth2 &lt;&lt;EOF
+BOOTPROTO=dhcp
+DEVICE=eth2
+ONBOOT=yes
+DEFROUTE=no
+TYPE=Ethernet
+EOF'.</msg>
+<msg timestamp="20190904 22:48:34.725" level="DEBUG">[chan 6] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:34.812" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:34.812" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:34.812" starttime="20190904 22:48:34.724"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>sudo ifdown eth${INDEX} &amp;&amp; sudo ifup eth${INDEX}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:34.813" level="TRACE">Arguments: [ 'sudo ifdown eth2 &amp;&amp; sudo ifup eth2' ]</msg>
+<msg timestamp="20190904 22:48:34.813" level="INFO">Executing command 'sudo ifdown eth2 &amp;&amp; sudo ifup eth2'.</msg>
+<msg timestamp="20190904 22:48:34.814" level="DEBUG">[chan 7] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:37.320" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:37.320" level="TRACE">Return: '\nDetermining IP information for eth2... done.'</msg>
+<status status="PASS" endtime="20190904 22:48:37.320" starttime="20190904 22:48:34.813"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:48:37.320" starttime="20190904 22:48:34.721"></status>
+</kw>
+<kw type="foritem" name="${INDEX} = 3">
+<kw name="Render J2 Template" library="CATSUtils">
+<arguments>
+<arg>source=/home/tests/00_infra_config/data/pe_ifcfg.j2</arg>
+<arg>index=${INDEX}</arg>
+</arguments>
+<assign>
+<var>${ifcfg_file}</var>
+</assign>
+<msg timestamp="20190904 22:48:37.322" level="TRACE">Arguments: [ source='/home/tests/00_infra_config/data/pe_ifcfg.j2' | index=3 ]</msg>
+<msg timestamp="20190904 22:48:37.324" level="TRACE">Return: 'BOOTPROTO=dhcp\nDEVICE=eth3\nONBOOT=yes\nDEFROUTE=no\nTYPE=Ethernet'</msg>
+<msg timestamp="20190904 22:48:37.324" level="INFO">${ifcfg_file} = BOOTPROTO=dhcp
+DEVICE=eth3
+ONBOOT=yes
+DEFROUTE=no
+TYPE=Ethernet</msg>
+<status status="PASS" endtime="20190904 22:48:37.324" starttime="20190904 22:48:37.321"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth${INDEX} &lt;&lt;EOF${\n}${ifcfg_file}${\n}EOF</arg>
+</arguments>
+<msg timestamp="20190904 22:48:37.325" level="TRACE">Arguments: [ 'cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth3 &lt;&lt;EOF\nBOOTPROTO=dhcp\nDEVICE=eth3\nONBOOT=yes\nDEFROUTE=no\nTYPE=Ethernet\nEOF' ]</msg>
+<msg timestamp="20190904 22:48:37.325" level="INFO">Executing command 'cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth3 &lt;&lt;EOF
+BOOTPROTO=dhcp
+DEVICE=eth3
+ONBOOT=yes
+DEFROUTE=no
+TYPE=Ethernet
+EOF'.</msg>
+<msg timestamp="20190904 22:48:37.326" level="DEBUG">[chan 8] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:37.413" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:37.413" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:37.413" starttime="20190904 22:48:37.325"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>sudo ifdown eth${INDEX} &amp;&amp; sudo ifup eth${INDEX}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:37.414" level="TRACE">Arguments: [ 'sudo ifdown eth3 &amp;&amp; sudo ifup eth3' ]</msg>
+<msg timestamp="20190904 22:48:37.414" level="INFO">Executing command 'sudo ifdown eth3 &amp;&amp; sudo ifup eth3'.</msg>
+<msg timestamp="20190904 22:48:37.415" level="DEBUG">[chan 9] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:39.930" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:39.930" level="TRACE">Return: '\nDetermining IP information for eth3... done.'</msg>
+<status status="PASS" endtime="20190904 22:48:39.931" starttime="20190904 22:48:37.414"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:48:39.931" starttime="20190904 22:48:37.320"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:48:39.931" starttime="20190904 22:48:32.057"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>iptables -t nat -F</arg>
+</arguments>
+<msg timestamp="20190904 22:48:39.932" level="TRACE">Arguments: [ 'iptables -t nat -F' ]</msg>
+<msg timestamp="20190904 22:48:39.932" level="INFO">Executing command 'iptables -t nat -F'.</msg>
+<msg timestamp="20190904 22:48:39.932" level="DEBUG">[chan 10] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:40.019" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:40.019" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:40.019" starttime="20190904 22:48:39.931"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>iptables -t nat -A POSTROUTING -o eth0 -d 10.0.0.1/32 -j MASQUERADE</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.020" level="TRACE">Arguments: [ 'iptables -t nat -A POSTROUTING -o eth0 -d 10.0.0.1/32 -j MASQUERADE' ]</msg>
+<msg timestamp="20190904 22:48:40.020" level="INFO">Executing command 'iptables -t nat -A POSTROUTING -o eth0 -d 10.0.0.1/32 -j MASQUERADE'.</msg>
+<msg timestamp="20190904 22:48:40.020" level="DEBUG">[chan 11] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:40.107" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:40.108" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:40.108" starttime="20190904 22:48:40.020"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>iptables -t nat -A POSTROUTING -o eth0 -d 10.0.0.33/32 -j MASQUERADE</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.109" level="TRACE">Arguments: [ 'iptables -t nat -A POSTROUTING -o eth0 -d 10.0.0.33/32 -j MASQUERADE' ]</msg>
+<msg timestamp="20190904 22:48:40.109" level="INFO">Executing command 'iptables -t nat -A POSTROUTING -o eth0 -d 10.0.0.33/32 -j MASQUERADE'.</msg>
+<msg timestamp="20190904 22:48:40.109" level="DEBUG">[chan 12] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:40.164" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:40.165" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:40.165" starttime="20190904 22:48:40.108"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>iptables -t nat -A POSTROUTING -o eth0 ! -d 10.0.0.0/8 -j MASQUERADE</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.166" level="TRACE">Arguments: [ 'iptables -t nat -A POSTROUTING -o eth0 ! -d 10.0.0.0/8 -j MASQUERADE' ]</msg>
+<msg timestamp="20190904 22:48:40.166" level="INFO">Executing command 'iptables -t nat -A POSTROUTING -o eth0 ! -d 10.0.0.0/8 -j MASQUERADE'.</msg>
+<msg timestamp="20190904 22:48:40.166" level="DEBUG">[chan 13] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:40.221" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:40.221" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:40.221" starttime="20190904 22:48:40.165"></status>
+</kw>
+<tags>
+<tag>pe-config</tag>
+</tags>
+<status status="PASS" endtime="20190904 22:48:40.221" critical="yes" starttime="20190904 22:48:27.876"></status>
+</test>
+<test id="s1-s1-t2" name="Configure VSC VM">
+<kw name="Login" library="vsc">
+<arguments>
+<arg>vsc_address=${vsc_mgmt_ip}</arg>
+<arg>username=admin</arg>
+<arg>password=admin</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.223" level="TRACE">Arguments: [ ${vsc_address}='10.0.0.3' | ${username}='admin' | ${password}='admin' | ${prompt}=None | ${port}='22' | ${timeout}='10' ]</msg>
+<kw name="Open Connection" library="SSHLibrary">
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<arguments>
+<arg>${vsc_address}</arg>
+<arg>prompt=${prompt}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>port=${port}</arg>
+</arguments>
+<assign>
+<var>${conn_id}</var>
+</assign>
+<msg timestamp="20190904 22:48:40.225" level="TRACE">Arguments: [ '10.0.0.3' | prompt=None | timeout='10' | port=22 ]</msg>
+<msg timestamp="20190904 22:48:40.225" level="TRACE">Return: 2</msg>
+<msg timestamp="20190904 22:48:40.225" level="INFO">${conn_id} = 2</msg>
+<status status="PASS" endtime="20190904 22:48:40.225" starttime="20190904 22:48:40.224"></status>
+</kw>
+<kw name="Login" library="SSHLibrary">
+<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
+<arguments>
+<arg>${username}</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.226" level="TRACE">Arguments: [ 'admin' | 'admin' ]</msg>
+<msg timestamp="20190904 22:48:40.227" level="INFO">Logging into '10.0.0.3:22' as 'admin'.</msg>
+<msg timestamp="20190904 22:48:40.351" level="DEBUG">Adding ssh-rsa host key for 10.0.0.3: 065355c846ef8b722bd4e9ca563f1baf</msg>
+<msg timestamp="20190904 22:48:40.355" level="DEBUG">[chan 0] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:40.860" level="INFO">Read output: 
+
+*A:vsc.nuage.lab#</msg>
+<msg timestamp="20190904 22:48:40.861" level="TRACE">Return: '\r\n\r\n*A:vsc.nuage.lab# '</msg>
+<status status="PASS" endtime="20190904 22:48:40.861" starttime="20190904 22:48:40.226"></status>
+</kw>
+<kw name="Write" library="SSHLibrary">
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<arguments>
+<arg>environment no more</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.862" level="TRACE">Arguments: [ 'environment no more' ]</msg>
+<msg timestamp="20190904 22:48:40.880" level="INFO">environment no more</msg>
+<msg timestamp="20190904 22:48:40.880" level="TRACE">Return: 'environment no more \r\n'</msg>
+<status status="PASS" endtime="20190904 22:48:40.880" starttime="20190904 22:48:40.861"></status>
+</kw>
+<kw name="Read Until Regexp" library="SSHLibrary">
+<doc>Consumes and returns the server output until a match to ``regexp`` is found.</doc>
+<arguments>
+<arg>[A|B]:.*?[#|$]</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.881" level="TRACE">Arguments: [ '[A|B]:.*?[#|$]' ]</msg>
+<msg timestamp="20190904 22:48:40.882" level="INFO">*A:vsc.nuage.lab#</msg>
+<msg timestamp="20190904 22:48:40.882" level="TRACE">Return: '*A:vsc.nuage.lab#'</msg>
+<status status="PASS" endtime="20190904 22:48:40.882" starttime="20190904 22:48:40.881"></status>
+</kw>
+<msg timestamp="20190904 22:48:40.882" level="TRACE">Return: 2</msg>
+<status status="PASS" endtime="20190904 22:48:40.882" starttime="20190904 22:48:40.223"></status>
+</kw>
+<kw name="Execute Command" library="vsc">
+<arguments>
+<arg>/bof static-route ${mv_wan_network} next-hop ${pe-router}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.883" level="TRACE">Arguments: [ ${command}='/bof static-route 10.10.1.0/24 next-hop 10.0.0.50' | ${prompt_regex}='A:.*?[#|$|&gt;]\\s' ]</msg>
+<kw name="Write" library="SSHLibrary">
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<arguments>
+<arg>${command}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.884" level="TRACE">Arguments: [ '/bof static-route 10.10.1.0/24 next-hop 10.0.0.50' ]</msg>
+<msg timestamp="20190904 22:48:40.916" level="INFO">/bof static-route 10.10.1.0/24 next-hop 10.0.0.50</msg>
+<msg timestamp="20190904 22:48:40.916" level="TRACE">Return: ' /bof static-route 10.10.1.0/24 next-hop 10.0.0.50 \r\n'</msg>
+<status status="PASS" endtime="20190904 22:48:40.916" starttime="20190904 22:48:40.884"></status>
+</kw>
+<kw name="Read Until Regexp" library="SSHLibrary">
+<doc>Consumes and returns the server output until a match to ``regexp`` is found.</doc>
+<arguments>
+<arg>${prompt_regex}</arg>
+</arguments>
+<assign>
+<var>${output}</var>
+</assign>
+<msg timestamp="20190904 22:48:40.917" level="TRACE">Arguments: [ 'A:.*?[#|$|&gt;]\\s' ]</msg>
+<msg timestamp="20190904 22:48:40.917" level="INFO">*A:vsc.nuage.lab#</msg>
+<msg timestamp="20190904 22:48:40.917" level="TRACE">Return: '*A:vsc.nuage.lab# '</msg>
+<msg timestamp="20190904 22:48:40.917" level="INFO">${output} = *A:vsc.nuage.lab# </msg>
+<status status="PASS" endtime="20190904 22:48:40.917" starttime="20190904 22:48:40.916"></status>
+</kw>
+<msg timestamp="20190904 22:48:40.918" level="TRACE">Return: '*A:vsc.nuage.lab# '</msg>
+<status status="PASS" endtime="20190904 22:48:40.918" starttime="20190904 22:48:40.883"></status>
+</kw>
+<kw name="Execute Command" library="vsc">
+<arguments>
+<arg>/bof static-route ${ny_wan_network} next-hop ${pe-router}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.918" level="TRACE">Arguments: [ ${command}='/bof static-route 10.10.2.0/24 next-hop 10.0.0.50' | ${prompt_regex}='A:.*?[#|$|&gt;]\\s' ]</msg>
+<kw name="Write" library="SSHLibrary">
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<arguments>
+<arg>${command}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.920" level="TRACE">Arguments: [ '/bof static-route 10.10.2.0/24 next-hop 10.0.0.50' ]</msg>
+<msg timestamp="20190904 22:48:40.950" level="INFO">/bof static-route 10.10.2.0/24 next-hop 10.0.0.50</msg>
+<msg timestamp="20190904 22:48:40.950" level="TRACE">Return: '/bof static-route 10.10.2.0/24 next-hop 10.0.0.50 \r\n'</msg>
+<status status="PASS" endtime="20190904 22:48:40.950" starttime="20190904 22:48:40.919"></status>
+</kw>
+<kw name="Read Until Regexp" library="SSHLibrary">
+<doc>Consumes and returns the server output until a match to ``regexp`` is found.</doc>
+<arguments>
+<arg>${prompt_regex}</arg>
+</arguments>
+<assign>
+<var>${output}</var>
+</assign>
+<msg timestamp="20190904 22:48:40.951" level="TRACE">Arguments: [ 'A:.*?[#|$|&gt;]\\s' ]</msg>
+<msg timestamp="20190904 22:48:40.951" level="INFO">*A:vsc.nuage.lab#</msg>
+<msg timestamp="20190904 22:48:40.951" level="TRACE">Return: '*A:vsc.nuage.lab# '</msg>
+<msg timestamp="20190904 22:48:40.951" level="INFO">${output} = *A:vsc.nuage.lab# </msg>
+<status status="PASS" endtime="20190904 22:48:40.951" starttime="20190904 22:48:40.950"></status>
+</kw>
+<msg timestamp="20190904 22:48:40.952" level="TRACE">Return: '*A:vsc.nuage.lab# '</msg>
+<status status="PASS" endtime="20190904 22:48:40.952" starttime="20190904 22:48:40.918"></status>
+</kw>
+<kw name="Execute Command" library="vsc">
+<arguments>
+<arg>/bof static-route ${hq_wan_network} next-hop ${pe-router}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.953" level="TRACE">Arguments: [ ${command}='/bof static-route 10.10.3.0/24 next-hop 10.0.0.50' | ${prompt_regex}='A:.*?[#|$|&gt;]\\s' ]</msg>
+<kw name="Write" library="SSHLibrary">
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<arguments>
+<arg>${command}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:40.953" level="TRACE">Arguments: [ '/bof static-route 10.10.3.0/24 next-hop 10.0.0.50' ]</msg>
+<msg timestamp="20190904 22:48:41.056" level="INFO">/bof static-route 10.10.3.0/24 next-hop 10.0.0.50</msg>
+<msg timestamp="20190904 22:48:41.056" level="TRACE">Return: '/bof static-route 10.10.3.0/24 next-hop 10.0.0.50 \r\n'</msg>
+<status status="PASS" endtime="20190904 22:48:41.056" starttime="20190904 22:48:40.953"></status>
+</kw>
+<kw name="Read Until Regexp" library="SSHLibrary">
+<doc>Consumes and returns the server output until a match to ``regexp`` is found.</doc>
+<arguments>
+<arg>${prompt_regex}</arg>
+</arguments>
+<assign>
+<var>${output}</var>
+</assign>
+<msg timestamp="20190904 22:48:41.057" level="TRACE">Arguments: [ 'A:.*?[#|$|&gt;]\\s' ]</msg>
+<msg timestamp="20190904 22:48:41.058" level="INFO">*A:vsc.nuage.lab#</msg>
+<msg timestamp="20190904 22:48:41.058" level="TRACE">Return: '*A:vsc.nuage.lab# '</msg>
+<msg timestamp="20190904 22:48:41.058" level="INFO">${output} = *A:vsc.nuage.lab# </msg>
+<status status="PASS" endtime="20190904 22:48:41.058" starttime="20190904 22:48:41.057"></status>
+</kw>
+<msg timestamp="20190904 22:48:41.058" level="TRACE">Return: '*A:vsc.nuage.lab# '</msg>
+<status status="PASS" endtime="20190904 22:48:41.058" starttime="20190904 22:48:40.952"></status>
+</kw>
+<kw name="Execute Command" library="vsc">
+<arguments>
+<arg>/bof save</arg>
+</arguments>
+<msg timestamp="20190904 22:48:41.059" level="TRACE">Arguments: [ ${command}='/bof save' | ${prompt_regex}='A:.*?[#|$|&gt;]\\s' ]</msg>
+<kw name="Write" library="SSHLibrary">
+<doc>Writes the given ``text`` on the remote machine and appends a newline.</doc>
+<arguments>
+<arg>${command}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:41.060" level="TRACE">Arguments: [ '/bof save' ]</msg>
+<msg timestamp="20190904 22:48:41.074" level="INFO">/bof save</msg>
+<msg timestamp="20190904 22:48:41.075" level="TRACE">Return: '/bof save \r\n'</msg>
+<status status="PASS" endtime="20190904 22:48:41.075" starttime="20190904 22:48:41.060"></status>
+</kw>
+<kw name="Read Until Regexp" library="SSHLibrary">
+<doc>Consumes and returns the server output until a match to ``regexp`` is found.</doc>
+<arguments>
+<arg>${prompt_regex}</arg>
+</arguments>
+<assign>
+<var>${output}</var>
+</assign>
+<msg timestamp="20190904 22:48:41.075" level="TRACE">Arguments: [ 'A:.*?[#|$|&gt;]\\s' ]</msg>
+<msg timestamp="20190904 22:48:41.340" level="INFO">Writing BOF to cf1:/bof.cfg ... OK
+Completed.
+*A:vsc.nuage.lab#</msg>
+<msg timestamp="20190904 22:48:41.341" level="TRACE">Return: 'Writing BOF to cf1:/bof.cfg ... OK\r\nCompleted.\r\n*A:vsc.nuage.lab# '</msg>
+<msg timestamp="20190904 22:48:41.341" level="INFO">${output} = Writing BOF to cf1:/bof.cfg ... OK
+Completed.
+*A:vsc.nuage.lab# </msg>
+<status status="PASS" endtime="20190904 22:48:41.341" starttime="20190904 22:48:41.075"></status>
+</kw>
+<msg timestamp="20190904 22:48:41.341" level="TRACE">Return: 'Writing BOF to cf1:/bof.cfg ... OK\r\nCompleted.\r\n*A:vsc.nuage.lab# '</msg>
+<status status="PASS" endtime="20190904 22:48:41.341" starttime="20190904 22:48:41.059"></status>
+</kw>
+<tags>
+<tag>pe-config</tag>
+</tags>
+<status status="PASS" endtime="20190904 22:48:41.342" critical="yes" starttime="20190904 22:48:40.222"></status>
+</test>
+<status status="PASS" endtime="20190904 22:48:41.342" starttime="20190904 22:48:25.317"></status>
+</suite>
+<suite source="/home/tests/00_infra_config/02_setup_portal.robot" id="s1-s2" name="02 Setup Portal">
+<kw type="setup" name="Login NuageX User" library="vars">
+<msg timestamp="20190904 22:48:41.503" level="TRACE">Arguments: [  ]</msg>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>$vsd_password == ""</arg>
+<arg>Get NuageX lab password</arg>
+</arguments>
+<msg timestamp="20190904 22:48:41.504" level="TRACE">Arguments: [ '$vsd_password == ""' | 'Get NuageX lab password' ]</msg>
+<kw name="Get NuageX lab password" library="vars">
+<msg timestamp="20190904 22:48:41.507" level="TRACE">Arguments: [  ]</msg>
+<kw name="Run Process" library="Process">
+<doc>Runs a process and waits for it to complete.</doc>
+<arguments>
+<arg>wget -q -O - http://169.254.169.254/2009-04-04/user-data | grep -m1 "content" | awk '{print $3}' | base64 -d | grep -m1 "password" | awk '{print $2}'</arg>
+<arg>shell=True</arg>
+<arg>alias=passwd</arg>
+</arguments>
+<msg timestamp="20190904 22:48:41.507" level="TRACE">Arguments: [ 'wget -q -O - http://169.254.169.254/2009-04-04/user-data | grep -m1 "content" | awk \'{print $3}\' | base64 -d | grep -m1 "password" | awk \'{print $2}\'' | shell='True' | alias='passwd' ]</msg>
+<msg timestamp="20190904 22:48:41.507" level="INFO">Starting process:
+wget -q -O - http://169.254.169.254/2009-04-04/user-data | grep -m1 "content" | awk '{print $3}' | base64 -d | grep -m1 "password" | awk '{print $2}'</msg>
+<msg timestamp="20190904 22:48:41.508" level="DEBUG">Process configuration:
+cwd:     /
+shell:   True
+stdout:  PIPE
+stderr:  PIPE
+alias:   passwd
+env:     None</msg>
+<msg timestamp="20190904 22:48:42.258" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20190904 22:48:43.505" level="INFO">Process completed.</msg>
+<msg timestamp="20190904 22:48:43.505" level="TRACE">Return: &lt;robot.libraries.Process.ExecutionResult object at 0x7f213541b310&gt;</msg>
+<status status="PASS" endtime="20190904 22:48:43.505" starttime="20190904 22:48:41.507"></status>
+</kw>
+<kw name="Get Process Result" library="Process">
+<doc>Returns the specified `result object` or some of its attributes.</doc>
+<arguments>
+<arg>passwd</arg>
+<arg>stdout=True</arg>
+</arguments>
+<assign>
+<var>${vsd_password}</var>
+</assign>
+<msg timestamp="20190904 22:48:43.507" level="TRACE">Arguments: [ 'passwd' | stdout=True ]</msg>
+<msg timestamp="20190904 22:48:43.507" level="TRACE">Return: 'JRLxXihC9B75mKKM'</msg>
+<msg timestamp="20190904 22:48:43.507" level="INFO">${vsd_password} = JRLxXihC9B75mKKM</msg>
+<status status="PASS" endtime="20190904 22:48:43.508" starttime="20190904 22:48:43.506"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${vsd_password}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:43.509" level="TRACE">Arguments: [ '${vsd_password}' ]</msg>
+<msg timestamp="20190904 22:48:43.509" level="INFO">${vsd_password} = JRLxXihC9B75mKKM</msg>
+<msg timestamp="20190904 22:48:43.509" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:48:43.509" starttime="20190904 22:48:43.508"></status>
+</kw>
+<msg timestamp="20190904 22:48:43.509" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:48:43.510" starttime="20190904 22:48:41.506"></status>
+</kw>
+<msg timestamp="20190904 22:48:43.510" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:48:43.510" starttime="20190904 22:48:41.503"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>$lab_ip_address == ""</arg>
+<arg>Get NuageX lab ip address</arg>
+</arguments>
+<msg timestamp="20190904 22:48:43.511" level="TRACE">Arguments: [ '$lab_ip_address == ""' | 'Get NuageX lab ip address' ]</msg>
+<kw name="Get NuageX lab ip address" library="vars">
+<msg timestamp="20190904 22:48:43.514" level="TRACE">Arguments: [  ]</msg>
+<kw name="Run Process" library="Process">
+<doc>Runs a process and waits for it to complete.</doc>
+<arguments>
+<arg>wget -q -O - http://169.254.169.254/2009-04-04/meta-data/public-ipv4</arg>
+<arg>shell=True</arg>
+<arg>alias=public_ip_address</arg>
+</arguments>
+<msg timestamp="20190904 22:48:43.516" level="TRACE">Arguments: [ 'wget -q -O - http://169.254.169.254/2009-04-04/meta-data/public-ipv4' | shell='True' | alias='public_ip_address' ]</msg>
+<msg timestamp="20190904 22:48:43.516" level="INFO">Starting process:
+wget -q -O - http://169.254.169.254/2009-04-04/meta-data/public-ipv4</msg>
+<msg timestamp="20190904 22:48:43.516" level="DEBUG">Process configuration:
+cwd:     /
+shell:   True
+stdout:  PIPE
+stderr:  PIPE
+alias:   public_ip_address
+env:     None</msg>
+<msg timestamp="20190904 22:48:44.275" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20190904 22:48:45.011" level="INFO">Process completed.</msg>
+<msg timestamp="20190904 22:48:45.011" level="TRACE">Return: &lt;robot.libraries.Process.ExecutionResult object at 0x7f2135414dd0&gt;</msg>
+<status status="PASS" endtime="20190904 22:48:45.011" starttime="20190904 22:48:43.515"></status>
+</kw>
+<kw name="Get Process Result" library="Process">
+<doc>Returns the specified `result object` or some of its attributes.</doc>
+<arguments>
+<arg>public_ip_address</arg>
+<arg>stdout=True</arg>
+</arguments>
+<assign>
+<var>${lab_ip_address}</var>
+</assign>
+<msg timestamp="20190904 22:48:45.013" level="TRACE">Arguments: [ 'public_ip_address' | stdout=True ]</msg>
+<msg timestamp="20190904 22:48:45.013" level="TRACE">Return: '124.252.253.223'</msg>
+<msg timestamp="20190904 22:48:45.013" level="INFO">${lab_ip_address} = 124.252.253.223</msg>
+<status status="PASS" endtime="20190904 22:48:45.013" starttime="20190904 22:48:45.012"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${lab_ip_address}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:45.014" level="TRACE">Arguments: [ '${lab_ip_address}' ]</msg>
+<msg timestamp="20190904 22:48:45.015" level="INFO">${lab_ip_address} = 124.252.253.223</msg>
+<msg timestamp="20190904 22:48:45.015" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:48:45.015" starttime="20190904 22:48:45.014"></status>
+</kw>
+<msg timestamp="20190904 22:48:45.015" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:48:45.015" starttime="20190904 22:48:43.514"></status>
+</kw>
+<msg timestamp="20190904 22:48:45.015" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:48:45.015" starttime="20190904 22:48:43.510"></status>
+</kw>
+<kw name="Login user" library="nuageusermgmt">
+<arguments>
+<arg>cats_api_url=https://${vsd_ip}:8443</arg>
+<arg>cats_username=admin</arg>
+<arg>cats_password=${vsd_password}</arg>
+<arg>cats_org_name=csp</arg>
+</arguments>
+<msg timestamp="20190904 22:48:45.016" level="TRACE">Arguments: [ ${cats_api_url}='https://10.0.0.2:8443' | ${cats_username}='admin' | ${cats_password}='JRLxXihC9B75mKKM' | ${cats_cert}=None | ${cats_private_key}=None | ${cats_org_name}='csp' ]</msg>
+<kw name="User Login" library="NuageVSD">
+<doc>Try to log in a user with a given username, password and organization.</doc>
+<arguments>
+<arg>cats_api_url=${cats_api_url}</arg>
+<arg>cats_username=${cats_username}</arg>
+<arg>cats_password=${cats_password}</arg>
+<arg>cats_cert=${cats_cert}</arg>
+<arg>cats_private_key=${cats_private_key}</arg>
+<arg>cats_org_name=${cats_org_name}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:45.018" level="TRACE">Arguments: [ cats_api_url='https://10.0.0.2:8443' | cats_username='admin' | cats_password='JRLxXihC9B75mKKM' | cats_cert=None | cats_private_key=None | cats_org_name='csp' ]</msg>
+<msg timestamp="20190904 22:48:45.018" level="INFO">Try authentication with Username and Password</msg>
+<msg timestamp="20190904 22:48:45.019" level="INFO">CATS :: Trying to login a user "admin" with a password "JRLxXihC9B75mKKM" of organization "csp" using API endpoint "https://10.0.0.2:8443"</msg>
+<msg timestamp="20190904 22:48:45.023" level="INFO">&gt; GET https://10.0.0.2:8443/nuage/api/v5_0/me </msg>
+<msg timestamp="20190904 22:48:45.023" level="DEBUG">&gt; headers: {'X-Nuage-Organization': u'csp', 'Content-Type': 'application/json', 'Authorization': u'XREST YWRtaW46SlJMeFhpaEM5Qjc1bUtLTQ=='}</msg>
+<msg timestamp="20190904 22:48:45.023" level="DEBUG">&gt; data:
+  null</msg>
+<msg timestamp="20190904 22:48:45.026" level="DEBUG">Starting new HTTPS connection (1): 10.0.0.2:8443</msg>
+<msg timestamp="20190904 22:48:45.094" level="DEBUG">https://10.0.0.2:8443 "GET /nuage/api/v5_0/me HTTP/1.1" 200 None</msg>
+<msg timestamp="20190904 22:48:45.096" level="INFO">&lt; GET https://10.0.0.2:8443/nuage/api/v5_0/me  [200] </msg>
+<msg timestamp="20190904 22:48:45.096" level="DEBUG">&lt; headers: {'X-XSS-Protection': '1', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': 'default-src', 'Access-Control-Expose-Headers': 'X-Nuage-Organization, X-Nuage-ProxyUser, X-Nuage-OrderBy, X-Nuage-FilterType, X-Nuage-Filter, X-Nuage-Page, X-Nuage-PageSize, X-Nuage-Count, X-Nuage-Custom, X-Nuage-ClientType, X-SSL-Client-CN, X-SSL-Client-ORG, X-SSL-Client-UID, X-SSL-Issuer-CN, X-SSL-Client-DN, X-SSL-Issuer-DN', 'Transfer-Encoding': 'chunked', 'Set-Cookie': 'rememberMe=deleteMe; Path=/nuage; Max-Age=0; Expires=Tue, 03-Sep-2019 22:48:45 GMT', 'Expires': 'Wed, 31 Dec 1969 16:00:00 PST', 'Vary': 'Accept-Encoding', 'Server': 'Apache-Coyote/1.1', 'Date': 'Wed, 04 Sep 2019 22:48:45 GMT', 'Pragma': 'No-cache', 'Cache-Control': 'no-cache', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Referrer-Policy': 'origin', 'Content-Type': 'application/json', 'X-Frame-Options': 'deny', 'Content-Encoding': 'gzip'}</msg>
+<msg timestamp="20190904 22:48:45.097" level="DEBUG">&lt; data:
+[
+    {
+        "flowCollectionEnabled": true, 
+        "externalID": null, 
+        "APIKey": "30e86e10-e19e-48a3-854b-16c69c34240c", 
+        "enterpriseID": "76046673-d0ea-4a67-b6af-2829952f0812", 
+        "vssStatsInterval": 30, 
+        "enterpriseName": "CSP", 
+        "role": "CSPROOT", 
+        "licenseCapabilities": [
+            "ENCRYPTION_ENABLED"
+        ], 
+        "externalId": null, 
+        "aarProbeStatsInterval": 30, 
+        "statisticsEnabled": true, 
+        "aarFlowStatsInterval": 30, 
+        "entityScope": null, 
+        "avatarType": null, 
+        "password": null, 
+        "ID": "d66408e7-2999-4751-9b13-41892144502f", 
+        "userName": "admin", 
+        "mobileNumber": null, 
+        "firstName": "admin", 
+        "APIKeyExpiry": 1567722390926, 
+        "lastName": "admin", 
+        "email": "admin@nuagex.io", 
+        "statsTSDBServerAddress": "es.nuage.lab:9300", 
+        "avatarData": null
+    }
+]</msg>
+<msg timestamp="20190904 22:48:45.097" level="DEBUG">[NURESTSession] Started session with username admin in enterprise csp</msg>
+<msg timestamp="20190904 22:48:45.097" level="TRACE">CATS :: User Login function produced the following results:
+session_params:&lt;vspk.v5_0.nuvsdsession.NUVSDSession object at 0x7f213540b8d0&gt;, active_user_obj:&lt;class 'vspk.v5_0.nume.NUMe'&gt; (ID=d66408e7-2999-4751-9b13-41892144502f), active_user_name/role:admin/CSPROOT, csproot_session:&lt;vspk.v5_0.nuvsdsession.NUVSDSession object at 0x7f213540b8d0&gt;, csproot_user_obj:&lt;class 'vspk.v5_0.nume.NUMe'&gt; (ID=d66408e7-2999-4751-9b13-41892144502f), csproot_user_name/role:admin/CSPROOT</msg>
+<msg timestamp="20190904 22:48:45.097" level="TRACE">Return: &lt;vspk.v5_0.nuvsdsession.NUVSDSession object at 0x7f213540b8d0&gt;</msg>
+<status status="PASS" endtime="20190904 22:48:45.098" starttime="20190904 22:48:45.017"></status>
+</kw>
+<msg timestamp="20190904 22:48:45.098" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:48:45.098" starttime="20190904 22:48:45.016"></status>
+</kw>
+<msg timestamp="20190904 22:48:45.098" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:48:45.098" starttime="20190904 22:48:41.503"></status>
+</kw>
+<test id="s1-s2-t1" name="Connect to portal host">
+<kw name="Connect to Server With Keys" library="linux">
+<arguments>
+<arg>server_address=${portal_mgmt_ip}</arg>
+<arg>username=root</arg>
+<arg>priv_key=${ssh_key_path}</arg>
+</arguments>
+<assign>
+<var>${conn}</var>
+</assign>
+<msg timestamp="20190904 22:48:45.101" level="TRACE">Arguments: [ ${server_address}='10.0.0.6' | ${server_port}='22' | ${username}='root' | ${priv_key}='~/.ssh/id_rsa' | ${priv_key_password}=None | ${delay}='0.5' | ${prompt}=None | ${timeout}='3' | ${newline}='LF' ]</msg>
+<kw name="Parse Path" library="CATSUtils">
+<arguments>
+<arg>${priv_key}</arg>
+</arguments>
+<assign>
+<var>${p_path}</var>
+</assign>
+<msg timestamp="20190904 22:48:45.102" level="TRACE">Arguments: [ '~/.ssh/id_rsa' ]</msg>
+<msg timestamp="20190904 22:48:45.107" level="TRACE">Return: {'dir_name': '/root/.ssh', 'file_name': 'id_rsa', 'full_path': '/root/.ssh/id_rsa'}</msg>
+<msg timestamp="20190904 22:48:45.107" level="INFO">${p_path} = {u'file_name': u'id_rsa', u'full_path': u'/root/.ssh/id_rsa', u'dir_name': u'/root/.ssh'}</msg>
+<status status="PASS" endtime="20190904 22:48:45.107" starttime="20190904 22:48:45.102"></status>
+</kw>
+<kw name="Open Connection" library="SSHLibrary">
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<arguments>
+<arg>${server_address}</arg>
+<arg>port=${server_port}</arg>
+<arg>prompt=${prompt}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>newline=${newline}</arg>
+</arguments>
+<assign>
+<var>${conn_index}</var>
+</assign>
+<msg timestamp="20190904 22:48:45.108" level="TRACE">Arguments: [ '10.0.0.6' | port=22 | prompt=None | timeout='3' | newline='LF' ]</msg>
+<msg timestamp="20190904 22:48:45.109" level="TRACE">Return: 3</msg>
+<msg timestamp="20190904 22:48:45.109" level="INFO">${conn_index} = 3</msg>
+<status status="PASS" endtime="20190904 22:48:45.109" starttime="20190904 22:48:45.108"></status>
+</kw>
+<kw name="Login With Public Key" library="SSHLibrary">
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<arguments>
+<arg>${username}</arg>
+<arg>${p_path['full_path']}</arg>
+<arg>password=${priv_key_password}</arg>
+<arg>delay=${delay}</arg>
+</arguments>
+<msg timestamp="20190904 22:48:45.111" level="TRACE">Arguments: [ 'root' | '/root/.ssh/id_rsa' | password=None | delay='0.5' ]</msg>
+<msg timestamp="20190904 22:48:45.111" level="INFO">Logging into '10.0.0.6:22' as 'root'.</msg>
+<msg timestamp="20190904 22:48:45.146" level="DEBUG">Adding ssh-ed25519 host key for 10.0.0.6: 241ab95e5a9fadfe4a012d0106cadcee</msg>
+<msg timestamp="20190904 22:48:45.147" level="DEBUG">Trying discovered key 22bd1b2e2aed03a1ee57b159219e41ee in /root/.ssh/id_rsa</msg>
+<msg timestamp="20190904 22:48:45.211" level="DEBUG">[chan 0] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:46.525" level="INFO">Read output: Last login: Wed Sep  4 22:43:59 2019 from 10.0.0.1
+[root@portal ~]#</msg>
+<msg timestamp="20190904 22:48:46.525" level="TRACE">Return: 'Last login: Wed Sep  4 22:43:59 2019 from 10.0.0.1\r\r\n[root@portal ~]# '</msg>
+<status status="PASS" endtime="20190904 22:48:46.526" starttime="20190904 22:48:45.110"></status>
+</kw>
+<msg timestamp="20190904 22:48:46.526" level="TRACE">Return: 3</msg>
+<msg timestamp="20190904 22:48:46.526" level="INFO">${conn} = 3</msg>
+<status status="PASS" endtime="20190904 22:48:46.526" starttime="20190904 22:48:45.100"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:48:46.526" critical="yes" starttime="20190904 22:48:45.099"></status>
+</test>
+<test id="s1-s2-t2" name="Generate SSH keys">
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>mkdir -p /opt/vnsportal</arg>
+</arguments>
+<msg timestamp="20190904 22:48:46.528" level="TRACE">Arguments: [ 'mkdir -p /opt/vnsportal' ]</msg>
+<msg timestamp="20190904 22:48:46.529" level="INFO">Executing command 'mkdir -p /opt/vnsportal'.</msg>
+<msg timestamp="20190904 22:48:46.530" level="DEBUG">[chan 1] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:46.554" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:46.554" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:46.554" starttime="20190904 22:48:46.528"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""</arg>
+</arguments>
+<msg timestamp="20190904 22:48:46.555" level="TRACE">Arguments: [ 'ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""' ]</msg>
+<msg timestamp="20190904 22:48:46.555" level="INFO">Executing command 'ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""'.</msg>
+<msg timestamp="20190904 22:48:46.556" level="DEBUG">[chan 2] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:46.794" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:46.794" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:46.795" starttime="20190904 22:48:46.555"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>cat /root/.ssh/id_rsa.pub &gt;&gt; /root/.ssh/authorized_keys</arg>
+</arguments>
+<msg timestamp="20190904 22:48:46.796" level="TRACE">Arguments: [ 'cat /root/.ssh/id_rsa.pub &gt;&gt; /root/.ssh/authorized_keys' ]</msg>
+<msg timestamp="20190904 22:48:46.796" level="INFO">Executing command 'cat /root/.ssh/id_rsa.pub &gt;&gt; /root/.ssh/authorized_keys'.</msg>
+<msg timestamp="20190904 22:48:46.796" level="DEBUG">[chan 3] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:46.882" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:46.883" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:46.883" starttime="20190904 22:48:46.795"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>cp /root/.ssh/id_rsa* /opt/vnsportal/</arg>
+<arg>shell=True</arg>
+<arg>sudo=True</arg>
+</arguments>
+<msg timestamp="20190904 22:48:46.884" level="TRACE">Arguments: [ 'cp /root/.ssh/id_rsa* /opt/vnsportal/' | 'shell=True' | sudo=True ]</msg>
+<msg timestamp="20190904 22:48:46.884" level="INFO">Executing command 'sudo cp /root/.ssh/id_rsa* /opt/vnsportal/'.</msg>
+<msg timestamp="20190904 22:48:46.884" level="DEBUG">[chan 4] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:46.960" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:46.960" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:46.960" starttime="20190904 22:48:46.883"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:48:46.960" critical="yes" starttime="20190904 22:48:46.527"></status>
+</test>
+<test id="s1-s2-t3" name="Template portal configuration file">
+<kw name="Run Process" library="Process">
+<doc>Runs a process and waits for it to complete.</doc>
+<arguments>
+<arg>curl -s ifconfig.io</arg>
+<arg>shell=True</arg>
+<arg>alias=lab_ip</arg>
+</arguments>
+<msg timestamp="20190904 22:48:46.962" level="TRACE">Arguments: [ 'curl -s ifconfig.io' | shell='True' | alias='lab_ip' ]</msg>
+<msg timestamp="20190904 22:48:46.962" level="INFO">Starting process:
+curl -s ifconfig.io</msg>
+<msg timestamp="20190904 22:48:46.962" level="DEBUG">Process configuration:
+cwd:     /
+shell:   True
+stdout:  PIPE
+stderr:  PIPE
+alias:   lab_ip
+env:     None</msg>
+<msg timestamp="20190904 22:48:47.702" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20190904 22:48:47.952" level="INFO">Process completed.</msg>
+<msg timestamp="20190904 22:48:47.952" level="TRACE">Return: &lt;robot.libraries.Process.ExecutionResult object at 0x7f21353f73d0&gt;</msg>
+<status status="PASS" endtime="20190904 22:48:47.952" starttime="20190904 22:48:46.962"></status>
+</kw>
+<kw name="Get Process Result" library="Process">
+<doc>Returns the specified `result object` or some of its attributes.</doc>
+<arguments>
+<arg>lab_ip</arg>
+<arg>stdout=True</arg>
+</arguments>
+<assign>
+<var>${lab_ip}</var>
+</assign>
+<msg timestamp="20190904 22:48:47.954" level="TRACE">Arguments: [ 'lab_ip' | stdout=True ]</msg>
+<msg timestamp="20190904 22:48:47.954" level="TRACE">Return: '124.252.253.223'</msg>
+<msg timestamp="20190904 22:48:47.954" level="INFO">${lab_ip} = 124.252.253.223</msg>
+<status status="PASS" endtime="20190904 22:48:47.954" starttime="20190904 22:48:47.954"></status>
+</kw>
+<kw name="Render J2 Template" library="CATSUtils">
+<arguments>
+<arg>source=/home/tests/00_infra_config/data/config.j2</arg>
+<arg>portal_fqdn=${lab_ip}:443</arg>
+<arg>local_ip=${portal_mgmt_ip}</arg>
+<arg>vsd_fqdn=vsd.${domain}:8443</arg>
+<arg>vsd_auth_username=vnsportal</arg>
+<arg>vsd_auth_password=vnsportal</arg>
+<arg>vstats_ip=${es_mgmt_ip}</arg>
+<arg>servlet_session_secure=false</arg>
+</arguments>
+<assign>
+<var>${data}</var>
+</assign>
+<msg timestamp="20190904 22:48:47.956" level="TRACE">Arguments: [ source='/home/tests/00_infra_config/data/config.j2' | portal_fqdn='124.252.253.223:443' | local_ip='10.0.0.6' | vsd_fqdn='vsd.nuage.lab:8443' | vsd_auth_username='vnsportal' | vsd_auth_password='vnsportal' | vstats_ip='10.0.0.5' | servlet_session_secure='false' ]</msg>
+<msg timestamp="20190904 22:48:47.960" level="TRACE">Return: "forgot.password.sender.address: forgot@organization.com\ngr.dc: '1'\ngr.dc1.address: 0.0.0.0\ngr.dc2.address: 0.0.0.0\ngr.enabled: false\nha.enabled: false\nha.node1.address: 10.0.0.6\nha.node2.address: ''\nha.node3.address: ''\njms.password: csproot\njms.username: csproot@csp\nnew.account.sender.address: new@organization.com\npassword.reset.sender.address: reset@organization.com\nproxy.enabled: false\nproxy.port: '8000'\nproxy.url: 0.0.0.0\nsmtp.host: 0.0.0.0\nsmtp.password: ''\nsmtp.port: '25'\nsmtp.secureConnection: false\nsmtp.user: ''\nspring.data.jest.uri: http://10.0.0.5:9200\nsso.custom.entityId: com:nokia:vnsportal:sp\nsso.custom.idp.metadata: idp.metadata.xml\nsso.custom.imagename: nuage/vnsportal-eauth-saml-XYZ\nsso.custom.imagetag: 1.0.0\nsso.custom.impersonate.attribute: impersonatedUser\nsso.custom.keystore.key.alias: vnsportal\nsso.custom.keystore.key.password: changeit\nsso.custom.keystore.password: changeit\nsso.entityId: com:nokia:vnsportal:sp\nsso.idp.metadata: idp.metadata.xml\nsso.impersonate.attribute: impersonatedUser\nsso.keystore.key.alias: vnsportal\nsso.keystore.key.password: changeit\nsso.keystore.password: changeit\nsso.profile: 0\nvnsportal.csp.fqdn: 124.252.253.223:443\nvsd.host: 10.0.0.2:8443\nvsd.root.org: csp\nvsd.root.password: vnsportal\nvsd.root.username: vnsportal"</msg>
+<msg timestamp="20190904 22:48:47.960" level="INFO">${data} = forgot.password.sender.address: forgot@organization.com
+gr.dc: '1'
+gr.dc1.address: 0.0.0.0
+gr.dc2.address: 0.0.0.0
+gr.enabled: false
+ha.enabled: false
+ha.node1.address: 10.0.0.6
+ha.node2.address: ''
+h...</msg>
+<status status="PASS" endtime="20190904 22:48:47.960" starttime="20190904 22:48:47.955"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>cat &gt; /opt/vnsportal/config.yml &lt;&lt;EOF${\n}${data}${\n}EOF</arg>
+</arguments>
+<msg timestamp="20190904 22:48:47.961" level="TRACE">Arguments: [ "cat &gt; /opt/vnsportal/config.yml &lt;&lt;EOF\nforgot.password.sender.address: forgot@organization.com\ngr.dc: '1'\ngr.dc1.address: 0.0.0.0\ngr.dc2.address: 0.0.0.0\ngr.enabled: false\nha.enabled: false\nha.node1.address: 10.0.0.6\nha.node2.address: ''\nha.node3.address: ''\njms.password: csproot\njms.username: csproot@csp\nnew.account.sender.address: new@organization.com\npassword.reset.sender.address: reset@organization.com\nproxy.enabled: false\nproxy.port: '8000'\nproxy.url: 0.0.0.0\nsmtp.host: 0.0.0.0\nsmtp.password: ''\nsmtp.port: '25'\nsmtp.secureConnection: false\nsmtp.user: ''\nspring.data.jest.uri: http://10.0.0.5:9200\nsso.custom.entityId: com:nokia:vnsportal:sp\nsso.custom.idp.metadata: idp.metadata.xml\nsso.custom.imagename: nuage/vnsportal-eauth-saml-XYZ\nsso.custom.imagetag: 1.0.0\nsso.custom.impersonate.attribute: impersonatedUser\nsso.custom.keystore.key.alias: vnsportal\nsso.custom.keystore.key.password: changeit\nsso.custom.keystore.password: changeit\nsso.entityId: com:nokia:vnsportal:sp\nsso.idp.metadata: idp.metadata.xml\nsso.impersonate.attribute: impersonatedUser\nsso.keystore.key.alias: vnsportal\nsso.keystore.key.password: changeit\nsso.keystore.password: changeit\nsso.profile: 0\nvnsportal.csp.fqdn: 124.252.253.223:443\nvsd.host: 10.0.0.2:8443\nvsd.root.org: csp\nvsd.root.password: vnsportal\nvsd.root.username: vnsportal\nEOF" ]</msg>
+<msg timestamp="20190904 22:48:47.962" level="INFO">Executing command 'cat &gt; /opt/vnsportal/config.yml &lt;&lt;EOF
+forgot.password.sender.address: forgot@organization.com
+gr.dc: '1'
+gr.dc1.address: 0.0.0.0
+gr.dc2.address: 0.0.0.0
+gr.enabled: false
+ha.enabled: false
+ha.node1.address: 10.0.0.6
+ha.node2.address: ''
+ha.node3.address: ''
+jms.password: csproot
+jms.username: csproot@csp
+new.account.sender.address: new@organization.com
+password.reset.sender.address: reset@organization.com
+proxy.enabled: false
+proxy.port: '8000'
+proxy.url: 0.0.0.0
+smtp.host: 0.0.0.0
+smtp.password: ''
+smtp.port: '25'
+smtp.secureConnection: false
+smtp.user: ''
+spring.data.jest.uri: http://10.0.0.5:9200
+sso.custom.entityId: com:nokia:vnsportal:sp
+sso.custom.idp.metadata: idp.metadata.xml
+sso.custom.imagename: nuage/vnsportal-eauth-saml-XYZ
+sso.custom.imagetag: 1.0.0
+sso.custom.impersonate.attribute: impersonatedUser
+sso.custom.keystore.key.alias: vnsportal
+sso.custom.keystore.key.password: changeit
+sso.custom.keystore.password: changeit
+sso.entityId: com:nokia:vnsportal:sp
+sso.idp.metadata: idp.metadata.xml
+sso.impersonate.attribute: impersonatedUser
+sso.keystore.key.alias: vnsportal
+sso.keystore.key.password: changeit
+sso.keystore.password: changeit
+sso.profile: 0
+vnsportal.csp.fqdn: 124.252.253.223:443
+vsd.host: 10.0.0.2:8443
+vsd.root.org: csp
+vsd.root.password: vnsportal
+vsd.root.username: vnsportal
+EOF'.</msg>
+<msg timestamp="20190904 22:48:47.962" level="DEBUG">[chan 5] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:47.986" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:47.987" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:48:47.987" starttime="20190904 22:48:47.961"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:48:47.987" critical="yes" starttime="20190904 22:48:46.961"></status>
+</test>
+<test id="s1-s2-t4" name="Run portal bootstrap scripts">
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>docker images | grep installer | awk '{print $2}'</arg>
+</arguments>
+<assign>
+<var>${tag}</var>
+</assign>
+<msg timestamp="20190904 22:48:47.989" level="TRACE">Arguments: [ "docker images | grep installer | awk '{print $2}'" ]</msg>
+<msg timestamp="20190904 22:48:47.989" level="INFO">Executing command 'docker images | grep installer | awk '{print $2}''.</msg>
+<msg timestamp="20190904 22:48:47.989" level="DEBUG">[chan 6] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:48:48.167" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:48:48.167" level="TRACE">Return: '6.0.1-25'</msg>
+<msg timestamp="20190904 22:48:48.168" level="INFO">${tag} = 6.0.1-25</msg>
+<status status="PASS" endtime="20190904 22:48:48.168" starttime="20190904 22:48:47.989"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>docker run -ti --rm -v /var/run/docker.sock:/docker.sock -v /opt/vnsportal:/mnt:z nuage/vnsportal-installer:${tag} --skip</arg>
+<arg>shell=True</arg>
+<arg>sudo=True</arg>
+</arguments>
+<msg timestamp="20190904 22:48:48.169" level="TRACE">Arguments: [ 'docker run -ti --rm -v /var/run/docker.sock:/docker.sock -v /opt/vnsportal:/mnt:z nuage/vnsportal-installer:6.0.1-25 --skip' | 'shell=True' | sudo=True ]</msg>
+<msg timestamp="20190904 22:48:48.169" level="INFO">Executing command 'sudo docker run -ti --rm -v /var/run/docker.sock:/docker.sock -v /opt/vnsportal:/mnt:z nuage/vnsportal-installer:6.0.1-25 --skip'.</msg>
+<msg timestamp="20190904 22:48:48.170" level="DEBUG">[chan 7] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:51:18.212" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:51:18.213" level="TRACE">Return: '\r\n\x1b[97m=== Nuage SD-WAN Portal Installer ===\r\n\r\n\x1b[97mAttempting to connect to 10.0.0.6 \x1b[92msuccess\r\n\x1b[0m\r\n\r\n\x1b[97mInstalling ...\r\n\r\n\x1b[97mGathering Facts                                            \x1b[92m[ OK ] \r\n\x1b[97mRead Configuration File                                    \x1b[92m[ OK ] \r\n\x1b[97mCapture Public Key                                         \x1b[92m[ OK ] \r\n\x1b[97mInitialize Node List                                       \x1b[92m[ OK ] \r\n\x1b[97mAdd node1 hosts to inventory                               \x1b[92m[ OK ] \r\n\x1b[97mAdd node2 hosts to inventory                               \x1b[92m[ OK ] \r\n\x1b[97mAdd node3 hosts to inventory                               \x1b[92m[ OK ] \r\n\x1b[97mGathering Facts                                            \x1b[92m[ OK ] \r\n\x1b[97mCreate directories for Nuage SD-WAN Portal installation    \x1b[92m[ OK ] \r\n\x1b[97mCopy INSTALLER files                                       \x1b[92m[ OK ] \r\n\x1b[97mCopy CRON daily job                                        \x1b[92m[ OK ] \r\n\x1b[97mCopy CONTROL files                                         \x1b[92m[ OK ] \r\n\x1b[97mCopy CONFIGURATION files                                   \x1b[92m[ OK ] \r\n\x1b[97mCopy AUTHENTICATION files (external)                       \x1b[92m[ OK ] \r\n\x1b[97mConfigure DOCKER files                                     \x1b[92m[ OK ] \r\n\x1b[97mConfigure DOCKER (advanced)                                \x1b[92m[ OK ] \r\n\x1b[97mConfigure CONTROL files                                    \x1b[92m[ OK ] \r\n\x1b[97mConfigure CLUSTER script                                   \x1b[92m[ OK ] \r\n\x1b[97mConfigure DB                                               \x1b[92m[ OK ] \r\n\x1b[97mConfigure HAPROXY Application                              \x1b[92m[ OK ] \r\n\x1b[97mConfigure TOMCAT Application (core)                        \x1b[92m[ OK ] \r\n\x1b[97mConfigure TOMCAT Application (advanced)                    \x1b[92m[ OK ] \r\n\x1b[97mConfigure MESSAGE-BUS Application                          \x1b[92m[ OK ] \r\n\x1b[97mConfigure CERTIFICATE-SERVICE Application                  \x1b[92m[ OK ] \r\n\x1b[97mConfigure MESSAGING Application                            \x1b[92m[ OK ] \r\n\x1b[97mConfigure AUTHENTICATION Application (external)            \x1b[92m[ OK ] \r\n\x1b[97mRemove DR file                                             \x1b[92m[ OK ] \r\n\x1b[97mCopy HAPROXY default certificate                           \x1b[92m[ OK ] \r\n\x1b[97mCopy NGINX example localization                            \x1b[92m[ OK ] \r\n\x1b[97mCheck NGINX for pre-existing en.json localization          \x1b[92m[ OK ] \r\n\x1b[97mCheck NGINX for other pre-existing localization files      \x1b[92m[ OK ] \r\n\x1b[97mExecute NGINX pre-existing localization file compare       \x1b[92m[ OK ] \r\n\x1b[97mBackup NGINX pre-existing en.json localization file        \x1b[92m[ OK ] \r\n\x1b[97mCopy NGINX new en.json localization file                   \x1b[92m[ OK ] \r\n\x1b[97mCopy REACT example localization                            \x1b[92m[ OK ] \r\n\x1b[97mCheck REACT for pre-existing en.json localization          \x1b[92m[ OK ] \r\n\x1b[97mCheck REACT for other pre-existing localization files      \x1b[92m[ OK ] \r\n\x1b[97mExecute REACT pre-existing localization file compare       \x1b[92m[ OK ] \r\n\x1b[97mBackup REACT pre-existing en.json localization file        \x1b[92m[ OK ] \r\n\x1b[97mCopy REACT new en.json localization file                   \x1b[92m[ OK ] \r\n\x1b[97mCopy AUTH example localization                             \x1b[92m[ OK ] \r\n\x1b[97mCheck AUTH for pre-existing en.json localization           \x1b[92m[ OK ] \r\n\x1b[97mCheck AUTH for other pre-existing localization files       \x1b[92m[ OK ] \r\n\x1b[97mExecute AUTH pre-existing localization file compare        \x1b[92m[ OK ] \r\n\x1b[97mBackup AUTH pre-existing en.json localization file         \x1b[92m[ OK ] \r\n\x1b[97mCopy AUTH new en.json localization file                    \x1b[92m[ OK ] \r\n\x1b[97mStore INSTALLER history                                    \x1b[92m[ OK ] \x1b[0m\r\nDone\r'</msg>
+<status status="PASS" endtime="20190904 22:51:18.213" starttime="20190904 22:48:48.168"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:51:18.214" critical="yes" starttime="20190904 22:48:47.988"></status>
+</test>
+<test id="s1-s2-t5" name="Copy portal license file">
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>cp /home/centos/vns-portal.license /opt/vnsportal/tomcat-instance1/</arg>
+<arg>shell=True</arg>
+<arg>sudo=True</arg>
+</arguments>
+<msg timestamp="20190904 22:51:18.218" level="TRACE">Arguments: [ 'cp /home/centos/vns-portal.license /opt/vnsportal/tomcat-instance1/' | 'shell=True' | sudo=True ]</msg>
+<msg timestamp="20190904 22:51:18.219" level="INFO">Executing command 'sudo cp /home/centos/vns-portal.license /opt/vnsportal/tomcat-instance1/'.</msg>
+<msg timestamp="20190904 22:51:18.219" level="DEBUG">[chan 8] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:51:18.299" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:51:18.299" level="TRACE">Return: ''</msg>
+<status status="PASS" endtime="20190904 22:51:18.299" starttime="20190904 22:51:18.218"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:51:18.300" critical="yes" starttime="20190904 22:51:18.216"></status>
+</test>
+<test id="s1-s2-t6" name="Start portal">
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>/opt/vnsportal/start.sh</arg>
+<arg>shell=True</arg>
+<arg>sudo=True</arg>
+</arguments>
+<msg timestamp="20190904 22:51:18.301" level="TRACE">Arguments: [ '/opt/vnsportal/start.sh' | 'shell=True' | sudo=True ]</msg>
+<msg timestamp="20190904 22:51:18.301" level="INFO">Executing command 'sudo /opt/vnsportal/start.sh'.</msg>
+<msg timestamp="20190904 22:51:18.302" level="DEBUG">[chan 9] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:51:36.536" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:51:36.536" level="TRACE">Return: 'Creating vnsportal_msgbus-instance1_1 ... \r\r\nCreating vnsportal_db-db1_1           ... \r\r\n\x1b[2A\x1b[2K\rCreating vnsportal_msgbus-instance1_1 ... \x1b[32mdone\x1b[0m\r\x1b[2B\x1b[1A\x1b[2K\rCreating vnsportal_db-db1_1           ... \x1b[32mdone\x1b[0m\r\x1b[1BCreating vnsportal_tomcat-instance1_1 ... \r\r\n\x1b[1A\x1b[2K\rCreating vnsportal_tomcat-instance1_1 ... \x1b[32mdone\x1b[0m\r\x1b[1BCreating vnsportal_auth_instance1_1   ... \r\r\nCreating vnsportal_messaging_1        ... \r\r\nCreating vnsportal_react_instance1_1  ... \r\r\nCreating vnsportal_app_instance1_1    ... \r\r\n\x1b[3A\x1b[2K\rCreating vnsportal_messaging_1        ... \x1b[32mdone\x1b[0m\r\x1b[3B\x1b[4A\x1b[2K\rCreating vnsportal_auth_instance1_1   ... \x1b[32mdone\x1b[0m\r\x1b[4B\x1b[1A\x1b[2K\rCreating vnsportal_app_instance1_1    ... \x1b[32mdone\x1b[0m\r\x1b[1B\x1b[2A\x1b[2K\rCreating vnsportal_react_instance1_1  ... \x1b[32mdone\x1b[0m\r\x1b[2BCreating vnsportal_loadbalancer0_1    ... \r\r\n\x1b[1A\x1b[2K\rCreating vnsportal_loadbalancer0_1    ... \x1b[32mdone\x1b[0m\r\x1b[1BCreating vnsportal_certificate-service_1 ... \r\r\n\x1b[1A\x1b[2K\rCreating vnsportal_certificate-service_1 ... \x1b[32mdone\x1b[0m\r\x1b[1B'</msg>
+<status status="PASS" endtime="20190904 22:51:36.537" starttime="20190904 22:51:18.301"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:51:36.537" critical="yes" starttime="20190904 22:51:18.300"></status>
+</test>
+<status status="PASS" endtime="20190904 22:51:36.539" starttime="20190904 22:48:41.348"></status>
+</suite>
+<suite source="/home/tests/00_infra_config/03_setup_elastic.robot" id="s1-s3" name="03 Setup Elastic">
+<kw type="setup" name="Login NuageX User" library="vars">
+<msg timestamp="20190904 22:51:36.724" level="TRACE">Arguments: [  ]</msg>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>$vsd_password == ""</arg>
+<arg>Get NuageX lab password</arg>
+</arguments>
+<msg timestamp="20190904 22:51:36.726" level="TRACE">Arguments: [ '$vsd_password == ""' | 'Get NuageX lab password' ]</msg>
+<msg timestamp="20190904 22:51:36.728" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:51:36.729" starttime="20190904 22:51:36.725"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>$lab_ip_address == ""</arg>
+<arg>Get NuageX lab ip address</arg>
+</arguments>
+<msg timestamp="20190904 22:51:36.730" level="TRACE">Arguments: [ '$lab_ip_address == ""' | 'Get NuageX lab ip address' ]</msg>
+<msg timestamp="20190904 22:51:36.733" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:51:36.733" starttime="20190904 22:51:36.729"></status>
+</kw>
+<kw name="Login user" library="nuageusermgmt">
+<arguments>
+<arg>cats_api_url=https://${vsd_ip}:8443</arg>
+<arg>cats_username=admin</arg>
+<arg>cats_password=${vsd_password}</arg>
+<arg>cats_org_name=csp</arg>
+</arguments>
+<msg timestamp="20190904 22:51:36.735" level="TRACE">Arguments: [ ${cats_api_url}='https://10.0.0.2:8443' | ${cats_username}='admin' | ${cats_password}='JRLxXihC9B75mKKM' | ${cats_cert}=None | ${cats_private_key}=None | ${cats_org_name}='csp' ]</msg>
+<kw name="User Login" library="NuageVSD">
+<doc>Try to log in a user with a given username, password and organization.</doc>
+<arguments>
+<arg>cats_api_url=${cats_api_url}</arg>
+<arg>cats_username=${cats_username}</arg>
+<arg>cats_password=${cats_password}</arg>
+<arg>cats_cert=${cats_cert}</arg>
+<arg>cats_private_key=${cats_private_key}</arg>
+<arg>cats_org_name=${cats_org_name}</arg>
+</arguments>
+<msg timestamp="20190904 22:51:36.737" level="TRACE">Arguments: [ cats_api_url='https://10.0.0.2:8443' | cats_username='admin' | cats_password='JRLxXihC9B75mKKM' | cats_cert=None | cats_private_key=None | cats_org_name='csp' ]</msg>
+<msg timestamp="20190904 22:51:36.737" level="INFO">Try authentication with Username and Password</msg>
+<msg timestamp="20190904 22:51:36.739" level="INFO">CATS :: Trying to login a user "admin" with a password "JRLxXihC9B75mKKM" of organization "csp" using API endpoint "https://10.0.0.2:8443"</msg>
+<msg timestamp="20190904 22:51:36.745" level="INFO">&gt; GET https://10.0.0.2:8443/nuage/api/v5_0/me </msg>
+<msg timestamp="20190904 22:51:36.746" level="DEBUG">&gt; headers: {'X-Nuage-Organization': u'csp', 'Content-Type': 'application/json', 'Authorization': u'XREST YWRtaW46SlJMeFhpaEM5Qjc1bUtLTQ=='}</msg>
+<msg timestamp="20190904 22:51:36.746" level="DEBUG">&gt; data:
+  null</msg>
+<msg timestamp="20190904 22:51:36.749" level="DEBUG">Starting new HTTPS connection (1): 10.0.0.2:8443</msg>
+<msg timestamp="20190904 22:51:36.822" level="DEBUG">https://10.0.0.2:8443 "GET /nuage/api/v5_0/me HTTP/1.1" 200 None</msg>
+<msg timestamp="20190904 22:51:36.824" level="INFO">&lt; GET https://10.0.0.2:8443/nuage/api/v5_0/me  [200] </msg>
+<msg timestamp="20190904 22:51:36.824" level="DEBUG">&lt; headers: {'X-XSS-Protection': '1', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': 'default-src', 'Access-Control-Expose-Headers': 'X-Nuage-Organization, X-Nuage-ProxyUser, X-Nuage-OrderBy, X-Nuage-FilterType, X-Nuage-Filter, X-Nuage-Page, X-Nuage-PageSize, X-Nuage-Count, X-Nuage-Custom, X-Nuage-ClientType, X-SSL-Client-CN, X-SSL-Client-ORG, X-SSL-Client-UID, X-SSL-Issuer-CN, X-SSL-Client-DN, X-SSL-Issuer-DN', 'Transfer-Encoding': 'chunked', 'Set-Cookie': 'rememberMe=deleteMe; Path=/nuage; Max-Age=0; Expires=Tue, 03-Sep-2019 22:51:36 GMT', 'Expires': 'Wed, 31 Dec 1969 16:00:00 PST', 'Vary': 'Accept-Encoding', 'Server': 'Apache-Coyote/1.1', 'Date': 'Wed, 04 Sep 2019 22:51:36 GMT', 'Pragma': 'No-cache', 'Cache-Control': 'no-cache', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Referrer-Policy': 'origin', 'Content-Type': 'application/json', 'X-Frame-Options': 'deny', 'Content-Encoding': 'gzip'}</msg>
+<msg timestamp="20190904 22:51:36.824" level="DEBUG">&lt; data:
+[
+    {
+        "flowCollectionEnabled": true, 
+        "externalID": null, 
+        "APIKey": "30e86e10-e19e-48a3-854b-16c69c34240c", 
+        "enterpriseID": "76046673-d0ea-4a67-b6af-2829952f0812", 
+        "vssStatsInterval": 30, 
+        "enterpriseName": "CSP", 
+        "role": "CSPROOT", 
+        "licenseCapabilities": [
+            "ENCRYPTION_ENABLED"
+        ], 
+        "externalId": null, 
+        "aarProbeStatsInterval": 30, 
+        "statisticsEnabled": true, 
+        "aarFlowStatsInterval": 30, 
+        "entityScope": null, 
+        "avatarType": null, 
+        "password": null, 
+        "ID": "d66408e7-2999-4751-9b13-41892144502f", 
+        "userName": "admin", 
+        "mobileNumber": null, 
+        "firstName": "admin", 
+        "APIKeyExpiry": 1567722390926, 
+        "lastName": "admin", 
+        "email": "admin@nuagex.io", 
+        "statsTSDBServerAddress": "es.nuage.lab:9300", 
+        "avatarData": null
+    }
+]</msg>
+<msg timestamp="20190904 22:51:36.825" level="DEBUG">[NURESTSession] Started session with username admin in enterprise csp</msg>
+<msg timestamp="20190904 22:51:36.826" level="TRACE">CATS :: User Login function produced the following results:
+session_params:&lt;vspk.v5_0.nuvsdsession.NUVSDSession object at 0x7f2135440990&gt;, active_user_obj:&lt;class 'vspk.v5_0.nume.NUMe'&gt; (ID=d66408e7-2999-4751-9b13-41892144502f), active_user_name/role:admin/CSPROOT, csproot_session:&lt;vspk.v5_0.nuvsdsession.NUVSDSession object at 0x7f2135440990&gt;, csproot_user_obj:&lt;class 'vspk.v5_0.nume.NUMe'&gt; (ID=d66408e7-2999-4751-9b13-41892144502f), csproot_user_name/role:admin/CSPROOT</msg>
+<msg timestamp="20190904 22:51:36.826" level="TRACE">Return: &lt;vspk.v5_0.nuvsdsession.NUVSDSession object at 0x7f2135440990&gt;</msg>
+<status status="PASS" endtime="20190904 22:51:36.826" starttime="20190904 22:51:36.736"></status>
+</kw>
+<msg timestamp="20190904 22:51:36.826" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:51:36.826" starttime="20190904 22:51:36.734"></status>
+</kw>
+<msg timestamp="20190904 22:51:36.826" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20190904 22:51:36.827" starttime="20190904 22:51:36.724"></status>
+</kw>
+<test id="s1-s3-t1" name="Connect to ES VM">
+<kw name="Connect to Server With Keys" library="linux">
+<arguments>
+<arg>server_address=${es_mgmt_ip}</arg>
+<arg>username=root</arg>
+<arg>priv_key=${ssh_key_path}</arg>
+</arguments>
+<assign>
+<var>${conn}</var>
+</assign>
+<msg timestamp="20190904 22:51:36.829" level="TRACE">Arguments: [ ${server_address}='10.0.0.5' | ${server_port}='22' | ${username}='root' | ${priv_key}='~/.ssh/id_rsa' | ${priv_key_password}=None | ${delay}='0.5' | ${prompt}=None | ${timeout}='3' | ${newline}='LF' ]</msg>
+<kw name="Parse Path" library="CATSUtils">
+<arguments>
+<arg>${priv_key}</arg>
+</arguments>
+<assign>
+<var>${p_path}</var>
+</assign>
+<msg timestamp="20190904 22:51:36.829" level="TRACE">Arguments: [ '~/.ssh/id_rsa' ]</msg>
+<msg timestamp="20190904 22:51:36.830" level="TRACE">Return: {'dir_name': '/root/.ssh', 'file_name': 'id_rsa', 'full_path': '/root/.ssh/id_rsa'}</msg>
+<msg timestamp="20190904 22:51:36.830" level="INFO">${p_path} = {u'file_name': u'id_rsa', u'full_path': u'/root/.ssh/id_rsa', u'dir_name': u'/root/.ssh'}</msg>
+<status status="PASS" endtime="20190904 22:51:36.830" starttime="20190904 22:51:36.829"></status>
+</kw>
+<kw name="Open Connection" library="SSHLibrary">
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<arguments>
+<arg>${server_address}</arg>
+<arg>port=${server_port}</arg>
+<arg>prompt=${prompt}</arg>
+<arg>timeout=${timeout}</arg>
+<arg>newline=${newline}</arg>
+</arguments>
+<assign>
+<var>${conn_index}</var>
+</assign>
+<msg timestamp="20190904 22:51:36.831" level="TRACE">Arguments: [ '10.0.0.5' | port=22 | prompt=None | timeout='3' | newline='LF' ]</msg>
+<msg timestamp="20190904 22:51:36.832" level="TRACE">Return: 4</msg>
+<msg timestamp="20190904 22:51:36.832" level="INFO">${conn_index} = 4</msg>
+<status status="PASS" endtime="20190904 22:51:36.832" starttime="20190904 22:51:36.831"></status>
+</kw>
+<kw name="Login With Public Key" library="SSHLibrary">
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<arguments>
+<arg>${username}</arg>
+<arg>${p_path['full_path']}</arg>
+<arg>password=${priv_key_password}</arg>
+<arg>delay=${delay}</arg>
+</arguments>
+<msg timestamp="20190904 22:51:36.833" level="TRACE">Arguments: [ 'root' | '/root/.ssh/id_rsa' | password=None | delay='0.5' ]</msg>
+<msg timestamp="20190904 22:51:36.833" level="INFO">Logging into '10.0.0.5:22' as 'root'.</msg>
+<msg timestamp="20190904 22:51:36.936" level="DEBUG">Adding ssh-ed25519 host key for 10.0.0.5: ea78d97072ce06f51889598421271132</msg>
+<msg timestamp="20190904 22:51:36.937" level="DEBUG">Trying discovered key 22bd1b2e2aed03a1ee57b159219e41ee in /root/.ssh/id_rsa</msg>
+<msg timestamp="20190904 22:51:37.002" level="DEBUG">[chan 0] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:51:38.279" level="INFO">Read output: Last login: Wed Sep  4 15:44:41 2019 from gateway
+
+Welcome to Nuage-Elastic  5.4.1_1
+
+[root@es ~]#</msg>
+<msg timestamp="20190904 22:51:38.280" level="TRACE">Return: 'Last login: Wed Sep  4 15:44:41 2019 from gateway\r\r\n\r\nWelcome to Nuage-Elastic  5.4.1_1\r\n\r\n[root@es ~]# '</msg>
+<status status="PASS" endtime="20190904 22:51:38.280" starttime="20190904 22:51:36.832"></status>
+</kw>
+<msg timestamp="20190904 22:51:38.280" level="TRACE">Return: 4</msg>
+<msg timestamp="20190904 22:51:38.280" level="INFO">${conn} = 4</msg>
+<status status="PASS" endtime="20190904 22:51:38.280" starttime="20190904 22:51:36.828"></status>
+</kw>
+<status status="PASS" endtime="20190904 22:51:38.281" critical="yes" starttime="20190904 22:51:36.827"></status>
+</test>
+<test id="s1-s3-t2" name="Copy Snapshot file">
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>cd /root &amp;&amp; curl -L -O http://files.nuagedemos.net/elastic_portal_5.4.1.tar.gz</arg>
+<arg>shell=True</arg>
+<arg>sudo=True</arg>
+</arguments>
+<msg timestamp="20190904 22:51:38.282" level="TRACE">Arguments: [ 'cd /root &amp;&amp; curl -L -O http://files.nuagedemos.net/elastic_portal_5.4.1.tar.gz' | 'shell=True' | sudo=True ]</msg>
+<msg timestamp="20190904 22:51:38.282" level="INFO">Executing command 'sudo cd /root &amp;&amp; curl -L -O http://files.nuagedemos.net/elastic_portal_5.4.1.tar.gz'.</msg>
+<msg timestamp="20190904 22:51:38.283" level="DEBUG">[chan 1] Max packet in: 32768 bytes</msg>
+<msg timestamp="20190904 22:55:33.634" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20190904 22:55:33.636" level="TRACE">Return: '  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\r\n                                 Dload  Upload   Total   Spent    Left  Speed\r\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0 8520M    0 24.7M    0     0  25.8M      0  0:05:29 --:--:--  0:05:29 25.8M\r  0 8520M    0 80.3M    0     0  41.0M      0  0:03:27  0:00:01  0:03:26 41.0M\r  1 8520M    1  136M    0     0  46.0M      0  0:03:05  0:00:02  0:03:03 46.0M\r  2 8520M    2  191M    0     0  48.4M      0  0:02:55  0:00:03  0:02:52 48.4M\r  2 8520M    2  246M    0     0  49.8M      0  0:02:51  0:00:04  0:02:47 49.8M\r  3 8520M    3  300M    0     0  50.3M      0  0:02:49  0:00:05  0:02:44 55.0M\r  4 8520M    4  354M    0     0  50.9M      0  0:02:47  0:00:06  0:02:41 54.7M\r  4 8520M    4  398M    0     0  50.0M      0  0:02:50  0:00:07  0:02:43 52.4M\r  5 8520M    5  432M    0     0  48.2M      0  0:02:56  0:00:08  0:02:48 48.1M\r  5 8520M    5  471M    0     0  47.3M      0  0:03:00  0:00:09  0:02:51 44.8M\r  6 8520M    6  520M    0     0  47.4M      0  0:02:59  0:00:10  0:02:49 44.0M\r  6 8520M    6  564M    0     0  47.1M      0  0:03:00  0:00:11  0:02:49 41.9M\r  7 8520M    7  610M    0     0  47.1M      0  0:03:00  0:00:12  0:02:48 42.4M\r  7 8520M    7  664M    0     0  47.6M      0  0:02:58  0:00:13  0:02:45 46.4M\r  8 8520M    8  691M    0     0  44.3M      0  0:03:12  0:00:15  0:02:57 39.1M\r  8 8520M    8  702M    0     0  44.0M      0  0:03:13  0:00:15  0:02:58 36.4M\r  8 8520M    8  719M    0     0  42.3M      0  0:03:20  0:00:16  0:03:04 31.0M\r  9 8520M    9  770M    0     0  42.8M      0  0:03:18  0:00:17  0:03:01 31.9M\r  9 8520M    9  825M    0     0  43.5M      0  0:03:15  0:00:18  0:02:57 32.1M\r 10 8520M   10  880M    0     0  44.1M      0  0:03:13  0:00:19  0:02:54 43.2M\r 10 8520M   10  933M    0     0  44.5M      0  0:03:11  0:00:20  0:02:51 46.2M\r 11 8520M   11  987M    0     0  44.9M      0  0:03:09  0:00:21  0:02:48 53.6M\r 12 8520M   12 1035M    0     0  45.1M      0  0:03:08  0:00:22  0:02:46 53.1M\r 12 8520M   12 1086M    0     0  45.3M      0  0:03:07  0:00:23  0:02:44 52.3M\r 13 8520M   13 1140M    0     0  45.6M      0  0:03:06  0:00:24  0:02:42 51.9M\r 13 8520M   13 1140M    0     0  43.9M      0  0:03:13  0:00:25  0:02:48 41.3M\r 13 8520M   13 1140M    0     0  42.2M      0  0:03:21  0:00:26  0:02:55 30.6M\r 13 8520M   13 1140M    0     0  40.7M      0  0:03:28  0:00:27  0:03:01 20.8M\r 13 8520M   13 1140M    0     0  39.3M      0  0:03:36  0:00:28  0:03:08 10.7M\r 13 8520M   13 1170M    0     0  39.0M      0  0:03:38  0:00:29  0:03:09 6274k\r 14 8520M   14 1218M    0     0  39.3M      0  0:03:36  0:00:30  0:03:06 15.5M\r 14 8520M   14 1265M    0     0  39.6M      0  0:03:35  0:00:31  0:03:04 25.0M\r 15 8520M   15 1319M    0     0  40.0M      0  0:03:32  0:00:32  0:03:00 35.7M\r 15 8520M   15 1348M    0     0  39.7M      0  0:03:34  0:00:33  0:03:01 41.6M\r 16 8520M   16 1379M    0     0  39.4M      0  0:03:35  0:00:34  0:03:01 41.6M\r 16 8520M   16 1399M    0     0  38.2M      0  0:03:42  0:00:36  0:03:06 32.1M\r 16 8520M   16 1399M    0     0  37.2M      0  0:03:48  0:00:37  0:03:11 23.7M\r 16 8520M   16 1399M    0     0  36.2M      0  0:03:54  0:00:38  0:03:16 14.3M\r 16 8520M   16 1399M    0     0  35.3M      0  0:04:01  0:00:39  0:03:22 9325k\r 16 8520M   16 1413M    0     0  35.3M      0  0:04:00  0:00:39  0:03:21 7051k\r 17 8520M   17 1458M    0     0  35.6M      0  0:03:59  0:00:40  0:03:19 13.5M\r 17 8520M   17 1511M    0     0  36.0M      0  0:03:56  0:00:41  0:03:15 25.6M\r 18 8520M   18 1564M    0     0  36.4M      0  0:03:53  0:00:42  0:03:11 37.8M\r 18 8520M   18 1618M    0     0  36.8M      0  0:03:51  0:00:43  0:03:08 50.1M\r 19 8520M   19 1672M    0     0  37.1M      0  0:03:49  0:00:44  0:03:05 51.7M\r 20 8520M   20 1722M    0     0  37.4M      0  0:03:47  0:00:45  0:03:02 52.6M\r 20 8520M   20 1776M    0     0  37.8M      0  0:03:45  0:00:46  0:02:59 53.0M\r 21 8520M   21 1812M    0     0  37.2M      0  0:03:48  0:00:48  0:03:00 43.6M\r 21 8520M   21 1812M    0     0  36.5M      0  0:03:53  0:00:49  0:03:04 34.2M\r 21 8520M   21 1812M    0     0  35.8M      0  0:03:57  0:00:50  0:03:07 25.2M\r 21 8520M   21 1834M    0     0  35.9M      0  0:03:56  0:00:50  0:03:06 22.3M\r 22 8520M   22 1887M    0     0  36.3M      0  0:03:54  0:00:51  0:03:03 22.1M\r 22 8520M   22 1931M    0     0  36.4M      0  0:03:53  0:00:52  0:03:01 27.4M\r 23 8520M   23 1979M    0     0  36.6M      0  0:03:52  0:00:53  0:02:59 38.6M\r 23 8520M   23 2032M    0     0  36.9M      0  0:03:50  0:00:54  0:02:56 49.5M\r 24 8520M   24 2073M    0     0  37.0M      0  0:03:49  0:00:55  0:02:54 47.9M\r 24 8520M   24 2123M    0     0  37.2M      0  0:03:48  0:00:56  0:02:52 47.2M\r 25 8520M   25 2152M    0     0  37.1M      0  0:03:49  0:00:57  0:02:52 43.9M\r 25 8520M   25 2153M    0     0  36.4M      0  0:03:53  0:00:59  0:02:54 34.0M\r 25 8520M   25 2153M    0     0  35.8M      0  0:03:57  0:01:00  0:02:57 23.6M\r 25 8520M   25 2153M    0     0  35.2M      0  0:04:01  0:01:01  0:03:00 15.6M\r 25 8520M   25 2153M    0     0  34.6M      0  0:04:05  0:01:02  0:03:03 5953k\r 25 8520M   25 2188M    0     0  34.7M      0  0:04:05  0:01:02  0:03:03 7472k\r 26 8520M   26 2243M    0     0  35.0M      0  0:04:02  0:01:03  0:02:59 18.3M\r 26 8520M   26 2298M    0     0  35.3M      0  0:04:00  0:01:04  0:02:56 29.5M\r 27 8520M   27 2351M    0     0  35.6M      0  0:03:58  0:01:05  0:02:53 40.6M\r 27 8520M   27 2369M    0     0  35.2M      0  0:04:01  0:01:07  0:02:54 41.5M\r 27 8520M   27 2369M    0     0  34.7M      0  0:04:05  0:01:08  0:02:57 34.0M\r 27 8520M   27 2369M    0     0  34.2M      0  0:04:09  0:01:09  0:03:00 23.7M\r 27 8520M   27 2369M    0     0  33.7M      0  0:04:12  0:01:10  0:03:02 13.4M\r 28 8520M   28 2401M    0     0  33.8M      0  0:04:11  0:01:10  0:03:01  9.8M\r 28 8520M   28 2419M    0     0  33.4M      0  0:04:14  0:01:12  0:03:02  9.9M\r 28 8520M   28 2431M    0     0  33.3M      0  0:04:15  0:01:12  0:03:03 13.3M\r 29 8520M   29 2487M    0     0  33.6M      0  0:04:13  0:01:13  0:03:00 25.3M\r 29 8520M   29 2542M    0     0  33.9M      0  0:04:11  0:01:14  0:02:57 37.0M\r 30 8520M   30 2597M    0     0  34.2M      0  0:04:09  0:01:15  0:02:54 39.3M\r 30 8520M   30 2611M    0     0  33.7M      0  0:04:12  0:01:17  0:02:55 37.9M\r 30 8520M   30 2611M    0     0  33.3M      0  0:04:15  0:01:18  0:02:57 33.4M\r 31 8520M   31 2665M    0     0  33.7M      0  0:04:12  0:01:18  0:02:54 35.6M\r 31 8520M   31 2718M    0     0  34.0M      0  0:04:10  0:01:19  0:02:51 35.1M\r 32 8520M   32 2765M    0     0  34.1M      0  0:04:09  0:01:20  0:02:49 33.5M\r 32 8520M   32 2777M    0     0  33.7M      0  0:04:12  0:01:22  0:02:50 33.5M\r 32 8520M   32 2781M    0     0  33.4M      0  0:04:15  0:01:23  0:02:52 34.6M\r 33 8520M   33 2815M    0     0  33.5M      0  0:04:14  0:01:23  0:02:51 29.9M\r 33 8520M   33 2869M    0     0  33.7M      0  0:04:12  0:01:24  0:02:48 30.0M\r 34 8520M   34 2922M    0     0  34.0M      0  0:04:10  0:01:25  0:02:45 31.4M\r 34 8520M   34 2949M    0     0  33.5M      0  0:04:13  0:01:27  0:02:46 30.8M\r 34 8520M   34 2949M    0     0  33.4M      0  0:04:14  0:01:28  0:02:46 34.5M\r 35 8520M   35 2995M    0     0  33.6M      0  0:04:13  0:01:28  0:02:45 36.0M\r 35 8520M   35 3050M    0     0  33.9M      0  0:04:11  0:01:29  0:02:42 36.3M\r 36 8520M   36 3105M    0     0  34.1M      0  0:04:09  0:01:30  0:02:39 36.5M\r 36 8520M   36 3125M    0     0  33.9M      0  0:04:11  0:01:32  0:02:39 41.5M\r 36 8520M   36 3133M    0     0  33.6M      0  0:04:13  0:01:33  0:02:40 36.2M\r 37 8520M   37 3167M    0     0  33.7M      0  0:04:12  0:01:33  0:02:39 34.3M\r 37 8520M   37 3222M    0     0  33.9M      0  0:04:11  0:01:34  0:02:37 34.3M\r 38 8520M   38 3267M    0     0  34.0M      0  0:04:10  0:01:35  0:02:35 32.4M\r 38 8520M   38 3287M    0     0  33.8M      0  0:04:11  0:01:37  0:02:34 31.9M\r 39 8520M   39 3326M    0     0  33.9M      0  0:04:10  0:01:37  0:02:33 40.3M\r 39 8520M   39 3379M    0     0  34.1M      0  0:04:09  0:01:38  0:02:31 42.4M\r 40 8520M   40 3423M    0     0  34.2M      0  0:04:08  0:01:39  0:02:29 40.3M\r 40 8520M   40 3467M    0     0  34.3M      0  0:04:08  0:01:40  0:02:28 40.0M\r 40 8520M   40 3481M    0     0  34.0M      0  0:04:10  0:01:42  0:02:28 37.3M\r 40 8520M   40 3481M    0     0  33.6M      0  0:04:12  0:01:43  0:02:29 28.8M\r 40 8520M   40 3485M    0     0  33.5M      0  0:04:14  0:01:43  0:02:31 21.0M\r 41 8520M   41 3540M    0     0  33.7M      0  0:04:12  0:01:44  0:02:28 23.2M\r 42 8520M   42 3595M    0     0  33.9M      0  0:04:11  0:01:45  0:02:26 25.4M\r 42 8520M   42 3615M    0     0  33.6M      0  0:04:12  0:01:47  0:02:25 26.8M\r 42 8520M   42 3623M    0     0  33.5M      0  0:04:13  0:01:47  0:02:26 30.6M\r 43 8520M   43 3678M    0     0  33.7M      0  0:04:12  0:01:48  0:02:24 38.5M\r 43 8520M   43 3732M    0     0  33.9M      0  0:04:11  0:01:49  0:02:22 38.3M\r 44 8520M   44 3787M    0     0  34.1M      0  0:04:09  0:01:50  0:02:19 38.3M\r 44 8520M   44 3793M    0     0  33.8M      0  0:04:11  0:01:52  0:02:19 37.5M\r 44 8520M   44 3793M    0     0  33.5M      0  0:04:13  0:01:53  0:02:20 33.2M\r 44 8520M   44 3793M    0     0  33.2M      0  0:04:16  0:01:54  0:02:22 22.5M\r 44 8520M   44 3793M    0     0  32.9M      0  0:04:18  0:01:55  0:02:23 11.9M\r 44 8520M   44 3793M    0     0  32.6M      0  0:04:20  0:01:56  0:02:24 1270k\r 44 8520M   44 3793M    0     0  32.4M      0  0:04:22  0:01:57  0:02:25     0\r 44 8520M   44 3806M    0     0  32.2M      0  0:04:24  0:01:57  0:02:27 2682k\r 45 8520M   45 3849M    0     0  32.3M      0  0:04:23  0:01:58  0:02:25 11.5M\r 45 8520M   45 3892M    0     0  32.4M      0  0:04:22  0:01:59  0:02:23 20.3M\r 46 8520M   46 3937M    0     0  32.5M      0  0:04:21  0:02:00  0:02:21 29.5M\r 46 8520M   46 3983M    0     0  32.6M      0  0:04:20  0:02:01  0:02:19 39.0M\r 47 8520M   47 4025M    0     0  32.4M      0  0:04:22  0:02:03  0:02:19 37.0M\r 47 8520M   47 4025M    0     0  32.2M      0  0:04:24  0:02:04  0:02:20 29.6M\r 47 8520M   47 4025M    0     0  32.2M      0  0:04:24  0:02:04  0:02:20 26.3M\r 47 8520M   47 4068M    0     0  32.2M      0  0:04:23  0:02:05  0:02:18 26.0M\r 48 8520M   48 4116M    0     0  32.4M      0  0:04:22  0:02:06  0:02:16 26.4M\r 48 8520M   48 4156M    0     0  32.4M      0  0:04:22  0:02:07  0:02:15 32.2M\r 48 8520M   48 4157M    0     0  32.2M      0  0:04:24  0:02:08  0:02:16 32.3M\r 48 8520M   48 4161M    0     0  32.0M      0  0:04:26  0:02:09  0:02:17 27.3M\r 49 8520M   49 4176M    0     0  31.8M      0  0:04:27  0:02:10  0:02:17 21.7M\r 49 8520M   49 4200M    0     0  31.8M      0  0:04:27  0:02:11  0:02:16 16.9M\r 49 8520M   49 4227M    0     0  31.5M      0  0:04:29  0:02:13  0:02:16 11.8M\r 49 8520M   49 4227M    0     0  31.3M      0  0:04:31  0:02:14  0:02:17 11.7M\r 49 8520M   49 4227M    0     0  31.1M      0  0:04:33  0:02:15  0:02:18 11.8M\r 49 8520M   49 4238M    0     0  31.1M      0  0:04:33  0:02:15  0:02:18 12.4M\r 50 8520M   50 4270M    0     0  31.1M      0  0:04:33  0:02:16  0:02:17 14.0M\r 50 8520M   50 4299M    0     0  30.9M      0  0:04:35  0:02:18  0:02:17 14.3M\r 50 8520M   50 4299M    0     0  30.8M      0  0:04:36  0:02:19  0:02:17 16.2M\r 50 8520M   50 4318M    0     0  30.8M      0  0:04:36  0:02:19  0:02:17 20.6M\r 51 8520M   51 4359M    0     0  30.9M      0  0:04:35  0:02:20  0:02:15 24.1M\r 51 8520M   51 4404M    0     0  31.0M      0  0:04:34  0:02:21  0:02:13 26.7M\r 52 8520M   52 4447M    0     0  30.9M      0  0:04:35  0:02:23  0:02:12 29.8M\r 52 8520M   52 4447M    0     0  30.6M      0  0:04:37  0:02:24  0:02:13 26.6M\r 52 8520M   52 4450M    0     0  30.7M      0  0:04:37  0:02:24  0:02:13 26.4M\r 52 8520M   52 4515M    0     0  30.9M      0  0:04:35  0:02:25  0:02:10 31.2M\r 53 8520M   53 4562M    0     0  31.0M      0  0:04:34  0:02:26  0:02:08 31.6M\r 54 8520M   54 4603M    0     0  30.9M      0  0:04:35  0:02:28  0:02:07 31.4M\r 54 8520M   54 4614M    0     0  30.9M      0  0:04:35  0:02:28  0:02:07 41.0M\r 54 8520M   54 4660M    0     0  31.0M      0  0:04:34  0:02:29  0:02:05 41.8M\r 55 8520M   55 4707M    0     0  31.1M      0  0:04:33  0:02:30  0:02:03 38.2M\r 55 8520M   55 4744M    0     0  31.2M      0  0:04:32  0:02:31  0:02:01 36.5M\r 56 8520M   56 4777M    0     0  31.0M      0  0:04:34  0:02:33  0:02:01 34.3M\r 56 8520M   56 4777M    0     0  30.8M      0  0:04:36  0:02:34  0:02:02 27.3M\r 56 8520M   56 4777M    0     0  30.7M      0  0:04:36  0:02:35  0:02:01 22.3M\r 56 8520M   56 4815M    0     0  30.8M      0  0:04:35  0:02:35  0:02:00 21.6M\r 57 8520M   57 4858M    0     0  30.9M      0  0:04:35  0:02:36  0:01:59 22.6M\r 57 8520M   57 4899M    0     0  30.8M      0  0:04:36  0:02:38  0:01:58 24.8M\r 57 8520M   57 4904M    0     0  30.8M      0  0:04:36  0:02:38  0:01:58 31.4M\r 58 8520M   58 4951M    0     0  30.9M      0  0:04:35  0:02:39  0:01:56 36.7M\r 58 8520M   58 4998M    0     0  31.0M      0  0:04:34  0:02:40  0:01:54 36.7M\r 59 8520M   59 5044M    0     0  31.1M      0  0:04:33  0:02:41  0:01:52 37.3M\r 59 8520M   59 5087M    0     0  31.0M      0  0:04:34  0:02:43  0:01:51 36.9M\r 59 8520M   59 5087M    0     0  30.8M      0  0:04:36  0:02:44  0:01:52 30.7M\r 59 8520M   59 5087M    0     0  30.7M      0  0:04:37  0:02:45  0:01:52 24.4M\r 60 8520M   60 5129M    0     0  30.9M      0  0:04:35  0:02:45  0:01:50 26.0M\r 61 8520M   61 5216M    0     0  31.2M      0  0:04:32  0:02:46  0:01:46 34.3M\r 61 8520M   61 5260M    0     0  31.3M      0  0:04:32  0:02:47  0:01:45 42.6M\r 62 8520M   62 5305M    0     0  31.4M      0  0:04:31  0:02:48  0:01:43 53.8M\r 62 8520M   62 5357M    0     0  31.5M      0  0:04:30  0:02:49  0:01:41 60.5M\r 63 8520M   63 5409M    0     0  31.6M      0  0:04:29  0:02:50  0:01:39 55.9M\r 64 8520M   64 5457M    0     0  31.7M      0  0:04:28  0:02:51  0:01:37 48.2M\r 64 8520M   64 5507M    0     0  31.6M      0  0:04:29  0:02:53  0:01:36 41.5M\r 64 8520M   64 5507M    0     0  31.4M      0  0:04:30  0:02:54  0:01:36 33.9M\r 64 8520M   64 5507M    0     0  31.3M      0  0:04:32  0:02:55  0:01:37 25.1M\r 64 8520M   64 5507M    0     0  31.2M      0  0:04:32  0:02:55  0:01:37 19.5M\r 65 8520M   65 5592M    0     0  31.6M      0  0:04:29  0:02:56  0:01:33 26.8M\r 66 8520M   66 5629M    0     0  31.6M      0  0:04:29  0:02:57  0:01:32 30.0M\r 66 8520M   66 5676M    0     0  31.7M      0  0:04:28  0:02:58  0:01:30 41.6M\r 67 8520M   67 5715M    0     0  31.7M      0  0:04:28  0:02:59  0:01:29 51.1M\r 67 8520M   67 5769M    0     0  31.8M      0  0:04:27  0:03:00  0:01:27 52.9M\r 67 8520M   67 5784M    0     0  31.7M      0  0:04:28  0:03:02  0:01:26 36.5M\r 67 8520M   67 5784M    0     0  31.5M      0  0:04:29  0:03:03  0:01:26 29.5M\r 68 8520M   68 5795M    0     0  31.5M      0  0:04:30  0:03:03  0:01:27 23.7M\r 68 8520M   68 5826M    0     0  31.5M      0  0:04:30  0:03:04  0:01:26 22.2M\r 68 8520M   68 5863M    0     0  31.5M      0  0:04:30  0:03:05  0:01:25 18.6M\r 69 8520M   69 5909M    0     0  31.6M      0  0:04:29  0:03:06  0:01:23 26.2M\r 69 8520M   69 5956M    0     0  31.6M      0  0:04:28  0:03:07  0:01:21 36.2M\r 70 8520M   70 5997M    0     0  31.6M      0  0:04:29  0:03:09  0:01:20 35.1M\r 70 8520M   70 5997M    0     0  31.4M      0  0:04:30  0:03:10  0:01:20 29.7M\r 70 8520M   70 5997M    0     0  31.3M      0  0:04:31  0:03:11  0:01:20 26.6M\r 71 8520M   71 6055M    0     0  31.5M      0  0:04:30  0:03:11  0:01:19 29.3M\r 71 8520M   71 6108M    0     0  31.6M      0  0:04:29  0:03:12  0:01:17 30.5M\r 72 8520M   72 6147M    0     0  31.5M      0  0:04:29  0:03:14  0:01:15 30.1M\r 72 8520M   72 6147M    0     0  31.4M      0  0:04:30  0:03:15  0:01:15 33.4M\r 72 8520M   72 6189M    0     0  31.5M      0  0:04:29  0:03:15  0:01:14 38.8M\r 73 8520M   73 6237M    0     0  31.6M      0  0:04:29  0:03:16  0:01:13 36.3M\r 73 8520M   73 6280M    0     0  31.7M      0  0:04:28  0:03:17  0:01:11 34.4M\r 74 8520M   74 6319M    0     0  31.6M      0  0:04:29  0:03:19  0:01:10 34.2M\r 74 8520M   74 6319M    0     0  31.5M      0  0:04:29  0:03:19  0:01:10 35.8M\r 74 8520M   74 6382M    0     0  31.7M      0  0:04:28  0:03:20  0:01:08 38.6M\r 75 8520M   75 6412M    0     0  31.7M      0  0:04:28  0:03:21  0:01:07 34.9M\r 75 8520M   75 6429M    0     0  31.6M      0  0:04:28  0:03:22  0:01:06 29.6M\r 75 8520M   75 6450M    0     0  31.5M      0  0:04:30  0:03:24  0:01:06 25.8M\r 75 8520M   75 6450M    0     0  31.3M      0  0:04:31  0:03:25  0:01:06 22.7M\r 75 8520M   75 6450M    0     0  31.3M      0  0:04:32  0:03:26  0:01:06 13.4M\r 76 8520M   76 6505M    0     0  31.4M      0  0:04:31  0:03:26  0:01:05 18.5M\r 77 8520M   77 6607M    0     0  31.7M      0  0:04:28  0:03:27  0:01:01 35.7M\r 78 8520M   78 6651M    0     0  31.7M      0  0:04:27  0:03:29  0:00:58 45.7M\r 78 8520M   78 6722M    0     0  32.0M      0  0:04:26  0:03:29  0:00:57 65.0M\r 80 8520M   80 6824M    0     0  32.3M      0  0:04:23  0:03:30  0:00:53 75.6M\r 81 8520M   81 6922M    0     0  32.6M      0  0:04:20  0:03:31  0:00:49 83.5M\r 82 8520M   82 7023M    0     0  32.9M      0  0:04:18  0:03:32  0:00:46 83.0M\r 83 8520M   83 7110M    0     0  33.2M      0  0:04:16  0:03:33  0:00:43 95.8M\r 84 8520M   84 7187M    0     0  33.4M      0  0:04:14  0:03:34  0:00:40 93.0M\r 84 8520M   84 7191M    0     0  33.2M      0  0:04:15  0:03:36  0:00:39 71.8M\r 85 8520M   85 7255M    0     0  33.4M      0  0:04:14  0:03:36  0:00:38 66.5M\r 86 8520M   86 7332M    0     0  33.6M      0  0:04:13  0:03:37  0:00:36 61.8M\r 86 8520M   86 7409M    0     0  33.8M      0  0:04:11  0:03:38  0:00:33 59.8M\r 87 8520M   87 7468M    0     0  33.9M      0  0:04:10  0:03:39  0:00:31 56.1M\r 88 8520M   88 7529M    0     0  34.0M      0  0:04:10  0:03:40  0:00:30 69.0M\r 88 8520M   88 7574M    0     0  34.1M      0  0:04:09  0:03:41  0:00:28 63.6M\r 89 8520M   89 7647M    0     0  34.3M      0  0:04:08  0:03:42  0:00:26 63.0M\r 90 8520M   90 7753M    0     0  34.6M      0  0:04:06  0:03:43  0:00:23 68.7M\r 92 8520M   92 7855M    0     0  34.9M      0  0:04:04  0:03:44  0:00:20 77.3M\r 93 8520M   93 7941M    0     0  35.1M      0  0:04:02  0:03:45  0:00:17 82.3M\r 93 8520M   93 7982M    0     0  35.1M      0  0:04:02  0:03:46  0:00:16 81.5M\r 94 8520M   94 8032M    0     0  35.2M      0  0:04:01  0:03:47  0:00:14 77.0M\r 95 8520M   95 8102M    0     0  35.3M      0  0:04:00  0:03:48  0:00:12 69.8M\r 96 8520M   96 8204M    0     0  35.6M      0  0:03:58  0:03:49  0:00:09 69.9M\r 97 8520M   97 8309M    0     0  35.9M      0  0:03:56  0:03:50  0:00:06 73.5M\r 98 8520M   98 8414M    0     0  36.2M      0  0:03:54  0:03:51  0:00:03 86.4M\r 99 8520M   99 8463M    0     0  36.3M      0  0:03:54  0:03:52  0:00:02 86.1M\r 99 8520M   99 8514M    0     0  36.3M      0  0:03:54  0:03:53  0:00:01 81.7M\r100 8520M  100 8520M    0     0  36.2M      0  0:03:54  0:03:54 --:--:-- 64.6M\r'
