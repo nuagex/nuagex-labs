@@ -70,6 +70,9 @@ Connect to PA PC and Add SSH Script Crontab
 
     SSHLibrary.Execute Command    cat > /etc/crontab <<EOF${\n}${crontab_file}${\n}EOF
 
+Add Portal hostname
+    SSHLibrary.Execute Command    echo '192.168.10.100 ion-motors.lab' >> /etc/hosts
+
 ################################################################################################################################
 Update DHCP address for PA Tablet
     SSHLibrary.Switch Connection    ${patablet_conn}
@@ -101,6 +104,9 @@ Connect to PA Tablet and Add SSH Script Crontab
                      ...    pa_tablet_address=${pa_tablet_data_addr}
 
     SSHLibrary.Execute Command    cat > /etc/crontab <<EOF${\n}${crontab_file}${\n}EOF
+
+Add Portal hostname
+    SSHLibrary.Execute Command    echo '192.168.10.100 ion-motors.lab' >> /etc/hosts
 
 #################################################################################################################################
 Update DHCP address for SJ PC1
@@ -146,6 +152,8 @@ Connect to SJ Mobile and Add SSH Script Crontab
                      ...    hq_pc_address=${hq_sf_pc1_data_addr}
                      ...    pa_tablet_address=${pa_tablet_data_addr}
                      ...    sj_mobile_address=${sj_mobile_data_addr}
+Add Portal hostname
+    SSHLibrary.Execute Command    echo '192.168.10.100 ion-motors.lab' >> /etc/hosts
 
 Sleep 60 sec before verifying datapath
     # its been seen that immediate traffic emission could fail

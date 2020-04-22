@@ -13,6 +13,15 @@ Set up HQ Server
     SSHLibrary.Put Directory
     ...  source=${CURDIR}/files/webserver
     ...  destination=/root
+    ...  recursive=True
 
-    # enable IP routing
-    SSHLibrary.Execute Command  ip netns exec ns-data flask run --host=0.0.0.0
+    SSHLibrary.Put File
+    ...  source=${CURDIR}/files/webserver.service
+    ...  destination=/etc/systemd/system
+    
+
+    SSHLibrary.Execute Command  pip install gunicorn flask
+
+    SSHLibrary.Execute Command  systemctl enable webserver.service
+
+    SSHLibrary.Execute Command  systemctl start webserver.service

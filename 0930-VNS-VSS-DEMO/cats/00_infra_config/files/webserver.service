@@ -1,0 +1,11 @@
+[Unit]
+Description=Gunicorn instance to serve ION Motors website
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/root/webserver
+ExecStart=/bin/sh -c 'ip netns exec ns-data /usr/bin/gunicorn --bind 0.0.0.0:5000 wsgi:app'
+
+[Install]
+WantedBy=multi-user.target
