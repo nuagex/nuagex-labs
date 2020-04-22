@@ -28,7 +28,7 @@ Once a lab is deployed and configured using automation scripts, it will match th
 
 ![lab](./images/image.png)
 
-The lab models an Organization with a headquarters (HQ) and a branch sites deployed over single underlay (Internet).
+The lab models an Organization with a headquarters (HQ) and branch sites deployed over single underlay (Internet).
 
 Both the HQ and the branchs are equipped with a Nuage Networks NSG. The headquarters site user devices and branch offices user devices are emulated using the [Branch-PC image](https://nuagenetworks.zendesk.com/hc/en-us/articles/360010244033) which allows to generate and analyze traffic as well as run some real-world applications. Although the devices are not needed to demonstrate the features of a joint solution, they are used here as the Installer PCs to automatically bootstrap the NSGs.
 
