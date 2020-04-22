@@ -11,8 +11,6 @@ Update DHCP address for HQ PC1
     ...    ip netns exec ns-data dhclient --no-pid eth1
     ...    sudo=True
 
-    SSHLibrary.Execute Command  curl http://files.nuagedemos.net/vss_demo/browse.sh -L -O 
-
 Install HTTP Server and Required Packages on SF HQ PC
     SSHLibrary.Execute Command    yum install -y httpd hping3
 
