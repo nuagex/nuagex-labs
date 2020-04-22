@@ -156,6 +156,9 @@ Connect to SJ Mobile and Add SSH Script Crontab
                      ...    hq_pc_address=${hq_sf_pc1_data_addr}
                      ...    pa_tablet_address=${pa_tablet_data_addr}
                      ...    sj_mobile_address=${sj_mobile_data_addr}
+
+    SSHLibrary.Execute Command    cat > /etc/crontab <<EOF${\n}${crontab_file}${\n}EOF
+
 Add Portal hostname to SJ Mobile
     SSHLibrary.Execute Command    echo '192.168.10.100 ion-motors.lab' >> /etc/hosts
 
