@@ -13,8 +13,8 @@ Update DHCP address for HQ PC1
 
     SSHLibrary.Execute Command  curl http://files.nuagedemos.net/vss_demo/browse.sh -L -O 
 
-Install HTTP Server and Required Packages for SIP on SF HQ PC
-    SSHLibrary.Execute Command    yum install -y httpd ncurses-devel openssl-devel lksctp-tools-devel libpcap libpcap-devel hping3
+Install HTTP Server and Required Packages on SF HQ PC
+    SSHLibrary.Execute Command    yum install -y httpd hping3
 
 Copy files to SF HQ PC
     SSHLibrary.Put File
@@ -24,10 +24,12 @@ Copy files to SF HQ PC
     SSHLibrary.Put File
     ...  source=${CURDIR}/files/browse.sh
     ...  destination=/root
+    ...  mode=0755
 
     SSHLibrary.Put File
     ...  source=${CURDIR}/files/lnkdn.sh
     ...  destination=/root
+    ...  mode=0755
     
 Connect to SF HQ PC and Add SSH Script Crontab 
     ${crontab_file} =  CATSUtils.Render J2 Template
@@ -37,9 +39,6 @@ Connect to SF HQ PC and Add SSH Script Crontab
                      ...    hq_pc_address=${hq_sf_pc1_data_addr}
 
     SSHLibrary.Execute Command    cat > /etc/crontab <<EOF${\n}${crontab_file}${\n}EOF
-
-Copy SIPP library on HQ PC
-    SSHLibrary.Execute Command    curl -L -O http://files.nuagedemos.net/software/sipp/sipp && chmod +x sipp 
 
 ############################################################################################################################################
 
@@ -54,13 +53,15 @@ Transfer scripts to PA PC1
     SSHLibrary.Put File
     ...  source=${CURDIR}/files/cnn.sh
     ...  destination=/root
+    ...  mode=0755
 
     SSHLibrary.Put File
     ...  source=${CURDIR}/files/steam.sh
     ...  destination=/root
+    ...  mode=0755
 
-Install Required Packages for SIP on PA PC
-    SSHLibrary.Execute Command    yum install -y ncurses-devel openssl-devel lksctp-tools-devel libpcap libpcap-devel hping3
+Install Required Packages on PA PC
+    SSHLibrary.Execute Command    yum install -y hping3
 
 Connect to PA PC and Add SSH Script Crontab 
     ${crontab_file} =  CATSUtils.Render J2 Template
@@ -70,9 +71,6 @@ Connect to PA PC and Add SSH Script Crontab
                      ...    hq_pc_address=${hq_sf_pc1_data_addr}
 
     SSHLibrary.Execute Command    cat > /etc/crontab <<EOF${\n}${crontab_file}${\n}EOF
-
-Copy SIPP library on PA PC
-    SSHLibrary.Execute Command    curl -L -O http://files.nuagedemos.net/software/sipp/sipp && chmod +x sipp
 
 ################################################################################################################################
 Update DHCP address for PA Tablet
@@ -86,13 +84,15 @@ Copy files to PA Tablet
     SSHLibrary.Put File
     ...  source=${CURDIR}/files/guest.sh
     ...  destination=/root
+    ...  mode=0755
 
     SSHLibrary.Put File
     ...  source=${CURDIR}/files/syn_flag.sh
     ...  destination=/root
+    ...  mode=0755
 
 Install Required Packages for PA Tablet
-    SSHLibrary.Execute Command    yum install -y hping3
+    SSHLibrary.Execute Command    yum -y install hping3
 
 Connect to PA Tablet and Add SSH Script Crontab 
     ${crontab_file} =  CATSUtils.Render J2 Template
@@ -112,8 +112,8 @@ Update DHCP address for SJ PC1
     ...    ip netns exec ns-data dhclient --no-pid eth1
     ...    sudo=True
 
-Install Required Packages for SIP on SJ PC
-    SSHLibrary.Execute Command    yum install -y ncurses-devel openssl-devel lksctp-tools-devel libpcap libpcap-devel hping3
+Install Required Packages on SJ PC
+    SSHLibrary.Execute Command    yum install -y hping3
 
 Connect to SJ PC and Add SSH Script Crontab 
     ${crontab_file} =  CATSUtils.Render J2 Template
@@ -124,9 +124,6 @@ Connect to SJ PC and Add SSH Script Crontab
 
     SSHLibrary.Execute Command    cat > /etc/crontab <<EOF${\n}${crontab_file}${\n}EOF
 
-Copy SIPP library on sj PC
-    SSHLibrary.Execute Command    curl -L -O http://files.nuagedemos.net/software/sipp/sipp && chmod +x sipp
-
 #################################################################################################################################
 Update DHCP address for SJ Mobile
     SSHLibrary.Switch Connection    ${sjmobile_conn}
@@ -136,14 +133,14 @@ Update DHCP address for SJ Mobile
     ...    sudo=True
 
 Install Required Packages for SJ Mobile
-    SSHLibrary.Execute Command    yum install -y hping3
+    SSHLibrary.Execute Command    yum -y install hping3
 
 Copy files to SJ Mobile
     SSHLibrary.Put File
     ...  source=${CURDIR}/files/guest.sh
     ...  destination=/root
 
-Connect to SJ MObile and Add SSH Script Crontab 
+Connect to SJ Mobile and Add SSH Script Crontab 
     ${crontab_file} =  CATSUtils.Render J2 Template
                      ...    source=${CURDIR}/data/sj_mobile_crontab.j2
                      ...    pa_pc_address=${pa_pc1_data_addr}
