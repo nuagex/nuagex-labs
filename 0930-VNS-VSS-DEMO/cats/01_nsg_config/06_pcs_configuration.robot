@@ -35,6 +35,8 @@ Connect to SF HQ PC and Add SSH Script Crontab
                      ...    pa_pc_address=${pa_pc1_data_addr}
                      ...    sj_pc_address=${sj_pc1_data_addr}
                      ...    hq_pc_address=${hq_sf_pc1_data_addr}
+                     ...    pa_tablet_address=${pa_tablet_data_addr}
+                     ...    sj_mobile_address=${sj_mobile_data_addr}
 
     SSHLibrary.Execute Command    cat > /etc/crontab <<EOF${\n}${crontab_file}${\n}EOF
 
@@ -67,11 +69,10 @@ Connect to PA PC and Add SSH Script Crontab
                      ...    pa_pc_address=${pa_pc1_data_addr}
                      ...    sj_pc_address=${sj_pc1_data_addr}
                      ...    hq_pc_address=${hq_sf_pc1_data_addr}
+                     ...    pa_tablet_address=${pa_tablet_data_addr}
+                     ...    sj_mobile_address=${sj_mobile_data_addr}
 
     SSHLibrary.Execute Command    cat > /etc/crontab <<EOF${\n}${crontab_file}${\n}EOF
-
-Add Portal hostname
-    SSHLibrary.Execute Command    echo '192.168.10.100 ion-motors.lab' >> /etc/hosts
 
 ################################################################################################################################
 Update DHCP address for PA Tablet
@@ -102,10 +103,11 @@ Connect to PA Tablet and Add SSH Script Crontab
                      ...    sj_pc_address=${sj_pc1_data_addr}
                      ...    hq_pc_address=${hq_sf_pc1_data_addr}
                      ...    pa_tablet_address=${pa_tablet_data_addr}
+                     ...    sj_mobile_address=${sj_mobile_data_addr}
 
     SSHLibrary.Execute Command    cat > /etc/crontab <<EOF${\n}${crontab_file}${\n}EOF
 
-Add Portal hostname
+Add Portal hostname to PA tablet
     SSHLibrary.Execute Command    echo '192.168.10.100 ion-motors.lab' >> /etc/hosts
 
 #################################################################################################################################
@@ -125,6 +127,8 @@ Connect to SJ PC and Add SSH Script Crontab
                      ...    pa_pc_address=${pa_pc1_data_addr}
                      ...    sj_pc_address=${sj_pc1_data_addr}
                      ...    hq_pc_address=${hq_sf_pc1_data_addr}
+                     ...    pa_tablet_address=${pa_tablet_data_addr}
+                     ...    sj_mobile_address=${sj_mobile_data_addr}
 
     SSHLibrary.Execute Command    cat > /etc/crontab <<EOF${\n}${crontab_file}${\n}EOF
 
@@ -152,7 +156,7 @@ Connect to SJ Mobile and Add SSH Script Crontab
                      ...    hq_pc_address=${hq_sf_pc1_data_addr}
                      ...    pa_tablet_address=${pa_tablet_data_addr}
                      ...    sj_mobile_address=${sj_mobile_data_addr}
-Add Portal hostname
+Add Portal hostname to SJ Mobile
     SSHLibrary.Execute Command    echo '192.168.10.100 ion-motors.lab' >> /etc/hosts
 
 Sleep 60 sec before verifying datapath
