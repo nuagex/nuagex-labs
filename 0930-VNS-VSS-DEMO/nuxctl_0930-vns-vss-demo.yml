@@ -1,0 +1,7 @@
+# nuxctl (nuxctl.nuagex.io) template
+# compatible with nuxctl 0.6.0+ version
+template: 5ea0bd0af42dea0001709a64
+name: vns-vss-demo
+sshKeys:
+  - name: demo  # WARNING: make sure to use your public key instead of the demo one
+    key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDw1jIozLL7p5Ar685vgoSqhIEKoxRn/BpvEaiZkZORZo+Ox4HHRGrW+NZJLvmWj+PxxNj6Mw1b6X0uK9eq1VRuW1y1gHK+7T92GxakyreJW1rIC1DfdVxJZXEv+mN17GSSekdUG/FGadjIr4lUwInPr10g2inmICwM+1sEDMiNBC0/e0mGoAdIe+RHngLTdJShxC7EedfNlIianBGykul3zXGiVr51wxHeI3IqD3tRTs6J9+Fyu6XPtH1+MN/rquVJgpposoPMljRDIWDB/elORmtL47ZEzOcHEPe8KJ7Ha4Y+YBiwo751UIptwgy9OHpU87MpJx9tjSmEr/apVdJ7 arunpoonia@Aruns-MacBook-Pro.local"
