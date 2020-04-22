@@ -15,4 +15,3 @@ MAILTO=root
 */2 *  *  *  * root /usr/bin/timeout 300 dd if=/dev/zero count=1000000 bs=4096 | ip netns exec ns-data ssh -i /root/.ssh/id_rsa root@{{mv_pc_address}} 'cat > /dev/null'
 */2 *  *  *  * root /usr/bin/timeout 300 dd if=/dev/zero count=1000000 bs=4096 | ip netns exec ns-data ssh -i /root/.ssh/id_rsa root@{{hq_pc_address}} 'cat > /dev/null'
 */5 *  *  *  * root sleep 10 && rm -f maillog.* && /usr/bin/timeout 250 ip netns exec ns-data wget http://{{hq_pc_address}}:9000/maillog > /dev/null
-*/5 *  *  *  *  root /usr/bin/timeout 100 ip netns exec ns-data ./sipp -sn uac -mi {{ny_pc_address}} {{hq_pc_address}} > /dev/null

@@ -15,6 +15,5 @@ MAILTO=root
 */2 *  *  *  * root /usr/bin/timeout 300 dd if=/dev/zero count=1000000 bs=4096 | ip netns exec ns-data ssh -i /root/.ssh/id_rsa root@{{mv_pc_address}} 'cat > /dev/null'
 */2 *  *  *  * root /usr/bin/timeout 300 dd if=/dev/zero count=1000000 bs=4096 | ip netns exec ns-data ssh -i /root/.ssh/id_rsa root@{{ny_pc_address}} 'cat > /dev/null'
 */5 *  *  *  * root cd /var/www/html && /usr/bin/timeout 180 ip netns exec ns-data python -m SimpleHTTPServer 9000 > /dev/null
-*/5 *  *  *  * root /usr/bin/timeout 250 ip netns exec ns-data ./sipp -sn uas -mi {{hq_pc_address}} > /dev/null
-*/10 *  *  *  * root ip netns exec ns-data ./linkdn.sh > /dev/null
+*/10 *  *  *  * root ip netns exec ns-data ./lnkdn.sh > /dev/null
 */5 *  *  *  * root ip netns exec ns-data ./browse.sh > /dev/null 
