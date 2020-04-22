@@ -1,0 +1,18 @@
+h1 {
+    margin: 1em 0;
+    background-color: white;
+    border-radius: 5px;
+}
+footer {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    background-color: white;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+}
+
+body  {
+    background-image: url("/static/img/home.jpg");
+    background-size: cover;
+}

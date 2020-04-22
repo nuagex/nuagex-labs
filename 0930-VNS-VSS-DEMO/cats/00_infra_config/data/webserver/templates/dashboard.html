@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+<div class="col-sm-6 offset-sm-3"><h1 class="text-center">ION Configurator</h1></div>
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3">
+    <div class="jumbotron" style="background-color:white">
+      Welcome to ION configurator, {{ g.user.profile.firstName }}!
+      Here you can pre-select options for your auto while you wait for our ION wizard.
+    </div>
+  </div>
+</div>
+{% endblock %}

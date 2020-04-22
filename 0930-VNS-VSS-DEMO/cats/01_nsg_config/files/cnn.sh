@@ -1,0 +1,1 @@
+for run in {1..20}; do 'wget -p cnn.com > /dev/null'; done;
