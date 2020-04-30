@@ -1,6 +1,6 @@
 # nuxctl (nuxctl.nuagex.io) template
 # compatible with nuxctl 0.6.0+ version
-template: 5982662519b6fd00018f9981
+template: 5eab334cf42dea0001709bed 
 name: Ipanema-single-underlay-mixed-mode
 sshKeys:
   - name: demo
