@@ -1,3 +1,5 @@
+advanced.client.timeout: '180'
+advanced.es.timeout: '60000'
 gr.dc: '1'
 gr.dc1.address: 0.0.0.0
 gr.dc2.address: 0.0.0.0
@@ -6,8 +8,8 @@ ha.enabled: false
 ha.node1.address: {{ local_ip }}
 ha.node2.address: ''
 ha.node3.address: ''
-jms.password: csproot
-jms.username: csproot@csp
+jms.password: proxy
+jms.username: proxyt@csp
 proxy.enabled: false
 proxy.port: '8000'
 proxy.url: 0.0.0.0
@@ -19,7 +21,7 @@ smtp.user: ''
 spring.data.jest.uri: http://{{ vstats_ip }}:9200
 sso.custom.entityId: com:nokia:vnsportal:sp
 sso.custom.idp.metadata: idp.metadata.xml
-sso.custom.imagename: nuage/vnsportal-eauth-saml-XYZ
+sso.custom.imagename: nuage/sdwanportal-eauth-saml-XYZ
 sso.custom.imagetag: 1.0.0
 sso.custom.impersonate.attribute: impersonatedUser
 sso.custom.keystore.key.alias: vnsportal
